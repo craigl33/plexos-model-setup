@@ -1,21 +1,19 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 19 11:29:38 2020
+"""Created on Wed Feb 19 11:29:38 2020
 @author: PLEXOS
 
 """
 """ set paths """
 
 
-new_model_folder = "S:/China/China ETP NZE 2021/06_Data/02_PowerPlants/"
+new_model_folder = 'S:/China/China ETP NZE 2021/06_Data/02_PowerPlants/'
 
 
 """load packages etc"""
 
-exec(open('Z:\Python_functions\import_packages2.py').read())
+exec(open(r'Z:\Python_functions\import_packages2.py').read())
 
-exec(open('Z:\Python_functions\single_functions\make_capacity_split_WEO.py').read())
-#%edit Z:\Python_functions\single_functions\make_capacity_split_WEO.py
+exec(open(r'Z:\Python_functions\single_functions\make_capacity_split_WEO.py').read())
+# %edit Z:\Python_functions\single_functions\make_capacity_split_WEO.py
 
 region_list = ['CR', 'ER', 'NCR', 'NER', 'NSR', 'NWR', 'SGR', 'SWR']
 
@@ -86,48 +84,89 @@ check_scales.to_csv(new_model_folder + "scaling_factors_from_PSO_2017.csv")
 
 
 """ set paths """
-wpt = new_model_folder + "ETP2021_CHN_Generation_Capacity_2035_2050_edited.xlsx"
-wpt2 = new_model_folder + "WEO2020_China_SIR data_updated.xlsx"
-pp = new_model_folder + "2021_08_30_generator_parameters_China_ETP_v1.0_new_techs.xlsx"
+wpt = new_model_folder + 'ETP2021_CHN_Generation_Capacity_2035_2050_edited.xlsx'
+wpt2 = new_model_folder + 'WEO2020_China_SIR data_updated.xlsx'
+pp = new_model_folder + '2021_08_30_generator_parameters_China_ETP_v1.0_new_techs.xlsx'
 # save path for capacity outputs to use in weighting site selections
-sp = "Y:/RED/GIS/China/output/China/nze_regional_capacities/"
+sp = 'Y:/RED/GIS/China/output/China/nze_regional_capacities/'
 
 """get split capacities """
-caps_2035 = make_capacity_split_WEO(weo_path = wpt, regions_vector = region_list, worksheet_path = pp, weo_scen = "NZE", hydro_cap_sheet = "", ETPhydro = True,
-                                          weo_sheet = "NZE", weo_idsheet = "Index", select_year = 2035,  index_sheet = "Indices", savepath = sp)
+caps_2035 = make_capacity_split_WEO(
+    weo_path=wpt,
+    regions_vector=region_list,
+    worksheet_path=pp,
+    weo_scen='NZE',
+    hydro_cap_sheet='',
+    ETPhydro=True,
+    weo_sheet='NZE',
+    weo_idsheet='Index',
+    select_year=2035,
+    index_sheet='Indices',
+    savepath=sp,
+)
 
-caps_2035vcb = make_capacity_split_WEO(weo_path = wpt, regions_vector = region_list, worksheet_path = pp, weo_scen = "NZEvcb", hydro_cap_sheet = "", ETPhydro = True,
-                                          weo_sheet = "NZE", weo_idsheet = "Index", select_year = 2035,  index_sheet = "Indices", savepath = sp)
+caps_2035vcb = make_capacity_split_WEO(
+    weo_path=wpt,
+    regions_vector=region_list,
+    worksheet_path=pp,
+    weo_scen='NZEvcb',
+    hydro_cap_sheet='',
+    ETPhydro=True,
+    weo_sheet='NZE',
+    weo_idsheet='Index',
+    select_year=2035,
+    index_sheet='Indices',
+    savepath=sp,
+)
 
-#caps_2050 = make_capacity_split_WEO(weo_path = wpt, regions_vector = region_list, worksheet_path = pp, weo_scen = "NZE", hydro_cap_sheet = "", hydro_split_sheet = "HydroSplit_2050",
+# caps_2050 = make_capacity_split_WEO(weo_path = wpt, regions_vector = region_list, worksheet_path = pp, weo_scen = "NZE", hydro_cap_sheet = "", hydro_split_sheet = "HydroSplit_2050",
 #                                          weo_sheet = "NZE", weo_idsheet = "Index", select_year = 2050,  index_sheet = "Indices", savepath = sp)
 
-caps_2020 = make_capacity_split_WEO(weo_path = wpt2, regions_vector = region_list, worksheet_path = pp, weo_scen = "Base", hydro_cap_sheet = "", hydro_split_sheet = "HydroSplit_2035",
-                                          weo_sheet = "SDS", weo_idsheet = "Index", select_year = 2020,  index_sheet = "Indices", savepath = sp)
+caps_2020 = make_capacity_split_WEO(
+    weo_path=wpt2,
+    regions_vector=region_list,
+    worksheet_path=pp,
+    weo_scen='Base',
+    hydro_cap_sheet='',
+    hydro_split_sheet='HydroSplit_2035',
+    weo_sheet='SDS',
+    weo_idsheet='Index',
+    select_year=2020,
+    index_sheet='Indices',
+    savepath=sp,
+)
 
 
-caps_2060 = make_capacity_split_WEO(weo_path = wpt, regions_vector = region_list, worksheet_path = pp, weo_scen = "NZE", hydro_cap_sheet = "", ETPhydro = True,
-                                          weo_sheet = "NZE", weo_idsheet = "Index", select_year = 2060,  index_sheet = "Indices", savepath = sp)
+caps_2060 = make_capacity_split_WEO(
+    weo_path=wpt,
+    regions_vector=region_list,
+    worksheet_path=pp,
+    weo_scen='NZE',
+    hydro_cap_sheet='',
+    ETPhydro=True,
+    weo_sheet='NZE',
+    weo_idsheet='Index',
+    select_year=2060,
+    index_sheet='Indices',
+    savepath=sp,
+)
 
 """combine into same index and write to .csv """
 
 
+caps_2020['Base_2020'] = caps_2020.cap_split
+caps_2035['NZE_2035'] = caps_2035.cap_split
+caps_2035vcb['NZE_2035vcb'] = caps_2035vcb.cap_split
+caps_2060['NZE_2060'] = caps_2060.cap_split
 
-caps_2020["Base_2020"] = caps_2020.cap_split
-caps_2035["NZE_2035"] = caps_2035.cap_split
-caps_2035vcb["NZE_2035vcb"] = caps_2035vcb.cap_split
-caps_2060["NZE_2060"] = caps_2060.cap_split
+comb = pd.merge(caps_2035[['plexos_name', 'NZE_2035']], caps_2060[['plexos_name', 'NZE_2060']], how='outer').fillna(0)
+comb2 = pd.merge(comb, caps_2020[['plexos_name', 'Base_2020']], how='outer').fillna(0)
+comb3 = pd.merge(comb2, caps_2035vcb[['plexos_name', 'NZE_2035vcb']], how='outer').fillna(0)
 
-comb = pd.merge(caps_2035[["plexos_name", "NZE_2035"]], caps_2060[["plexos_name", "NZE_2060"]], how = "outer").fillna(0)
-comb2 = pd.merge(comb, caps_2020[["plexos_name", "Base_2020"]], how = "outer").fillna(0)
-comb3 = pd.merge(comb2, caps_2035vcb[["plexos_name", "NZE_2035vcb"]], how = "outer").fillna(0)
-
-comb3.to_csv(new_model_folder + "caps_2020_2035_2060_ETP_NZE_update.csv")
-
+comb3.to_csv(new_model_folder + 'caps_2020_2035_2060_ETP_NZE_update.csv')
 
 
-
-""" read in original plant list and unit sizes to set regional max capacities for new technologies 
+""" read in original plant list and unit sizes to set regional max capacities for new technologies
 
 
 ### read in original
@@ -141,17 +180,19 @@ oc2.to_csv(new_model_folder + "max_caps_cast.csv")
 """
 
 # read in edited version
-max_caps_reg = pd.read_csv(new_model_folder + "max_capacities_manual.csv")
+max_caps_reg = pd.read_csv(new_model_folder + 'max_capacities_manual.csv')
 
-mcm   = pd.melt(max_caps_reg, id_vars = ["PLEXOS_tech"], value_vars = region_list, var_name = "region", value_name = "Max_capacity")
+mcm = pd.melt(
+    max_caps_reg, id_vars=['PLEXOS_tech'], value_vars=region_list, var_name='region', value_name='Max_capacity'
+)
 
-mcm["plexos_name"] = mcm.PLEXOS_tech + "_" + mcm.region
+mcm['plexos_name'] = mcm.PLEXOS_tech + '_' + mcm.region
 
 # add max caps to combined sheet and wite
 
-mcm2 = comb2.merge(mcm[["plexos_name", "Max_capacity"]], how = "outer")
+mcm2 = comb2.merge(mcm[['plexos_name', 'Max_capacity']], how='outer')
 
-mcm2.to_csv(new_model_folder + "maxcaps_2035_2060_ETP_NZE_updated.csv")
+mcm2.to_csv(new_model_folder + 'maxcaps_2035_2060_ETP_NZE_updated.csv')
 
 
 """ regional sufficiency checks """
@@ -182,7 +223,7 @@ ccs_agg = cf.groupby(["Region", "CCSType"])["cap_av"].sum().reset_index()
 
 tbl4 = pd.pivot_table(ccs_agg, index = "CCSType", columns = "Region", values = "cap_av").fillna(0)
 
-## new one for 2035 based on plant by plant availability 
+## new one for 2035 based on plant by plant availability
 
 ci = pd.read_excel(new_model_folder + "availability_by_plant_2035_index.xlsx", sheet_name = "index")
 
@@ -305,20 +346,4 @@ tbl = pd.pivot_table(reg_agg, index = "CCSType", columns = "Region", values = "B
 """
 
 
-
-
-
-
-
-
-
 #
-
-
-
-
-
-
-
-
-
