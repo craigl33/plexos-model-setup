@@ -1,24 +1,96 @@
-"""Created on Wed Feb 19 11:29:38 2020
-@author: PLEXOS
-
+"""TODO Module Description
 """
-""" set paths """
+
+import pandas as pd
+
+from functions.read_weo import make_capacity_split_WEO
+
+# Adjust some dependency settings
+pd.set_option('display.max_columns', None)  # Show all columns when printing
+pd.set_option('display.width', None)  # Don't wrap columns when printing
 
 
+# Set paths
 new_model_folder = 'S:/China/China ETP NZE 2021/06_Data/02_PowerPlants/'
-
-
-"""load packages etc"""
-
-exec(open(r'Z:\Python_functions\import_packages2.py').read())
-
-exec(open(r'Z:\Python_functions\single_functions\make_capacity_split_WEO.py').read())
-# %edit Z:\Python_functions\single_functions\make_capacity_split_WEO.py
+path_wpt = new_model_folder + 'ETP2021_CHN_Generation_Capacity_2035_2050_edited.xlsx'
+path_wpt2 = new_model_folder + 'WEO2020_China_SIR data_updated.xlsx'
+path_pp = new_model_folder + '2021_08_30_generator_parameters_China_ETP_v1.0_new_techs.xlsx'
+path_sp = './'
 
 region_list = ['CR', 'ER', 'NCR', 'NER', 'NSR', 'NWR', 'SGR', 'SWR']
 
-""" read in original plant list and unit sizes to set regional max capacities for new technologies """
+# Get split capacities
+caps_2035 = make_capacity_split_WEO(
+    weo_path=path_wpt,
+    regions_list=region_list,
+    worksheet_path=path_pp,
+    weo_scen='NZE',
+    hydro_cap_sheet='',
+    ETPhydro=True,
+    weo_sheet='NZE',
+    weo_idsheet='Index',
+    select_year=2035,
+    index_sheet='Indices',
+    savepath=path_sp,
+)
 
+caps_2035vcb = make_capacity_split_WEO(
+    weo_path=path_wpt,
+    regions_list=region_list,
+    worksheet_path=path_pp,
+    weo_scen='NZEvcb',
+    hydro_cap_sheet='',
+    ETPhydro=True,
+    weo_sheet='NZE',
+    weo_idsheet='Index',
+    select_year=2035,
+    index_sheet='Indices',
+    savepath=path_sp,
+)
+
+caps_2020 = make_capacity_split_WEO(
+    weo_path=path_wpt2,
+    regions_list=region_list,
+    worksheet_path=path_pp,
+    weo_scen='Base',
+    hydro_cap_sheet='',
+    hydro_split_sheet='HydroSplit_2035',
+    weo_sheet='SDS',
+    weo_idsheet='Index',
+    select_year=2020,
+    index_sheet='Indices',
+    savepath=path_sp,
+)
+
+caps_2060 = make_capacity_split_WEO(
+    weo_path=path_wpt,
+    regions_list=region_list,
+    worksheet_path=path_pp,
+    weo_scen='NZE',
+    hydro_cap_sheet='',
+    ETPhydro=True,
+    weo_sheet='NZE',
+    weo_idsheet='Index',
+    select_year=2060,
+    index_sheet='Indices',
+    savepath=path_sp,
+)
+
+# caps_2050 = make_capacity_split_WEO(
+#     weo_path=wpt,
+#     regions_vector=region_list,
+#     worksheet_path=pp,
+#     weo_scen='NZE',
+#     hydro_cap_sheet='',
+#     hydro_split_sheet='HydroSplit_2050',
+#     weo_sheet='NZE',
+#     weo_idsheet='Index',
+#     select_year=2050,
+#     index_sheet='Indices',
+#     savepath=sp,
+# )
+
+""" read in original plant list and unit sizes to set regional max capacities for new technologies """
 
 """ read in capacities and unit sizes used for China PST, with PLEXOS name (i.e. including region and technology) """
 """
@@ -82,77 +154,7 @@ check_scales.to_csv(new_model_folder + "scaling_factors_from_PSO_2017.csv")
 
 """
 
-
-""" set paths """
-wpt = new_model_folder + 'ETP2021_CHN_Generation_Capacity_2035_2050_edited.xlsx'
-wpt2 = new_model_folder + 'WEO2020_China_SIR data_updated.xlsx'
-pp = new_model_folder + '2021_08_30_generator_parameters_China_ETP_v1.0_new_techs.xlsx'
-# save path for capacity outputs to use in weighting site selections
-sp = 'Y:/RED/GIS/China/output/China/nze_regional_capacities/'
-
-"""get split capacities """
-caps_2035 = make_capacity_split_WEO(
-    weo_path=wpt,
-    regions_vector=region_list,
-    worksheet_path=pp,
-    weo_scen='NZE',
-    hydro_cap_sheet='',
-    ETPhydro=True,
-    weo_sheet='NZE',
-    weo_idsheet='Index',
-    select_year=2035,
-    index_sheet='Indices',
-    savepath=sp,
-)
-
-caps_2035vcb = make_capacity_split_WEO(
-    weo_path=wpt,
-    regions_vector=region_list,
-    worksheet_path=pp,
-    weo_scen='NZEvcb',
-    hydro_cap_sheet='',
-    ETPhydro=True,
-    weo_sheet='NZE',
-    weo_idsheet='Index',
-    select_year=2035,
-    index_sheet='Indices',
-    savepath=sp,
-)
-
-# caps_2050 = make_capacity_split_WEO(weo_path = wpt, regions_vector = region_list, worksheet_path = pp, weo_scen = "NZE", hydro_cap_sheet = "", hydro_split_sheet = "HydroSplit_2050",
-#                                          weo_sheet = "NZE", weo_idsheet = "Index", select_year = 2050,  index_sheet = "Indices", savepath = sp)
-
-caps_2020 = make_capacity_split_WEO(
-    weo_path=wpt2,
-    regions_vector=region_list,
-    worksheet_path=pp,
-    weo_scen='Base',
-    hydro_cap_sheet='',
-    hydro_split_sheet='HydroSplit_2035',
-    weo_sheet='SDS',
-    weo_idsheet='Index',
-    select_year=2020,
-    index_sheet='Indices',
-    savepath=sp,
-)
-
-
-caps_2060 = make_capacity_split_WEO(
-    weo_path=wpt,
-    regions_vector=region_list,
-    worksheet_path=pp,
-    weo_scen='NZE',
-    hydro_cap_sheet='',
-    ETPhydro=True,
-    weo_sheet='NZE',
-    weo_idsheet='Index',
-    select_year=2060,
-    index_sheet='Indices',
-    savepath=sp,
-)
-
 """combine into same index and write to .csv """
-
 
 caps_2020['Base_2020'] = caps_2020.cap_split
 caps_2035['NZE_2035'] = caps_2035.cap_split
@@ -164,7 +166,6 @@ comb2 = pd.merge(comb, caps_2020[['plexos_name', 'Base_2020']], how='outer').fil
 comb3 = pd.merge(comb2, caps_2035vcb[['plexos_name', 'NZE_2035vcb']], how='outer').fillna(0)
 
 comb3.to_csv(new_model_folder + 'caps_2020_2035_2060_ETP_NZE_update.csv')
-
 
 """ read in original plant list and unit sizes to set regional max capacities for new technologies
 
@@ -193,7 +194,6 @@ mcm['plexos_name'] = mcm.PLEXOS_tech + '_' + mcm.region
 mcm2 = comb2.merge(mcm[['plexos_name', 'Max_capacity']], how='outer')
 
 mcm2.to_csv(new_model_folder + 'maxcaps_2035_2060_ETP_NZE_updated.csv')
-
 
 """ regional sufficiency checks """
 
@@ -344,6 +344,5 @@ reg_agg = cf.groupby(["Region", "CCSType"])["Base_2020"].sum().reset_index()
 tbl = pd.pivot_table(reg_agg, index = "CCSType", columns = "Region", values = "Base_2020")
 
 """
-
 
 #
