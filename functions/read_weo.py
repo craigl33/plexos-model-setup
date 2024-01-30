@@ -98,102 +98,41 @@ hydro_split_sheet = ""
 AnnexAadjust = False
 AnnexAfile = gen_folder + "AnnexA_gencapacity.csv"
 
+
+weo_path = dem_path
+regions_list = regions
+weo_scen = "SDS"
+weo_sheet = 'SDS_2035'
+weo_idsheet = "Index"
+select_year = 2030
+regions_vector = reg
+worksheet_path = pp
+index_sheet = "Indices"
+split_sheet = "RegionSplit"
+hydro_cap_sheet = "SetCapacities2030"
+savepath = ''
+hydro_split_sheet = ""
+AnnexAadjust = False
+AnnexAfile = gen_folder + "AnnexA_gencapacity.csv"
+
+
+sds_2035_demand = read_end_use_demand_WEO_format(
+    dem_path,
+    ['SDS_2035'],
+    indexsheet='DSM_index_SDS_2035',
+    RegionSplit='RegionalFactors2035',
+    RegionVector=regions,
+    Scale_factor=scaleval_sds,
+    end_use_adj_sheet='end_use_adj',
+    end_use_col=2035,
+)
+
 """
 from collections.abc import Sequence
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
-
-
-def add_time_separators(
-    inputFrame: pd.DataFrame,
-    datetimeCol: str = 'datetime',
-    pattern_date: bool = False,
-    set_year: bool = False,
-    set_month: bool = False,
-    timeconvention: str = 'time_start',
-) -> pd.DataFrame:
-    """Add time separators columns to a dataframe with a datetime column.
-
-    Args:
-    ----
-        inputFrame: pd.DataFrame with datetime column.
-        datetimeCol: Name of datetime column.
-        pattern_date: If True, datetime column is a pattern index (e.g. M1,D1,H1) and a dummy datetime sequence is created.
-        set_year:  If pattern_date is True, set the year of the dummy datetime sequence.
-        set_month: If pattern_date is True, set the month of the dummy datetime sequence.
-        timeconvention: If 'time_start', the datetime column is the start of the time period. If 'time_end', the datetime column is the end of the time period.
-
-    Returns:
-    -------
-        pd.DataFrame with time separators columns added.
-    """
-    df = inputFrame.copy(deep=True)
-    dtcol = datetimeCol[:]
-    if pattern_date == True:
-        # Create dummy datetime sequence using a leap or specified year and add merge info
-        sd = dt(year=2020, month=1, day=1)
-        if set_year != False:
-            sd = dt(year=set_year, month=1, day=1)
-            if set_month != False:
-                sd = dt(year=set_year, set_month=1, day=1)
-        dtdf = pd.DataFrame(
-            pd.date_range(start=sd, end=sd + pd.offsets.DateOffset(years=1) + pd.offsets.DateOffset(hours=-1), freq='h')
-        )
-        dtdf.columns = ['datetime']
-        dtdf['month'] = pd.DatetimeIndex(dtdf.datetime).month
-        dtdf['mday'] = pd.DatetimeIndex(dtdf.datetime).day
-        dtdf['hour'] = pd.DatetimeIndex(dtdf.datetime).hour
-        # Derive month day and hour info from pattern index
-        df['month'] = df[dtcol].str.split(',').str[0].str.replace('M', '').astype(float)
-        df['mday'] = df[dtcol].str.split(',').str[1].str.replace('D', '').astype(float)
-        df['hour'] = df[dtcol].str.split(',').str[2].str.replace('H', '').astype(float) - 1
-
-        # Merge in dummy date sequence to allow remaining separators to be added as normal
-        df = pd.merge(df, dtdf, how='left')
-        dtcol = 'datetime'
-
-    if timeconvention == 'time_end':
-        df['original_datetime'] = df[dtcol]
-        df['datetime'] = df['datetime'] - timedelta(hours=1)
-
-    df['year'] = pd.DatetimeIndex(df[dtcol]).year
-    df['month'] = pd.DatetimeIndex(df[dtcol]).month
-    df['montht'] = pd.DatetimeIndex(df[dtcol]).month_name()
-    # df['week'] = pd.DatetimeIndex(df[dtcol]).isocalendar().week
-    df['mday'] = pd.DatetimeIndex(df[dtcol]).day
-    df['day'] = pd.DatetimeIndex(df[dtcol]).day
-    df['yday'] = pd.DatetimeIndex(df[dtcol]).dayofyear
-    df['hour'] = pd.DatetimeIndex(df[dtcol]).hour
-    df['pattern'] = 'M' + df.month.astype(str) + ',D' + df.mday.astype(str) + ',H' + (df.hour + 1).astype(str)
-    df['wday_num'] = pd.DatetimeIndex(df[dtcol]).dayofweek
-    df['wdaytype'] = 'blank'
-    df.loc[df['wday_num'].isin([0, 1, 2, 3, 4]), 'wdaytype'] = 'Weekday'
-    df.loc[df['wday_num'].isin([5]), 'wdaytype'] = 'Saturday'
-    df.loc[df['wday_num'].isin([6]), 'wdaytype'] = 'Sunday'
-    df['seasonNH'] = 'blank'
-    df['seasonSH'] = 'blank'
-    df['two_seasonNH'] = 'blank'
-    df.loc[df['month'].isin([12, 1, 2]), 'seasonNH'] = 'Winter'
-    df.loc[df['month'].isin([12, 1, 2]), 'seasonSH'] = 'Summer'
-    df.loc[df['month'].isin([3, 4, 5]), 'seasonNH'] = 'Spring'
-    df.loc[df['month'].isin([3, 4, 5]), 'seasonSH'] = 'Autumn'
-    df.loc[df['month'].isin([6, 7, 8]), 'seasonNH'] = 'Summer'
-    df.loc[df['month'].isin([6, 7, 8]), 'seasonSH'] = 'Winter'
-    df.loc[df['month'].isin([9, 10, 11]), 'seasonNH'] = 'Autumn'
-    df.loc[df['month'].isin([9, 10, 11]), 'seasonSH'] = 'Spring'
-
-    df.loc[df['month'].isin([1, 2, 3, 10, 11, 12]), 'two_seasonNH'] = 'Winter'
-    df.loc[df['month'].isin([4, 5, 6, 7, 8, 9]), 'two_seasonNH'] = 'Summer'
-
-    # Strip off year (datetime column and year column) unless was specified
-    if pattern_date == True and set_year == False:
-        df = df.drop(['datetime', 'year'], axis=1)
-
-    print('add_time_separators definition executed')
-
-    return df
 
 
 def make_capacity_split_WEO(
@@ -478,6 +417,25 @@ def make_capacity_split_WEO(
     return allcaps
 
 
+"""
+
+    
+file_path = dem_path
+sheet_vectors = ['SDS_2035']
+indexsheet='DSM_index_SDS_2035'
+RegionSplit='RegionalFactors2035'
+RegionVector=regions
+Scale_factor=scaleval_sds
+end_use_adj_sheet='end_use_adj'
+end_use_col=2035
+
+
+
+
+"""
+
+
+
 def read_end_use_demand_WEO_format(
     file_path: str | Path,
     sheet_vectors: Sequence[str],
@@ -562,11 +520,23 @@ def read_end_use_demand_WEO_format(
         # Add column of sums by end use for comparison with target totals
         dfeut['end_use_sum'] = dfeut.groupby(['end_use'])['value'].transform('sum') / 1000
 
-        if dfeut.end_use_sum.min() == 0:
-            raise ValueError('`end_use_sum` contains 0. Something is wrong with the end use aggregation.')
+        #if dfeut.end_use_sum.min() == 0:
+        #    raise ValueError('`end_use_sum` contains 0. Something is wrong with the end use aggregation.')
 
         # Adjust value based on ratio
-        dfeut['value'] = dfeut['value'] * (dfeut.eut / dfeut.end_use_sum)
+        
+        def safe_divide(row):
+            if row['end_use_sum'] != 0:
+                return row['value'] * (row['eut'] / row['end_use_sum'])
+            else:
+                return 0
+
+        # Apply the safe_divide function across each row
+        dfeut['value'] = dfeut.apply(safe_divide, axis=1)
+                #dfeut['value'] = dfeut['value'] * (dfeut.eut / dfeut.end_use_sum)
+              
+        
+        #dfeut['value'] = dfeut['value'] * np.where(dfeut['end_use_sum'] != 0, dfeut['eut'] / dfeut['end_use_sum'], 0)
         print(f'Sum of values before scale: {round(df["value"].sum() / 1000, 0)}')
         df = dfeut[colnames]
         print(f'Sum of values after scale: {round(df["value"].sum() / 1000, 0)}')
@@ -585,5 +555,106 @@ def read_end_use_demand_WEO_format(
     df['before_scale'] = df['value']
     df['value'] = df['before_scale'] * Scale_factor
 
-    print('read_end_use_demand definition executed')
+    #print('read_end_use_demand definition executed')
+    return df
+
+
+
+def add_time_separators(
+    inputFrame: pd.DataFrame,
+    datetimeCol: str = 'datetime',
+    pattern_date: bool = False,
+    set_year: bool = False,
+    set_month: bool = False,
+    timeconvention: str = 'time_start',
+) -> pd.DataFrame:
+    """Add time separators columns to a dataframe with a datetime column.
+
+    Args:
+    ----
+        inputFrame: pd.DataFrame with datetime column.
+        datetimeCol: Name of datetime column.
+        pattern_date: If True, datetime column is a pattern index (e.g. M1,D1,H1) and a dummy datetime sequence is created.
+        set_year:  If pattern_date is True, set the year of the dummy datetime sequence.
+        set_month: If pattern_date is True, set the month of the dummy datetime sequence.
+        timeconvention: If 'time_start', the datetime column is the start of the time period. If 'time_end', the datetime column is the end of the time period.
+
+    Returns:
+    -------
+        pd.DataFrame with time separators columns added.
+    """
+    df = inputFrame.copy(deep=True)
+    dtcol = datetimeCol[:]
+    if pattern_date == True:
+        # Create dummy datetime sequence using a leap or specified year and add merge info
+        sd = dt(year=2020, month=1, day=1)
+        if set_year != False:
+            sd = dt(year=set_year, month=1, day=1)
+            if set_month != False:
+                sd = dt(year=set_year, set_month=1, day=1)
+        dtdf = pd.DataFrame(
+            pd.date_range(start=sd, end=sd + pd.offsets.DateOffset(years=1) + pd.offsets.DateOffset(hours=-1), freq='h')
+        )
+        dtdf.columns = ['datetime']
+        dtdf['month'] = pd.DatetimeIndex(dtdf.datetime).month
+        dtdf['mday'] = pd.DatetimeIndex(dtdf.datetime).day
+        dtdf['hour'] = pd.DatetimeIndex(dtdf.datetime).hour
+        # Derive month day and hour info from pattern index
+        df['month'] = df[dtcol].str.split(',').str[0].str.replace('M', '').astype(float)
+        df['mday'] = df[dtcol].str.split(',').str[1].str.replace('D', '').astype(float)
+        df['hour'] = df[dtcol].str.split(',').str[2].str.replace('H', '').astype(float) - 1
+
+        # Merge in dummy date sequence to allow remaining separators to be added as normal
+        df = pd.merge(df, dtdf, how='left')
+        dtcol = 'datetime'
+
+    if timeconvention == 'time_end':
+        df['original_datetime'] = df[dtcol]
+        df['datetime'] = df['datetime'] - timedelta(hours=1)
+
+    df['year'] = pd.DatetimeIndex(df[dtcol]).year
+    df['month'] = pd.DatetimeIndex(df[dtcol]).month
+    df['montht'] = pd.DatetimeIndex(df[dtcol]).month_name()
+    # df['week'] = pd.DatetimeIndex(df[dtcol]).isocalendar().week
+    df['mday'] = pd.DatetimeIndex(df[dtcol]).day
+    df['day'] = pd.DatetimeIndex(df[dtcol]).day
+    df['yday'] = pd.DatetimeIndex(df[dtcol]).dayofyear
+    df['hour'] = pd.DatetimeIndex(df[dtcol]).hour
+    df['pattern'] = 'M' + df.month.astype(str) + ',D' + df.mday.astype(str) + ',H' + (df.hour + 1).astype(str)
+    df['wday_num'] = pd.DatetimeIndex(df[dtcol]).dayofweek
+    df['wdaytype'] = 'blank'
+    df.loc[df['wday_num'].isin([0, 1, 2, 3, 4]), 'wdaytype'] = 'Weekday'
+    df.loc[df['wday_num'].isin([5]), 'wdaytype'] = 'Saturday'
+    df.loc[df['wday_num'].isin([6]), 'wdaytype'] = 'Sunday'
+    df['seasonNH'] = 'blank'
+    df['seasonSH'] = 'blank'
+    df['two_seasonNH'] = 'blank'
+    df.loc[df['month'].isin([12, 1, 2]), 'seasonNH'] = 'Winter'
+    df.loc[df['month'].isin([12, 1, 2]), 'seasonSH'] = 'Summer'
+    df.loc[df['month'].isin([3, 4, 5]), 'seasonNH'] = 'Spring'
+    df.loc[df['month'].isin([3, 4, 5]), 'seasonSH'] = 'Autumn'
+    df.loc[df['month'].isin([6, 7, 8]), 'seasonNH'] = 'Summer'
+    df.loc[df['month'].isin([6, 7, 8]), 'seasonSH'] = 'Winter'
+    df.loc[df['month'].isin([9, 10, 11]), 'seasonNH'] = 'Autumn'
+    df.loc[df['month'].isin([9, 10, 11]), 'seasonSH'] = 'Spring'
+
+    df.loc[df['month'].isin([1, 2, 3, 10, 11, 12]), 'two_seasonNH'] = 'Winter'
+    df.loc[df['month'].isin([4, 5, 6, 7, 8, 9]), 'two_seasonNH'] = 'Summer'
+
+    # Strip off year (datetime column and year column) unless was specified
+    if pattern_date == True and set_year == False:
+        df = df.drop(['datetime', 'year'], axis=1)
+
+    #print('add_time_separators definition executed')
+
+    return df
+
+
+def make_pattern_index(df):
+    if df.index.freqstr == 'D':
+        df['Pattern'] = df.index.to_series().apply(lambda x: 'M{},D{}'.format(x.month,x.day))
+    else:
+        df['Pattern'] = df.index.to_series().apply(lambda x: 'M{},D{},H{}'.format(x.month,x.day,x.hour+1))
+    df = df.set_index('Pattern')
+ 
     return df

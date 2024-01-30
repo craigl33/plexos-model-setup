@@ -35,8 +35,18 @@ index_path = dem_path
 save_path = path_2035_aps
 hasAl = False
 indexsheet = "DSM_Index2035APS"
+
+raw_load = sds_2035_demand.copy(deep = True)
+index_path = dem_path
+save_path = save_path / 'NZE_2035/'
+hasAl = True
+indexsheet = "DSM_index_SDS_2035"
+
+
+
 """
 import pandas as pd
+from functions.read_weo import make_pattern_index, add_time_separators
 
 
 def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexsheet='DSM_Index', hasAl=False):
@@ -70,14 +80,14 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
     """ create total demands and write to .csv """
     totals = df.groupby(['datetime', 'pattern', 'region'])['value'].sum().reset_index()
     totals_table = totals.pivot_table(values='value', index=['datetime', 'pattern'], columns='region').reset_index()
-    totals_table.drop(columns=['datetime']).to_csv(save_path + 'total_load.csv', index=False)
+    totals_table.drop(columns=['datetime']).to_csv(save_path / 'total_load.csv', index=False)
 
     """ create whole region, by end-use demand for checks (not used in model) """
     end_use_demands = df.groupby(['datetime', 'pattern', 'end_use'])[['value']].sum().reset_index()
     end_use_table = end_use_demands.pivot_table(
         values='value', index=['datetime', 'pattern'], columns='end_use'
     ).reset_index()
-    end_use_table.to_csv(save_path + 'end_use_load_check.csv', index=False)
+    end_use_table.to_csv(save_path / 'end_use_load_check.csv', index=False)
 
     """ create "native" load from totals minus shiftable demands """
     ## subset shiftable loads from aggregated frame
@@ -93,7 +103,7 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
         .reset_index()
         .drop(columns=['datetime'])
     )
-    native_table.to_csv(save_path + 'native_load.csv', index=False)
+    native_table.to_csv(save_path / 'native_load.csv', index=False)
     """ create shiftable loads: load profile, daily sums, bid limits, max and min shifts, and annual limit for Aluminium """
     """ load profile - based on shiftable frame (already aggregated to shift category and region), create header """
     shiftable['NAME'] = shiftable.region + '_' + shiftable.header
@@ -102,11 +112,11 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
     shiftable_table = (
         shiftable.pivot_table(values='DSM', index=['datetime', 'pattern'], columns='NAME').reset_index().round(2)
     )
-    shiftable_table.drop(columns=['datetime']).to_csv(save_path + 'DSM_shift.csv', index=False)
+    shiftable_table.drop(columns=['datetime']).to_csv(save_path / 'DSM_shift.csv', index=False)
     """ daily sums """
     shift_sums = shiftable_table.set_index('datetime').drop(columns='pattern')
     shift_sums = shift_sums.resample('D').sum() / 1000  ## converted from MWh to GWh
-    make_pattern_index(shift_sums.round(5)).to_csv(save_path + 'DSM_dayLimits.csv')
+    make_pattern_index(shift_sums.round(5)).to_csv(save_path / 'DSM_dayLimits.csv')
     """ bids """  # - merge in index
     bids = pd.merge(shiftable, di, how='left')
     ## scale DSM value by max scale
@@ -118,7 +128,7 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
     ## set column names and write to .csv
     bids = bids[['NAME', 'pattern', 'value']]
     bids.columns = ['NAME', 'pattern', '1']
-    bids.to_csv(save_path + 'DSM_bidQuantities.csv', index=False)
+    bids.to_csv(save_path / 'DSM_bidQuantities.csv', index=False)
     """ max and min shift - tried changing this to monthly but produced infeasibilities
     agreed that annual max basis may be more reasonable anyway as demand response load is more coincident than unmanaged load
     so annual max basis may already be conservative """
@@ -138,7 +148,7 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
     # minmaxes.append(mins_frame)[["NAME", "pattern", "1"]].to_csv(save_path + "DSM_MaxShift.csv", index = False)
 
     combined_df = pd.concat([minmaxes, mins_frame])[['NAME', 'pattern', '1']]
-    combined_df.to_csv(save_path + 'DSM_MaxShift.csv', index=False)
+    combined_df.to_csv(save_path / 'DSM_MaxShift.csv', index=False)
 
     """ Aluminium annual limit """
     if hasAl == True:
@@ -146,7 +156,7 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
         alframe = alframe.groupby(['NAME'])[['DSM']].sum().reset_index()
         alframe['1'] = alframe.DSM / 1000
         alframe['pattern'] = 'M1-12'
-        alframe[['NAME', 'pattern', '1']].to_csv(save_path + 'Al_AnnualLim.csv', index=False)
+        alframe[['NAME', 'pattern', '1']].to_csv(save_path / 'Al_AnnualLim.csv', index=False)
 
     """ create shed loads: units, max capacity per type, and rating per type and unit """
     """ units """
@@ -165,7 +175,7 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
     units.loc[(units['1'] == 0) & (units['DSM'] > 0), '1'] = 1
     # units['1']
     units.pattern = 'M1-12'
-    units[['NAME', 'pattern', '1']].to_csv(save_path + 'shed_units.csv', index=False)
+    units[['NAME', 'pattern', '1']].to_csv(save_path / 'shed_units.csv', index=False)
     """ max capacity per type - calculate from DSM and units """
     mask = units['1'] != 0
     # Perform the division only where the mask is True
@@ -174,7 +184,7 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
     units.loc[~mask, 'size'] = 0
     unit_size = units[['NAME', 'pattern', 'size']]
     unit_size.columns = ['NAME', 'pattern', '1']
-    unit_size.to_csv(save_path + 'shed_max_cap.csv', index=False)
+    unit_size.to_csv(save_path / 'shed_max_cap.csv', index=False)
 
     """ rating per type and unit by dividing through aggregated timeseries by number of units """
     sheddable_pu = pd.merge(sheddable, units[['NAME', '1']], how='left')
@@ -190,12 +200,12 @@ def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexshee
         .reset_index()
         .drop(columns=['datetime'])
     )
-    sheddable_table.to_csv(save_path + 'DSM_shed.csv', index=False)
+    sheddable_table.to_csv(save_path / 'DSM_shed.csv', index=False)
 
     return totals_table
 
 
-print('convert_raw_load_to_PLEXOS_inputs definition executed')
+#print('convert_raw_load_to_PLEXOS_inputs definition executed')
 
 
 #
