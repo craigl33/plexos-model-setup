@@ -3,102 +3,16 @@
 # TODO: Clean commented out code
 ## takes various paths and sheet names but expects certain formats and column headings for the input sheets, refer to WEO 2020 India model for formats
 
-weo_path = wp
-weo_scen = "Base"
-weo_sheet = "STEPS"
-weo_idsheet = "Index"
-select_year = 2020
-regions_vector = reg
-worksheet_path = pp
-index_sheet = "Indices"
-split_sheet = "RegionSplit"
-hydro_cap_sheet = "SetCapacities2019"
-savepath = sp
+"""
+from collections.abc import Sequence
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
 
 
-caps_2020 = make_capacity_split_WEO(weo_path = wp, regions_vector = reg, worksheet_path = pp, weo_scen = "Base", hydro_cap_sheet = "SetCapacities2019",
-                                          weo_sheet = "STEPS", weo_idsheet = "Index", select_year = 2020,  index_sheet = "Indices", savepath = sp)
-
-
-caps_2019 = make_capacity_split_WEO(weo_path = wp, regions_vector = reg, worksheet_path = pp, weo_scen = "Base", hydro_cap_sheet = "",
-                                          weo_sheet = "STEPS", weo_idsheet = "Index", select_year = 2019,  index_sheet = "Indices")
-
-
-weo_path = wpt
-weo_scen = "SDS"
-weo_sheet = "SDS"
-weo_idsheet = "Index"
-select_year = 2050
-regions_vector = region_list
-worksheet_path = pp
-index_sheet = "Indices"
-split_sheet = "RegionSplit"
-hydro_cap_sheet = ""
-savepath = sp
-hydro_split_sheet = "HydroSplit"
-
-
-
-caps_2050 = make_capacity_split_WEO(weo_path = wp, regions_vector = region_list, worksheet_path = pp, weo_scen = "SDS", hydro_split_sheet=""  , hydro_cap_sheet = "",
-                                          weo_sheet = "SDS", weo_idsheet = "Index", select_year = 2050,  index_sheet = "Indices", savepath = sp)
-
-weo_path = wp
-weo_scen = "SDS"
-weo_sheet = "SDS"
-weo_idsheet = "Index"
-select_year = 2030
-regions_vector = reg
-worksheet_path = pp
-index_sheet = "Indices"
-split_sheet = "RegionSplit"
-hydro_cap_sheet = "SetCapacities"
-savepath = sp
-hydro_split_sheet = ""
-ETPhydro = False
-
-sds_2030_caps = make_capacity_split_WEO(weo_path = wp, regions_vector = reg, worksheet_path = pp, weo_scen = "SDS", hydro_cap_sheet = "SetCapacities",
-                                          weo_sheet = "SDS", weo_idsheet = "Index", select_year = 2030,  index_sheet = "Indices", savepath = sp)
-
-
-
-
-sds_2040_caps = make_capacity_split_WEO(weo_path = wp, regions_vector = reg, worksheet_path = pp, weo_scen = "SDS", hydro_cap_sheet = "SetCapacities",
-                                          weo_sheet = "SDS", weo_idsheet = "Index", select_year = 2040,  index_sheet = "Indices")
-
-
-weo_path = wpt
-weo_scen = "NZE"
-weo_sheet = "NZE"
-weo_idsheet = "Index"
-select_year = 2035
-regions_vector = region_list
-worksheet_path = pp
-index_sheet = "Indices"
-split_sheet = "RegionSplit"
-hydro_cap_sheet = ""
-savepath = sp
-hydro_split_sheet = "HydroSplit_2035"
-
-
-steps_2030_caps = make_capacity_split_WEO(weo_path = wp, regions_vector = reg, worksheet_path = pp, weo_scen = "STEPS", hydro_cap_sheet = "SetCapacities2030",
-                                          weo_sheet = "STEPS", weo_idsheet = "Index", select_year = 2030,  index_sheet = "Indices")
-
-weo_path = wp
-weo_scen = "STEPS"
-weo_sheet = "STEPS"
-weo_idsheet = "Index"
-select_year = 2030
-regions_vector = reg
-worksheet_path = pp
-index_sheet = "Indices"
-split_sheet = "RegionSplit"
-hydro_cap_sheet = "SetCapacities2030"
-savepath = ''
-hydro_split_sheet = ""
-AnnexAadjust = False
-AnnexAfile = gen_folder + "AnnexA_gencapacity.csv"
-
-
+"""
+# inputs for troubleshooting
 weo_path = dem_path
 regions_list = regions
 weo_scen = "SDS"
@@ -115,27 +29,11 @@ hydro_split_sheet = ""
 AnnexAadjust = False
 AnnexAfile = gen_folder + "AnnexA_gencapacity.csv"
 
-
-sds_2035_demand = read_end_use_demand_WEO_format(
-    dem_path,
-    ['SDS_2035'],
-    indexsheet='DSM_index_SDS_2035',
-    RegionSplit='RegionalFactors2035',
-    RegionVector=regions,
-    Scale_factor=scaleval_sds,
-    end_use_adj_sheet='end_use_adj',
-    end_use_col=2035,
-)
-
 """
-from collections.abc import Sequence
-from pathlib import Path
-
-import numpy as np
-import pandas as pd
 
 
 def make_capacity_split_WEO(
+    map_to_new_GEC: bool = True,
     weo_path: str | Path,
     regions_list: Sequence,
     worksheet_path: str | Path,
@@ -154,27 +52,29 @@ def make_capacity_split_WEO(
 ) -> pd.DataFrame:
     """Read in WEO capacity data and split into regional capacities based on splitting factors.
 
-    # TODO: All those variables should be clearly defined and maybe renamed to clean things up
+    # TODO: All those variables should be maybe renamed to clean things up
     Args:
-        weo_path: Path to WEO excel file.
-        regions_list: List of regions to split capacity to.
-        worksheet_path: TODO
-        split_sheet: TODO
-        weo_sheet: TODO
-        hydro_split_sheet: TODO
-        hydro_cap_sheet: TODO
-        weo_scen: TODO
-        weo_idsheet: TODO
-        select_year: TODO
-        index_sheet: TODO
-        savepath: TODO
-        ETPhydro: TODO
-        AnnexAadjust: TODO
-        AnnexAfile: TODO
+        weo_path: Path to the capacity data as shared by WEO
+        weo_sheet: Sheet name in the weo excel containing the capacity data
+        weo_idsheet: sheet name in the WEO data that contains an index identifying which outputs are capacity
+        regions_list: List of model regions to split capacity across
+        worksheet_path: Path to the generator parameters excel containing indices and splitting information by technology
+        split_sheet: Excel sheet name where the regional splitting factors are contained        
+        hydro_split_sheet: Sheet name with the factors for splitting WEO total hydropower capacity into technologies -
+                they have 'large' and 'small' only
+        hydro_cap_sheet: Sheet containing pre-existing hydropower capacities by region, if needed (used in India model)
+        weo_scen: WEO scenario selection, used in the capacity and hydropower splitting sheets to select the entries and to label saved files
+        select_year: year for which the capacity data is being processed
+        index_sheet: sheet name in the generator parameters sheet that contains the index of plant types
+                with the classifications used to align with the region splitting categories
+        savepath: if set, will save the regional wind and solar capacities for use creating the regional profiles
+        ETPhydro: used to accommodate ETP-based hydropower input that has different categories, typically leave False
+        AnnexAadjust: Allows to adjust the technology values to match Annex A data - if true, need an Annex A file
+        AnnexAfile: File to specify high level technology capacities for adjusting capacities to align with Annex A data
 
     Returns
     -------
-        pd.DataFrame: TODO
+        pd.DataFrame: containing split capacity with the PLEXOS names incorporating the regions
     """
     if not isinstance(savepath, Path):
         savepath = Path(savepath)
@@ -419,7 +319,7 @@ def make_capacity_split_WEO(
 
 """
 
-    
+# inputs for troubleshooting   
 file_path = dem_path
 sheet_vectors = ['SDS_2035']
 indexsheet='DSM_index_SDS_2035'
