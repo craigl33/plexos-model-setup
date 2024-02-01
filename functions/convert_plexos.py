@@ -50,6 +50,23 @@ from functions.read_weo import make_pattern_index, add_time_separators
 
 
 def convert_raw_load_to_PLEXOS_inputs(raw_load, index_path, save_path, indexsheet='DSM_Index', hasAl=False):
+    
+    """create the PLEXOS load and demand response input files based on the dataframe read in using read_end_use_demand_WEO_format function
+
+    Args:
+    ----
+        raw_load: dataframe containing scaled, regionally split demand returned by read_end_use_demand_WEO_format
+        index_path: the combined load sheet containing the demand response index
+        save_path: location to save the PLEXOS input files
+        indexsheet: sheet name containing the demand response index
+        hasAl: True/False depending whether the model has demand response for Aluminium demand (typically they don't, China has a special setup)
+
+
+    Returns:
+    -------
+        df: the dataframe containing the scaled, split data - required input for the function convert_raw_load_to_PLEXOS_inputs
+    """    
+    
     """Read in DSM index elements that should not be aggregated and rename for merging where appropriate"""
     di = pd.read_excel(index_path, sheet_name=indexsheet)
     di = di[pd.notnull(di['Sector.Subsector'])]
