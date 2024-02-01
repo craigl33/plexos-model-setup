@@ -33,9 +33,10 @@ AnnexAfile = gen_folder + "AnnexA_gencapacity.csv"
 
 
 def make_capacity_split_WEO(
-    map_to_new_GEC: bool = True,
+    
     weo_path: str | Path,
     regions_list: Sequence,
+    map_to_new_GEC: bool = True,
     worksheet_path: str | Path,
     split_sheet: str = 'RegionSplit',
     weo_sheet: str = 'STEPS',
@@ -49,6 +50,8 @@ def make_capacity_split_WEO(
     ETPhydro: bool = False,
     AnnexAadjust: bool = False,
     AnnexAfile: str | Path = '',
+    
+    
 ) -> pd.DataFrame:
     """Read in WEO capacity data and split into regional capacities based on splitting factors.
 
@@ -350,18 +353,18 @@ def read_end_use_demand_WEO_format(
 
     Args:
     ----
-        file_path: TODO
-        sheet_vectors: TODO
-        indexsheet: TODO
-        RegionSplit: TODO
-        RegionVector: TODO
-        Scale_factor: TODO
-        end_use_adj_sheet: TODO
-        end_use_col: TODO
+        file_path: path to the combined demand Excel containing the hourly end use profiles, demand response index and regional splitting factors
+        sheet_vectors: names of sheet(s) containing the hourly end use profiles. If the input demand has multiple regions already it is the list of regional sheets
+        indexsheet: sheet name containig the WEO demand response index specifying the sheddable and shiftable percentages
+        RegionSplit: sheet name containing the regional splitting factors for dividing the end use profiles among the regions
+        RegionVector: region names
+        Scale_factor: ratio of generation total to demand total to scale for losses
+        end_use_adj_sheet: end use values if the end use totals need to be scaled individually (e.g. adjust to ETP or different output)
+        end_use_col: column to select from the end use adjustment sheet (i.e. year)
 
     Returns:
     -------
-        df: TODO
+        df: the dataframe containing the scaled, split data - required input for the function convert_raw_load_to_PLEXOS_inputs
     """
     # Create empty dataframe to contain results
     df = pd.DataFrame()
