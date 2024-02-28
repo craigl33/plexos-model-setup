@@ -2,9 +2,10 @@
 # todo
 
 # Ruff configuration
+# Ruff is a linter and formater to enforce code quality
+# For more information see https://gitlab.iea.org/iea/ems/rise/knowledge-database/-/wikis/best-practices/Code-Quality
 [tool.ruff]
 line-length = 120
-ignore-init-module-imports = true
 extend-include = ["*.ipynb"]
 
 [tool.ruff.lint]
@@ -29,7 +30,8 @@ select = [
     'PD',   # pandas-vet
     'NPY',  # numpy-specific-rules
 ]
-ignore = ['D211', 'D213', 'D400', 'ANN101', 'ANN204', 'PD901']
+ignore = ['D104', 'D211', 'D213', 'D400', 'F403', 'ANN101', 'ANN204', 'PD901']
+ignore-init-module-imports = true
 
 [tool.ruff.format]
 quote-style = "single"
