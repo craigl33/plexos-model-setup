@@ -1,0 +1,137 @@
+WEO techs,Conversion,mapped,,new plant list,
+Biogases,Biogases,Y,,Battery_distributed,Y
+Biomass CHP Medium,Biomass_CHP_Medium,Y,,Battery_utility_1h,#N/A
+Biomass CHP Small,Biomass_CHP_Small,Y,,Battery_utility_2h,#N/A
+Biomass Cofiring,None,Y,,Battery_utility_4h,Y
+Biomass IGCC with CCS,Biomass_IGCC_with_CCS,Y,,Battery_utility_8h,#N/A
+Biomass Power Plant,Biomass_Power_Plant,Y,,Biogases,Y
+CCS CCGT 1,Gas_CCGT_CCS,Y,,Biomass_CHP_Medium,Y
+CCS IGCC 1,Coal_IGCC_CCS,Y,,Biomass_CHP_Small,Y
+CCS Oxyfuel 1,Coal_Oxyfuel_CCS,Y,,Biomass_IGCC_with_CCS,Y
+CHP BiomassandWaste,None,Y,,Biomass_Power_Plant,Y
+CHP Coal,Coal_CHP,Y,,Coal_CCS,Y
+CHP Gas,Gas_CHP,Y,,Coal_CHP,Y
+CHP Geothermal,Geothermal_CHP,Y,,Coal_CHP_CCS,Y
+CHP Nuclear,Nuclear_CHP,Y,,Coal_IGCC,Y
+CHP Oil,Oil_CHP,Y,,Coal_IGCC_CCS,Y
+CHP OtherSources,None,Y,,Coal_Oxyfuel_CCS,Y
+CHP Solar,Solar_CSP_CHP,Y,,Coal_Subcritical_Hard,Y
+Coal CHP MaxMin,Coal_CHP,Y,,Coal_Subcritical_Lignite,Y
+Coal IGCC 1,Coal_IGCC,Y,,Coal_Supercritical,Y
+Coal IGCC 2,Coal_IGCC,Y,,Coal_Ultrasupercritical,Y
+Coal IGCC 3,Coal_IGCC,Y,,Fuel_cell,Y
+Coal IGCC 4,Coal_IGCC,Y,,Gas_CCGT,Y
+Coal IGCC 5,Coal_IGCC,Y,,Gas_CCGT_CCS,Y
+Coal Subcritical 1,Coal_Subcritical_Lignite,Y,,Gas_CCGT_CHP_CCS,Y
+Coal Subcritical 2,Coal_Subcritical_Lignite,Y,,Gas_CHP,Y
+Coal Subcritical 3,Coal_Subcritical_Hard,Y,,Gas_GT,Y
+Coal Subcritical 4,Coal_Subcritical_Hard,Y,,Gas_Steam,Y
+Coal Subcritical 5,Coal_Subcritical_Hard,Y,,Geothermal,Y
+Coal Supercritical 1,Coal_Supercritical,Y,,Geothermal_CHP,Y
+Coal Supercritical 2,Coal_Supercritical,Y,,Hydro_PSH,Y
+Coal Supercritical 3,Coal_Supercritical,Y,,Hydro_Pumpback_PSH,Y
+Coal Supercritical 4,Coal_Supercritical,Y,,Hydro_Reservoir,Y
+Coal Supercritical 5,Coal_Supercritical,Y,,Hydro_RoR,Y
+Coal Ultrasupercritical 1,Coal_Ultrasupercritical,Y,,Hydro_RoRpondage,Y
+Coal Ultrasupercritical 2,Coal_Ultrasupercritical,Y,,Marine,Y
+Coal Ultrasupercritical 3,Coal_Ultrasupercritical,Y,,Nuclear,Y
+Coal Ultrasupercritical 4,Coal_Ultrasupercritical,Y,,Nuclear_CHP,Y
+Coal Ultrasupercritical 5,Coal_Ultrasupercritical,Y,,Oil_CHP,Y
+Fuel Cell 1,Fuel_cell,Y,,Oil_GT,Y
+Fuel Cell 2,Fuel_cell,Y,,Oil_Steam,Y
+Gas CCGT 1,Gas_CCGT,Y,,Solar_CSP,Y
+Gas CCGT 2,Gas_CCGT,Y,,Solar_CSP_CHP,Y
+Gas CCGT 3,Gas_CCGT,Y,,Solar_PV_Buildings,Y
+Gas CCGT 4,Gas_CCGT,Y,,Solar_PV_Utility,Y
+Gas CCGT 5,Gas_CCGT,Y,,Waste,Y
+Gas CHP MaxMin,Gas_CHP,Y,,Waste_CHP,#N/A
+Gas GT 1,Gas_GT,Y,,Waste_Renewable,#N/A
+Gas GT 2,Gas_GT,Y,,Waste_Renewable_CHP,#N/A
+Gas GT 3,Gas_GT,Y,,Wind_Offshore,Y
+Gas GT 4,Gas_GT,Y,,Wind_Onshore,Y
+Gas GT 5,Gas_GT,Y,,,
+Gas Steam 1,Gas_Steam,Y,,,
+Gas Steam 2,Gas_Steam,Y,,,
+Gas Steam 3,Gas_Steam,Y,,,
+Gas Steam 4,Gas_Steam,Y,,,
+Gas Steam 5,Gas_Steam,Y,,,
+Geothermal CHP,Geothermal_CHP,Y,,,
+Geothermal Elec,Geothermal,Y,,,
+Hydro PSH,Hydro_PSH,Y,,,
+Hydro Reservoir,Hydro_Reservoir,Y,,,
+Hydro RoR,Hydro_RoR,Y,,,
+Hydro RoRpondage,Hydro_RoRpondage,Y,,,
+NEW CCS CHP Coal,Coal_CHP_CCS,Y,,,
+NEW CCS CHP Coal Retrofit,Coal_CHP_CCS,Y,,,
+NEW CCS CHP Gas CCGT,Gas_CCGT_CHP_CCS,Y,,,
+NEW CCS CHP Gas CCGT Retrofit,Gas_CCGT_CHP_CCS,Y,,,
+NEW CCS Coal,Coal_CCS,Y,,,
+NEW CCS Coal CHP MaxMin,Coal_CHP_CCS,Y,,,
+NEW CCS Coal CHP MaxMin Retrofit,Coal_CHP_CCS,Y,,,
+NEW CCS Coal IGCC,Coal_IGCC_CCS,Y,,,
+NEW CCS Coal IGCC Retrofit,Coal_IGCC_CCS,Y,,,
+NEW CCS Coal Oxyfuel,Coal_Oxyfuel_CCS,Y,,,
+NEW CCS Coal Retrofit,Coal_CCS,Y,,,
+NEW CCS Gas CCGT,Gas_CCGT_CCS,Y,,,
+NEW CCS Gas CCGT CHP MaxMin,Gas_CCGT_CHP_CCS,Y,,,
+NEW CCS Gas CCGT CHP MaxMin Retrofit,Gas_CCGT_CHP_CCS,Y,,,
+NEW CCS Gas CCGT Retrofit,Gas_CCGT_CCS,Y,,,
+NEW CHP BiomassandWaste,None,Y,,,
+NEW CHP Coal,Coal_CHP,Y,,,
+NEW CHP Gas,Gas_CHP,Y,,,
+NEW CHP Geothermal,Geothermal_CHP,Y,,,
+NEW CHP Nuclear,Nuclear_CHP,Y,,,
+NEW CHP Oil,Oil_CHP,Y,,,
+NEW CHP OtherSources,None,Y,,,
+NEW CHP Solar,Solar_CSP_CHP,Y,,,
+NEW Coal CHP MaxMin,Coal_CHP,Y,,,
+NEW Coal IGCC,Coal_IGCC,Y,,,
+NEW Coal Lignite,Coal_Subcritical_Lignite,Y,,,
+NEW Coal Subcritical,Coal_Subcritical_Hard,Y,,,
+NEW Coal Supercritical,Coal_Supercritical,Y,,,
+NEW Coal Ultrasupercritical,Coal_Ultrasupercritical,Y,,,
+NEW Fuel Cell,Fuel_cell,Y,,,
+NEW Gas CCGT,Gas_CCGT,Y,,,
+NEW Gas CHP MaxMin,Gas_CHP,Y,,,
+NEW Gas GT,Gas_GT,Y,,,
+NEW Gas Steam,Gas_Steam,Y,,,
+NEW Nuclear,Nuclear,Y,,,
+NEW Oil CHP MaxMin,Oil_CHP,Y,,,
+NEW Oil GT,Oil_GT,Y,,,
+NEW Oil Steam,Oil_Steam,Y,,,
+Nuclear 1,Nuclear,Y,,,
+Oil CHP MaxMin,Oil_CHP,Y,,,
+Oil GT 1,Oil_GT,Y,,,
+Oil GT 2,Oil_GT,Y,,,
+Oil GT 3,Oil_GT,Y,,,
+Oil GT 4,Oil_GT,Y,,,
+Oil GT 5,Oil_GT,Y,,,
+Oil Steam 1,Oil_Steam,Y,,,
+Oil Steam 2,Oil_Steam,Y,,,
+Oil Steam 3,Oil_Steam,Y,,,
+Oil Steam 4,Oil_Steam,Y,,,
+Oil Steam 5,Oil_Steam,Y,,,
+Refurbishment Coal Subcritical Lignite,Coal_Subcritical_Lignite,Y,,,
+Refurbishment Coal Subcritical Steam,Coal_Subcritical_Hard,Y,,,
+Refurbishment Coal Supercritical Lignite,Coal_Subcritical_Lignite,Y,,,
+Refurbishment Coal Supercritical Steam,Coal_Subcritical_Hard,Y,,,
+Refurbishment Gas CCGT,Gas_CCGT,Y,,,
+Refurbishment Gas GT,Gas_GT,Y,,,
+Refurbishment Gas Steam,Gas_Steam,Y,,,
+Refurbishment Oil GT,Oil_GT,Y,,,
+Refurbishment Oil Steam,Oil_Steam,Y,,,
+Solar CSP,Solar_CSP,Y,,,
+Solar PV Buildings,Solar_PV_Buildings,Y,,,
+Solar PV Utility,Solar_PV_Utility,Y,,,
+Battery,Battery_utility_4h,Y,,,
+Co-located battery,Battery_distributed,Y,,,
+Tide And Wave,Marine,Y,,,
+Waste to Energy,Waste,Y,,,
+Wind Offshore,Wind_Offshore,Y,,,
+Wind Onshore,Wind_Onshore,Y,,,
+Shed1h,,Y,,,
+Shed4h,,Y,,,
+Shed10h,,Y,,,
+Hydro Pumpback PSH,Hydro_Pumpback_PSH,Y,,,
+Hydro Pumpback Conv,Hydro_Pumpback_Conv,Y,,,
+Installed capacity stand alone battery,Battery_utility_4h,Y,,,

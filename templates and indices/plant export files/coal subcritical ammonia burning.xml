@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type='text/xsl' href='http://www.PLEXOS.info/XML/PLEXOS.xsl'?>
+<plexosSystem Name="System" xmlns="http://www.plexos.info/XML" Version="9.200">
+  <Generators>
+    <Generator Name="Coal_Subcritical_1_KLM" GUID="c713296b-6581-451b-953a-8ab3ef6e32f3" Category="Agg_KLM">
+      <Generator_Fuels Fuel="CoalSub4200_KLM">
+        <Property Name="Ratio" Value="0.37" Scenario="{Object}NZE_2050_Fleetwide_blending" />
+        <Property Name="Ratio" Value="1" />
+      </Generator_Fuels>
+      <Generator_Fuels Fuel="NH3">
+        <Property Name="Ratio" Value="0" />
+        <Property Name="Ratio" Value="0.63" Scenario="{Object}NZE_2050_Fleetwide_blending" />
+      </Generator_Fuels>
+      <Generator_Nodes Node="KLM" />
+      <!--Settings-->
+      <Property Name="Unit Commitment Optimality" Value="0" Scenario="{Object}LinearRelaxation" />
+      <!--Production-->
+      <Property Name="Units" Value="0" Filename="{Object}Units" />
+      <Property Name="Max Capacity" Value="0" Filename="{Object}MaxCapacity" />
+      <Property Name="Heat Rate" Value="0" Filename="{Object}HeatRate" />
+      <Property Name="VO&amp;M Charge" Value="0" Filename="{Object}VOMCharge" />
+      <Property Name="FO&amp;M Charge" Value="0" Filename="{Object}FOMCharge" Scenario="{Object}FOM_Charge" />
+      <Property Name="Start Cost" Value="0" Filename="{Object}StartCost" Scenario="{Object}StartCostsSingle" />
+      <Property Name="Start Cost" Value="0" Band="3" Filename="{Object}StartCost" Scenario="{Object}StartCostsThreeband" />
+      <Property Name="Start Cost Time" Value="0" Band="3" Filename="{Object}StartCostTime" Scenario="{Object}StartCostsThreeband" />
+      <Property Name="Run Up Rate" Value="0" Band="3" Filename="{Object}RunUpRate" Scenario="{Object}RunUpRates" />
+      <Property Name="Rating Factor" Value="100" Filename="{Object}DeratedMaintenance" Scenario="{Object}Derated_maintenance" />
+      <Property Name="Min Up Time" Value="0" Filename="{Object}MinUpTime" Scenario="{Object}MinUpAndDownTime" />
+      <Property Name="Min Down Time" Value="0" Filename="{Object}MinDownTime" Scenario="{Object}MinUpAndDownTime" />
+      <Property Name="Ramp Up Charge" Value="0" Filename="{Object}RampUpCharge" Scenario="{Object}RampCharges" />
+      <Property Name="Ramp Down Charge" Value="0" Filename="{Object}RampDownCharge" Scenario="{Object}RampCharges" />
+      <Property Name="Aux Incr" Value="0" Filename="{Object}AuxLosses" Scenario="{Object}AuxLosses" />
+      <!--Constraints-->
+      <Property Name="Min Capacity Factor Month" Value="60" Scenario="{Object}MinCF_Coal_NZE2030" Period="3" />
+      <!--Reliability-->
+      <Property Name="Forced Outage Rate" Value="0" Filename="{Object}ForcedOutageRate" Scenario="{Object}ForcedOutages" />
+      <Property Name="Forced Outage Rate" Value="0" Band="2" Filename="{Object}ForcedOutageRate" Scenario="{Object}ForcedOutages" />
+      <Property Name="Maintenance Rate" Value="0" Band="3" Filename="{Object}MaintenanceRate" Scenario="{Object}Maintenance" />
+      <Property Name="Outage Rating" Value="0" Band="2" Filename="{Object}OutageRating" Scenario="{Object}ForcedOutages" />
+      <Property Name="Mean Time to Repair" Value="24" Filename="{Object}MeanTimetoRepair" />
+      <Property Name="Mean Time to Repair" Value="24" Band="2" Filename="{Object}MeanTimetoRepair" />
+      <Property Name="Mean Time to Repair" Value="24" Band="3" Filename="{Object}MeanTimetoRepair" />
+      <!--Pass-through-->
+      <Property Name="z" Value="0" Band="2" Filename="{Object}MaintenanceRate" Scenario="{Object}Maintenance" />
+      <Property Name="z" Value="0" Filename="{Object}ForcedOutageRate" Scenario="{Object}ForcedOutages" />
+    </Generator>
+  </Generators>
+  <Fuels>
+    <Fuel Name="CoalSub4200_KLM" GUID="6cb42b7c-e874-4a36-a39b-4a52499af746" Category="CoalSub4200" />
+    <Fuel Name="NH3" GUID="adab98db-fda4-4063-be0e-d854fe815063" Category="LowC_Fuels" />
+  </Fuels>
+  <Reserves>
+    <Reserve Name="Regulating_KLM" GUID="694905a2-fe6e-41c5-9ef1-03a9fb5be556" Category="APB_Regulating">
+      <Reserve_Generators Generator="Coal_Subcritical_1_KLM" />
+    </Reserve>
+    <Reserve Name="Spinning_KLM" GUID="138449ef-6c6c-46bc-b09b-1bdbd4b35e27" Category="APB_Spinning">
+      <Reserve_Generators Generator="Coal_Subcritical_1_KLM" />
+    </Reserve>
+  </Reserves>
+  <Nodes>
+    <Node Name="KLM" GUID="de76385a-293d-473d-8314-89bf8bff279b" />
+  </Nodes>
+  <DataFiles>
+    <DataFile Name="FOMCharge" GUID="9a2a5f7c-f4c9-4ec0-a6da-4cb55d300e46" Category="GeneratorParameters" />
+    <DataFile Name="HeatRate" GUID="b3b4a66b-6b33-4000-b8f5-729403c56acc" Category="GeneratorParameters" />
+    <DataFile Name="MaxCapacity" GUID="7e244981-b5ac-4a59-b0f7-7fa9224db7fe" Category="GeneratorParameters" />
+    <DataFile Name="StartCost" GUID="57d9fa76-306b-4c96-876d-762c2b8bb42a" Category="GeneratorParameters" />
+    <DataFile Name="Units" GUID="5b682278-060a-49f0-84c8-686c628db002" Category="GeneratorParameters" />
+    <DataFile Name="VOMCharge" GUID="896c42cd-d105-4eb4-bc8d-8477f321ce54" Category="GeneratorParameters" />
+    <DataFile Name="DeratedMaintenance" GUID="21eaf1ce-4bd6-4cd0-94f9-ca2a0e27f55b" Category="GeneratorParameters" />
+    <DataFile Name="MinDownTime" GUID="ddc6ec8c-ea1e-439c-b9b0-021f46765c36" Category="GeneratorParameters" />
+    <DataFile Name="MinUpTime" GUID="0f3d5d4a-adb8-4eb5-8f2c-0636963f7905" Category="GeneratorParameters" />
+    <DataFile Name="RunUpRate" GUID="3aaf4a29-da20-495c-87a8-59d181cfa70c" Category="GeneratorParameters" />
+    <DataFile Name="StartCostTime" GUID="e65ed551-0daf-4c40-a5ff-ba45dd0482a8" Category="GeneratorParameters" />
+    <DataFile Name="AuxLosses" GUID="91bd8165-a6a2-4016-9797-acbd91e856a9" Category="GeneratorParameters" />
+    <DataFile Name="ForcedOutageRate" GUID="63319700-df23-4ac7-9e76-cf5f937b4cfe" Category="GeneratorParameters" />
+    <DataFile Name="RampDownCharge" GUID="3a8f2f86-b40d-4ca2-a8a6-3fbcdc4490ee" Category="GeneratorParameters" />
+    <DataFile Name="RampUpCharge" GUID="1b0b1c7e-5cbd-4441-b6fb-e99ec2bede79" Category="GeneratorParameters" />
+    <DataFile Name="MaintenanceRate" GUID="f9863f14-9f00-4e3b-b21f-b871103e0d4c" Category="GeneratorParameters" />
+    <DataFile Name="MeanTimetoRepair" GUID="af6743f8-165c-44b5-94ad-15230d2a040b" Category="GeneratorParameters" />
+    <DataFile Name="OutageRating" GUID="3f0abd33-ce3e-4b41-8796-1ae03693205b" Category="GeneratorParameters" />
+  </DataFiles>
+  <Scenarios>
+    <Scenario Name="FOM_Charge" GUID="8637f8a1-50c9-42bf-ba3e-c6757a37a673" Category="Generator Parameters" />
+    <Scenario Name="LinearRelaxation" GUID="3cb965bd-9a51-42e5-af51-426164a609e7" />
+    <Scenario Name="StartCostsSingle" GUID="2528fd50-2a80-4228-83cc-9b2df7cd7e01" Category="Generator Parameters" />
+    <Scenario Name="StartCostsThreeband" GUID="22d31e72-56c9-47b3-a693-8a27a718eb0b" Category="Generator Parameters" />
+    <Scenario Name="Derated_maintenance" GUID="1ce9aadf-602f-4959-a9a2-fa2db52e1394" Category="Outages" />
+    <Scenario Name="MinUpAndDownTime" GUID="491c8c80-cfca-497b-bd2e-9636409873c7" Category="Generator Parameters" />
+    <Scenario Name="RunUpRates" GUID="9fe5340f-d9d5-4323-b8fb-c03cf220effc" Category="Generator Parameters" />
+    <Scenario Name="AuxLosses" GUID="8e998358-82ad-4684-8e67-99eebcf32fe2" Category="Generator Parameters" />
+    <Scenario Name="ForcedOutages" GUID="54daebaf-acbc-4c36-9fff-3030e75aad5a" Category="Outages" />
+    <Scenario Name="MinCF_Coal_NZE2030" GUID="785da9eb-2102-4824-972f-d4b4326d24dd" Category="FuelSupply" />
+    <Scenario Name="RampCharges" GUID="2a61fbb4-96e2-4e3d-a201-26b2caeb5950" Category="Generator Parameters" />
+    <Scenario Name="Maintenance" GUID="3a073ff7-a549-4105-9b7a-4f85aca3b8e1" Category="Outages" />
+    <Scenario Name="NZE_2050_Fleetwide_blending" GUID="47b872a2-21ab-425b-9363-7a293aeaaa5d" Category="FuelSupply" />
+  </Scenarios>
+  <Lists>
+    <List Name="All_Gen" GUID="f2c445a3-63a5-40e3-a9b3-a4b183c4cd69">
+      <List_Generators Generator="Coal_Subcritical_1_KLM" />
+    </List>
+    <List Name="Coal" GUID="f20d213d-742e-49be-930a-ade6ea4f13c9" Category="Technologies">
+      <List_Generators Generator="Coal_Subcritical_1_KLM" />
+    </List>
+    <List Name="Dispatchable_All" GUID="3c8d673d-256d-4ac2-a91c-fbacb8bbe6f3" Category="Dispatchable">
+      <List_Generators Generator="Coal_Subcritical_1_KLM" />
+    </List>
+    <List Name="Dispatchable_KLM" GUID="d30422c4-46a8-4638-83f8-27df28046bb8" Category="Dispatchable">
+      <List_Generators Generator="Coal_Subcritical_1_KLM" />
+    </List>
+    <List Name="KLM_Gens" GUID="ec800675-8f43-4bd9-ab58-c12a7f344232" Category="Gen by region">
+      <List_Generators Generator="Coal_Subcritical_1_KLM" />
+    </List>
+    <List Name="Thermal" GUID="c3d566a3-a9c8-453b-ae0c-e914d6cfb43f" Category="Technologies">
+      <List_Generators Generator="Coal_Subcritical_1_KLM" />
+    </List>
+  </Lists>
+  <Categories>
+    <Generator_Category Category="Agg_KLM" Rank="113" />
+  </Categories>
+</plexosSystem>

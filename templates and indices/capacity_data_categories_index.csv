@@ -1,0 +1,33 @@
+Label,Category
+thermal eleconly capacity of i plant,Capacity
+cumulative capacity of allchp i plants,Capacity
+renewable annual capacity incl pgaccess,Capacity
+thermal generation by tech and category,Generation
+total gross renewable generation by i plant,Generation
+pgaccess total generation excl central by source,Generation
+installed capacity storage paired with re by renewtype,Battery_Capacity
+fuel price i allplants,Fuel prices
+CAPITAL costs,Capital costs
+average by deployment of annual investment costs for new plants,Annual investment costs
+pg battery total capital costs,Capital costs
+CHP capital costs,Capital costs
+battery capacity,Battery_Capacity
+final electricity demand,Demand
+Cumulative efficiency of i plant,Efficiency
+Efficiencies of i NEW CHP Plants,Efficiency
+Efficiencies of i Existing CHP Plants,Efficiency
+Total gross renewable generation incl PGAccess,Generation
+Installed capacity stand alone battery,Battery_Capacity
+Electricity Final Demand Mtoe,Demand
+Fuel price i ALLPlants,Fuel price
+Average by deployment of Annual Investment Costs for NEW plants,Investment costs
+Thermal ElecONLY capacity of i plant,Capacity
+Cumulative Capacity of ALLCHP i plants,Capacity
+Renewable Annual Capacity incl PGAccess,Capacity
+Total gross renewable generation by i Plant,Generation
+PGAccess total generation excl central by source,Generation
+Installed capacity storage paired with RE by RenewType,Battery_Capacity
+Battery capacity,Battery_Capacity
+Thermal Generation By Tech and Category,Generation
+Capital costs,Capital costs
+PG battery total capital costs,Capital costs
