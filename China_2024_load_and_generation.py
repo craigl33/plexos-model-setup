@@ -6,7 +6,7 @@ import pandas as pd
 
 from functions.convert_plexos import convert_raw_load_to_PLEXOS_inputs
 from functions.read_weo import read_end_use_demand_WEO_format
-from functions.read_weo import make_capacity_split_WEO, make_pattern_index
+from functions.read_weo import make_capacity_split_WEO, make_pattern_index, export_data, convert_dw_to_plexos_list
 
 # Adjust some dependency settings
 pd.set_option('display.max_columns', None)  # Show all columns when printing
@@ -22,14 +22,14 @@ dem_path = load_folder / 'China_ETP_NZE_2021_07_29_combined_demand_inputs.xlsx'
 
 regions = ['CR', 'ER', 'NCR', 'NER', 'NSR', 'NWR', 'SGR', 'SWR']
 
-## GENERATION
+generator_parameters_path = 'S:/China/China proj 2023/test/06_Data/02_PowerPlants/2024_03_2_generator_parameters_China_0.1_updating_plant_list.xlsx'
 
-# Set paths
-new_model_folder = 'S:/China/China ETP NZE 2021/06_Data/02_PowerPlants/'
-path_wpt = new_model_folder + 'ETP2021_CHN_Generation_Capacity_2035_2050_edited.xlsx'
-path_wpt2 = new_model_folder + 'WEO2020_China_SIR data_updated.xlsx'
-path_pp = new_model_folder + '2021_08_30_generator_parameters_China_ETP_v1.0_new_techs.xlsx'
-path_sp = 'S:/China/China proj 2023/test/06_Data/02_PowerPlants/'
+China_capacities = convert_dw_to_plexos_list(region = "China",
+                          scenario = "Announced Pledges Scenario",
+                          year = "2030",
+                          params_path = generator_parameters_path)
+
+
 
 # Full version reading in new load data
 # Total electricity generation (excl. storage)	TWh	11716	15525
@@ -111,6 +111,41 @@ sds_2035_check = convert_raw_load_to_PLEXOS_inputs(
 
 
 ###### GENERATION #######
+
+# Set paths
+new_model_folder = 'S:/China/China ETP NZE 2021/06_Data/02_PowerPlants/'
+path_wpt = new_model_folder + 'ETP2021_CHN_Generation_Capacity_2035_2050_edited.xlsx'
+path_wpt2 = new_model_folder + 'WEO2020_China_SIR data_updated.xlsx'
+path_pp = new_model_folder + '2021_08_30_generator_parameters_China_ETP_v1.0_new_techs.xlsx'
+path_sp = 'S:/China/China proj 2023/test/06_Data/02_PowerPlants/'
+
+# query data from DW
+
+table_rise_weo = "rep.V_DIVISION_EDO_RISE"
+
+capacities_df = export_data(table_rise_weo,
+                 'IEA_DW',
+                 columns=['Code Scenario', 'Region', 'Product', 'Flow', 'Unit', 'Category', 'Value'],
+                 conditions={'Publication': 'Global Energy and Climate 2023',
+                             'Scenario': 'Announced Pledges Scenario',
+                             'Region': 'China',
+                             'Category': 'Capacity: installed',
+                             'Year': '2030',
+                             'Unit': 'GW'})
+
+
+capacities_df.Value.sum()
+
+chk = capacities_df.groupby(['Product', 'Flow']).sum()
+chk.to_csv('S:/China/China proj 2023/test/06_Data/02_PowerPlants/categories_WEO_index.csv')
+    
+
+
+trade_df = export_data(table_trade_hourly,
+                          'Division_EDC',
+                          columns=['datetime', 'Export Country ISO3', 'Net Trade MW'],
+                          conditions={'ISO3': region_name}).rename(columns = {"Net Trade MW":"Value", "Export Country ISO3":"Product"})
+    
 
 # Get split capacities
 caps_2035 = make_capacity_split_WEO(

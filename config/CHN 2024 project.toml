@@ -1,0 +1,29 @@
+# config information for China 2024 project initial setup
+
+[settings]
+model_type = "WEO" # or "non-WEO"
+scenario_year_pairs = [["Announced Pledges Scenario", 2022,], ["Announced Pledges Scenario", 2030], ["Stated Policies Scenario", 2030]]
+
+# path to files needed for setup such as generator parameters etc
+[path]
+generator_parameters_path = "S:/China/China proj 2023/test/06_Data/02_PowerPlants/2024_02_20_generator_parameters_China_2024_proj_simplified_v0.0.xlsx"
+transmission_path = "S:/China/China proj 2023/06_Data/01_Transmission/"
+load_path = 
+model_xml_path = None
+
+## how the plexos model is configured internally, e.g. region object contains single nodes or all nodes
+## there are some legacy differences between the models and there are some advantages, e.g. the Region object allows for more queries than Node
+[model_setup]
+main_node_object = "Node" # for some models could be Region
+main_aggregate_object = "Region" # for some models could be Area or Zone
+secondary_node_object = "Zone" # for models with Region as the primary object, Node is typically the secondary
+secondary_aggregate_object = None # This could be Area or Zone
+
+## whether to populate the solution index sheet model objects using user made Excel sheets or a model xml export
+[solution_index_source]
+transmission = "user Excel"
+generation = "user Excel"
+fuel = "xml export"
+emission= "xml export"
+
+

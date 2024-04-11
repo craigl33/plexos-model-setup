@@ -1,0 +1,142 @@
+PLEXOS technology,Mapping to WEO Capex,Mapping to APPFC techs,Mapping to NREL cost data,Fuel,PerformanceVar,FUELsub,FUELsimp,VRE,InertiaLOW,InertiaHI,Category,Classification,FUELgas,Fuel4,Fuel5,VRE2,VRE3,CategoryWEO,FlexCategory,QuickStart,Type,RegSplitCat,AnnexA
+Biogases,Excluded,Biogas,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Bioenergy
+Biomass_CHP_Medium,Excluded,CHP Other,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Bioenergy
+Biomass_CHP_Small,Excluded,CHP Other,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Bioenergy
+Biomass_Cofiring,Excluded,Coal subcritical,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Dispatchable,No,Generator,RES,Bioenergy
+Biomass_IGCC_with_CCS,Excluded,IGCC,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Bioenergy
+Biomass_Power_Plant,Excluded,Biomass dispatchable,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Bioenergy
+CCS_CCGT_1,Excluded,CCGT,CCGT,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Unabated natural gas
+CCS_IGCC_1,Excluded,IGCC,IGCC CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+CCS_Oxyfuel_1,Excluded,Coal supercritical,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+CHP_BiomassandWaste,Excluded,CHP Other,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Bioenergy
+CHP_Coal,Excluded,CHP Coal,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+CHP_Gas,Excluded,CHP Gas,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+CHP_Geothermal,Excluded,CHP Other,Geothermal,,1,Geothermal,Geothermal,Non-VRE,0,0,Geothermal,Geothermal,Geothermal,RES,Other,Non-VRE,Non-VRE,Geothermal,Constrained,No,Generator,RES,Other RE
+CHP_Nuclear,Excluded,CHP Other,Nuclear,Uranium,1,Uranium,Uranium,Non-VRE,2,4,Nuclear,Nuclear,Nuclear,Nuclear,Nuclear,Non-VRE,Non-VRE,Nuclear,Dispatchable,No,Generator,Nuclear,Nuclear
+CHP_Oil,Excluded,CHP Oil,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+CHP_OtherSources,Excluded,CHP Other,,,1,Other,Other,Non-VRE,2,4,Other,Other,Other,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Other RE
+CHP_Solar,Excluded,CHP Other,Solar CSP,,1,Solar,Solar,Non-VRE,0,0,Solar,Solar,Solar,CHP,Other,Non-VRE,Non-VRE,ConcentratedSolarPower,Constrained,No,Generator,Solar,Other RE
+Coal_CHP_MaxMin,Excluded,CHP Coal,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_IGCC_1,Excluded,IGCC,IGCC,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_IGCC_2,Excluded,IGCC,IGCC,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_IGCC_3,Excluded,IGCC,IGCC,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_IGCC_4,Excluded,IGCC,IGCC,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_IGCC_5,Excluded,IGCC,IGCC,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Subcritical_1,Excluded,Coal lignite,Lignite,Lignite,1,Lignite,Lignite,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Subcritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Subcritical_2,Excluded,Coal lignite,Lignite,Lignite,1,Lignite,Lignite,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Subcritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Subcritical_3,Excluded,Coal subcritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Subcritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Subcritical_4,Excluded,Coal subcritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Subcritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Subcritical_5,Excluded,Coal subcritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Subcritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Supercritical_1,Excluded,Coal supercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Supercritical_2,Excluded,Coal supercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Supercritical_3,Excluded,Coal supercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Supercritical_4,Excluded,Coal supercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Supercritical_5,Excluded,Coal supercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Ultrasupercritical_1,Excluded,Coal ultrasupercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Ultrasupercritical_2,Excluded,Coal ultrasupercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Ultrasupercritical_3,Excluded,Coal ultrasupercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Ultrasupercritical_4,Excluded,Coal ultrasupercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Coal_Ultrasupercritical_5,Excluded,Coal ultrasupercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Fuel_Cell_1,Excluded,Fuel cell,,,1,Fuel Cell,Fuel Cell,Non-VRE,2,4,Fuel Cell,Fuel Cell,Fuel Cell,RES,Other,VRE,VRE,Fuel_cell,Dispatchable,No,Generator,Gas,Unabated natural gas
+Fuel_Cell_2,Excluded,Fuel cell,,,1,Fuel Cell,Fuel Cell,Non-VRE,2,4,Fuel Cell,Fuel Cell,Fuel Cell,RES,Other,VRE,VRE,Fuel_cell,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_CCGT_1,Excluded,CCGT,CCGT,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_CCGT_2,Excluded,CCGT,CCGT,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_CCGT_3,Excluded,CCGT,CCGT,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_CCGT_4,Excluded,CCGT,CCGT,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_CCGT_5,Excluded,CCGT,CCGT,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_CHP_MaxMin,Excluded,CHP Gas,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+Gas_GT_1,Excluded,OCGT,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+Gas_GT_2,Excluded,OCGT,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+Gas_GT_3,Excluded,OCGT,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+Gas_GT_4,Excluded,OCGT,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+Gas_GT_5,Excluded,OCGT,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+Gas_Steam_1,Excluded,Steam turbine (Gas/Oil),OCGT,Gas,1,Gas-steam,Gas,Non-VRE,4,6,Gas,Gas,Thermal_gas,Thermal,Gas,Non-VRE,Non-VRE,Gas_steam,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_Steam_2,Excluded,Steam turbine (Gas/Oil),OCGT,Gas,1,Gas-steam,Gas,Non-VRE,4,6,Gas,Gas,Thermal_gas,Thermal,Gas,Non-VRE,Non-VRE,Gas_steam,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_Steam_3,Excluded,Steam turbine (Gas/Oil),OCGT,Gas,1,Gas-steam,Gas,Non-VRE,4,6,Gas,Gas,Thermal_gas,Thermal,Gas,Non-VRE,Non-VRE,Gas_steam,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_Steam_4,Excluded,Steam turbine (Gas/Oil),OCGT,Gas,1,Gas-steam,Gas,Non-VRE,4,6,Gas,Gas,Thermal_gas,Thermal,Gas,Non-VRE,Non-VRE,Gas_steam,Dispatchable,No,Generator,Gas,Unabated natural gas
+Gas_Steam_5,Excluded,Steam turbine (Gas/Oil),OCGT,Gas,1,Gas-steam,Gas,Non-VRE,4,6,Gas,Gas,Thermal_gas,Thermal,Gas,Non-VRE,Non-VRE,Gas_steam,Dispatchable,No,Generator,Gas,Unabated natural gas
+Geothermal_CHP,Excluded,CHP Other,Geothermal,,1,Geothermal,Geothermal,Non-VRE,0,0,Geothermal,Geothermal,Geothermal,RES,Other,Non-VRE,Non-VRE,Geothermal,Constrained,No,Generator,RES,Other RE
+Geothermal_Elec,Excluded,Geothermal,Geothermal,,1,Geothermal,Geothermal,Non-VRE,0,0,Geothermal,Geothermal,Geothermal,RES,Other,Non-VRE,Non-VRE,Geothermal,Constrained,No,Generator,RES,Other RE
+Hydro_PSH,Excluded,Hydro PSH,PSH,,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Pump,Yes,Generator,RES,Wind
+Hydro_Reservoir,Excluded,Hydro Reservoir,Hydro,,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Dispatchable,Yes,Generator,RES,Wind
+Hydro_RoR,Excluded,Hydro RoR,Hydro,,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Constrained,No,Generator,RES,Wind
+Hydro_RoRpondage,Excluded,Hydro RoRpondage,Hydro,,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Dispatchable,Yes,Generator,RES,Wind
+NEW_CCS_CHP_Coal,Excluded,CHP Coal,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_CHP_Coal_Retrofit,Excluded,CHP Coal,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_CHP_Gas_CCGT,Excluded,CCGT,CCGT CCS,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Fossil fuels with CCUS
+NEW_CCS_CHP_Gas_CCGT_Retrofit,Excluded,CCGT,CCGT CCS,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Fossil fuels with CCUS
+NEW_CCS_Coal,Coal + CCS,Coal supercritical,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_Coal_CHP_MaxMin,Excluded,Coal supercritical,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_Coal_CHP_MaxMin_Retrofit,Excluded,Coal supercritical,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_Coal_IGCC,IGCC + CCS,Coal supercritical,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_Coal_IGCC_Retrofit,Excluded,Coal supercritical,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_Coal_Oxyfuel,Oxyfuel + CCS,Coal supercritical,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_Coal_Retrofit,Excluded,Coal supercritical,Coal CCS,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Fossil fuels with CCUS
+NEW_CCS_Gas_CCGT,CCGT + CCS,CCGT,CCGT CCS,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Fossil fuels with CCUS
+NEW_CCS_Gas_CCGT_CHP_MaxMin,Excluded,CCGT,CCGT CCS,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CHP,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Fossil fuels with CCUS
+NEW_CCS_Gas_CCGT_CHP_MaxMin_Retrofit,Excluded,CCGT,CCGT CCS,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CHP,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Fossil fuels with CCUS
+NEW_CCS_Gas_CCGT_Retrofit,Excluded,CCGT,CCGT CCS,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Fossil fuels with CCUS
+NEW_CHP_BiomassandWaste,Excluded,CHP Other,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Bioenergy
+NEW_CHP_Coal,Excluded,CHP Coal,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+NEW_CHP_Gas,Excluded,CHP Gas,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+NEW_CHP_Geothermal,Excluded,CHP Other,Geothermal,,1,Geothermal,Geothermal,Non-VRE,0,0,Geothermal,Geothermal,Geothermal,RES,Other,Non-VRE,Non-VRE,Geothermal,Constrained,No,Generator,RES,Other RE
+NEW_CHP_Nuclear,Excluded,CHP Other,Nuclear,Uranium,1,Uranium,Uranium,Non-VRE,2,4,Nuclear,Nuclear,Nuclear,Nuclear,Nuclear,Non-VRE,Non-VRE,Nuclear,Dispatchable,No,Generator,Nuclear,Nuclear
+NEW_CHP_Oil,Excluded,CHP Oil,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+NEW_CHP_OtherSources,Excluded,CHP Other,,,1,Other,Other,Non-VRE,2,4,Other,Other,Other,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Other RE
+NEW_CHP_Solar,Excluded,CHP Other,Solar CSP,,1,Solar,Solar,Non-VRE,0,0,Solar,Solar,Solar,CHP,Other,Non-VRE,Non-VRE,ConcentratedSolarPower,Constrained,No,Generator,Solar,Other RE
+NEW_Coal_CHP_MaxMin,Excluded,Coal supercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,CHP,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Constrained,No,Generator,Coal,Unabated coal
+NEW_Coal_IGCC,IGCC,IGCC,IGCC,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_IGCC,Dispatchable,No,Generator,Coal,Unabated coal
+NEW_Coal_Lignite,Steam Coal - ULTRASUPERCRITICAL,Coal lignite,Lignite,Lignite,1,Lignite,Lignite,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Subcritical,Dispatchable,No,Generator,Coal,Unabated coal
+NEW_Coal_Subcritical,Steam Coal - SUBCRITICAL,Coal subcritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Subcritical,Dispatchable,No,Generator,Coal,Unabated coal
+NEW_Coal_Supercritical,Steam Coal - SUPERCRITICAL,Coal supercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Supercritical,Dispatchable,No,Generator,Coal,Unabated coal
+NEW_Coal_Ultrasupercritical,Steam Coal - ULTRASUPERCRITICAL,Coal ultrasupercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Ultrasupercritical,Dispatchable,No,Generator,Coal,Unabated coal
+NEW_Fuel_Cell,Fuel cell (distributed electricity generation),Fuel cell,Fuel Cell,,1,Fuel Cell,Fuel Cell,Non-VRE,2,4,Fuel Cell,Fuel Cell,Fuel Cell,RES,Other,VRE,VRE,Fuel_cell,Dispatchable,No,Generator,Gas,Unabated natural gas
+NEW_Gas_CCGT,CCGT,CCGT,CCGT,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Unabated natural gas
+NEW_Gas_CHP_MaxMin,Excluded,CHP Other,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+NEW_Gas_GT,Gas turbine,OCGT,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+NEW_Gas_Steam,Gas turbine,Steam turbine (Gas/Oil),OCGT,Gas,1,Gas-steam,Gas,Non-VRE,4,6,Gas,Gas,Thermal_gas,Thermal,Gas,Non-VRE,Non-VRE,Gas_steam,Dispatchable,No,Generator,Gas,Unabated natural gas
+NEW_Nuclear,Nuclear,Nuclear,Nuclear,Uranium,1,Uranium,Uranium,Non-VRE,2,4,Nuclear,Nuclear,Nuclear,Nuclear,Nuclear,Non-VRE,Non-VRE,Nuclear,Dispatchable,No,Generator,Nuclear,Nuclear
+NEW_Oil_CHP_MaxMin,Excluded,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,CHP,Thermal,Oil,Non-VRE,Non-VRE,Oil,Constrained,Yes,Generator,Gas,Oil
+NEW_Oil_GT,Gas turbine,OCGT,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+NEW_Oil_Steam,Gas turbine,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,4,6,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,No,Generator,Gas,Oil
+Nuclear_1,Excluded,Nuclear,Nuclear,Uranium,1,Uranium,Uranium,Non-VRE,2,4,Nuclear,Nuclear,Nuclear,Nuclear,Nuclear,Non-VRE,Non-VRE,Nuclear,Dispatchable,No,Generator,Nuclear,Nuclear
+Oil_CHP_MaxMin,Excluded,CHP Other,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,CHP,Thermal,Oil,Non-VRE,Non-VRE,Oil,Constrained,Yes,Generator,Gas,Oil
+Oil_GT_1,Excluded,OCGT,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+Oil_GT_2,Excluded,OCGT,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+Oil_GT_3,Excluded,OCGT,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+Oil_GT_4,Excluded,OCGT,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+Oil_GT_5,Excluded,OCGT,OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+Oil_Steam_1,Excluded,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,4,6,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,No,Generator,Gas,Oil
+Oil_Steam_2,Excluded,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,4,6,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,No,Generator,Gas,Oil
+Oil_Steam_3,Excluded,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,4,6,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,No,Generator,Gas,Oil
+Oil_Steam_4,Excluded,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,4,6,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,No,Generator,Gas,Oil
+Oil_Steam_5,Excluded,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,4,6,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,No,Generator,Gas,Oil
+Refurbishment_Coal_Subcritical_Lignite,Excluded,Coal subcritical,Lignite,Lignite,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Ultrasupercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Refurbishment_Coal_Subcritical_Steam,Excluded,Coal subcritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Ultrasupercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Refurbishment_Coal_Supercritical_Lignite,Excluded,Coal supercritical,Lignite,Lignite,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Ultrasupercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Refurbishment_Coal_Supercritical_Steam,Excluded,Coal supercritical,Coal,Bituminous coal,1,Bituminous coal,Bituminous coal,Non-VRE,2,4,Coal,Coal,Coal,Thermal,Coal,Non-VRE,Non-VRE,Coal_Ultrasupercritical,Dispatchable,No,Generator,Coal,Unabated coal
+Refurbishment_Gas_CCGT,Excluded,CCGT,CCGT,Gas,1,Gas-CCGT,Gas,Non-VRE,4,6,Gas,Gas,CCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_CCGT,Dispatchable,No,Generator,Gas,Unabated natural gas
+Refurbishment_Gas_GT,Excluded,OCGT,OCGT,Gas,1,Gas-OCGT,Gas,Non-VRE,4,6,Gas,Gas,OCGT,Thermal,Gas,Non-VRE,Non-VRE,Gas_GT,Dispatchable,Yes,Generator,Gas,Unabated natural gas
+Refurbishment_Gas_Steam,Excluded,Steam turbine (Gas/Oil),OCGT,Gas,1,Gas-steam,Gas,Non-VRE,4,6,Gas,Gas,Thermal_gas,Thermal,Gas,Non-VRE,Non-VRE,Gas_steam,Dispatchable,No,Generator,Gas,Unabated natural gas
+Refurbishment_Oil_GT,Excluded,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,2,4,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,Yes,Generator,Gas,Oil
+Refurbishment_Oil_Steam,Excluded,Steam turbine (Gas/Oil),OCGT,Oil,1,Oil,Oil,Non-VRE,4,6,Oil,Oil,Oil,Thermal,Oil,Non-VRE,Non-VRE,Oil,Dispatchable,No,Generator,Gas,Oil
+Solar_CSP,Excluded,Solar CSP,Solar CSP,,1,Solar,Solar,Non-VRE,0,0,Solar,Solar,Solar,RES,Other,Non-VRE,Non-VRE,ConcentratedSolarPower,Dispatchable,No,Generator,Solar,Other RE
+Solar_PV_Buildings,Excluded,Solar PV Buildings,Solar PV Buildings,,1,Solar,Solar,VRE,0,0,Solar,Solar,Solar,RES,SolarPV,Solar,Solar,SolarPV,VRE,No,Generator,Solar,Solar PV
+Solar_PV_Utility,Excluded,Solar PV Utility,Solar PV Utility,,1,Solar,Solar,VRE,0,0,Solar,Solar,Solar,RES,SolarPV,Solar,Solar,SolarPV,VRE,No,Generator,Solar,Solar PV
+Battery,Excluded,Battery,Battery,,1,Battery,Battery,Battery,0,0,Battery,Battery,Battery,Battery,Battery,Battery,Battery,Battery,Battery,No,Battery,Battery,Battery storage
+Co-located_battery,Excluded,Battery,Battery,,1,Battery,Battery,Battery,0,0,Battery,Battery,Battery,Battery,Battery,Battery,Battery,Battery,Battery,No,Battery,Battery,Battery storage
+Tide_And_Wave,Excluded,Ocean energy,,,1,Ocean,Ocean,Non-VRE,0,0,Marine,Marine,Ocean,RES,Other,Ocean,Ocean,Marine,Constrained,No,Generator,RES,Other RE
+Waste_to_Energy,Excluded,Solid biomass,Biomass,,1,Biomass,Biomass,Non-VRE,2,4,Bioenergy,Bioenergy,Biomass,RES,Other,Non-VRE,Non-VRE,Bioenergy,Constrained,No,Generator,RES,Bioenergy
+Wind_Offshore,Excluded,Wind offshore,Wind Offshore,,1,Wind,Wind,VRE,0,0,Wind,Wind,Wind,RES,Wind,Wind,Wind,Wind,VRE,No,Generator,Wind onshore,Wind
+Wind_Onshore,Excluded,Wind onshore,Wind Onshore,,1,Wind,Wind,VRE,0,0,Wind,Wind,Wind,RES,Wind,Wind,Wind,Wind,VRE,No,Generator,Wind offshore,Wind
+Shed1h,Excluded,Shed,,,1,DSM,DSM,DSM,0,0,DSM,DSM,DSM,DSM,Other,DSM,DSM,DSM,DSM,No,DSM_Generator,Exclude,None
+Shed4h,Excluded,Shed,,,1,DSM,DSM,DSM,0,0,DSM,DSM,DSM,DSM,Other,DSM,DSM,DSM,DSM,No,DSM_Generator,Exclude,None
+Shed10h,Excluded,Shed,,,1,DSM,DSM,DSM,0,0,DSM,DSM,DSM,DSM,Other,DSM,DSM,DSM,DSM,No,DSM_Generator,Exclude,None
+Hydro_Pumpback_PSH,Excluded,Hydro PSH,PSH,,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Pump,Yes,Generator,RES,Wind
+Hydro_Pumpback_Conv,Excluded,Hydro Reservoir,Hydro,,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Dispatchable,Yes,Generator,RES,Wind
+Hydro_PPA_THA,Excluded,Hydro Reservoir,Hydro,,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Dispatchable,Yes,Generator,RES,Wind
+Installed_capacity_stand_alone_battery,Excluded,Battery,Battery,,1,Battery,Battery,Battery,0,0,Battery,Battery,Battery,Battery,Battery,Battery,Battery,Battery,Battery,No,Battery,Battery,Battery storage
+Hydro_RoR,Excluded,Hydro RoR,Hydro,Hydro,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Constrained,No,Generator,RES,Wind
+Hydro_RoRpondage,Excluded,Hydro Pondage,Hydro,Hydro,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Dispatchable,Yes,Generator,RES,Wind
+Hydro_Reservoir,Excluded,Hydro Reservoir,Hydro,Hydro,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Dispatchable,Yes,Generator,RES,Wind
+Hydro_PSH,Excluded,Hydro PSH,Hydro,Hydro,1,Hydro,Hydro,Non-VRE,2,4,Hydro,Hydro,Hydro,Hydro,Hydro,Non-VRE,Non-VRE,Hydro,Pump,Yes,Generator,RES,Wind
