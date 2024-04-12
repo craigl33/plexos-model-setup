@@ -43,7 +43,8 @@ has_aluminium = "False"
 # setup method can be data warehouse
 # only need to specify publication for data warehouse setup method
 # load_scaling is needed for losses scaling - should be obtained from WEO extended dataset or can be 1 (if the value is 0 to 2 it will scale, otherwise it is treated as the total in TWh)
-#P1 = { name = "Announced Pledges Scenario", year = "2022", setup_method = "data warehouse", publication = 'Global Energy and Climate 2023', scenario_code = "APS_2022", capacity_sheet = "", load_scaling = 8911.84}
+# load scaling values obtained from Extended dataset of WEO generation number
+P1 = { name = "Announced Pledges Scenario", year = "2022", setup_method = "data warehouse", publication = 'Global Energy and Climate 2023', scenario_code = "APS_2022", capacity_sheet = "", load_scaling = 8911.84}
 P2 = { name = "Announced Pledges Scenario", year = "2030", setup_method = "data warehouse", publication = 'Global Energy and Climate 2023', scenario_code = "APS_2030", capacity_sheet = "", load_scaling = 11453.9}
 P3 = { name = "Stated Policies Scenario", year = "2030", setup_method = "data warehouse", publication = 'Global Energy and Climate 2023', scenario_code = "STEPS_2030", capacity_sheet = "", load_scaling = 11742.8}
 

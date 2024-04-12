@@ -17,12 +17,12 @@ Created on Fri Feb 16 16:46:53 2024
 @author: HUNGERFORD_Z
 
 import model_setup as ms
-config = ms.ModelConfig('model_setup/config/CHN_2024_EFC.toml')
+config = ms.ModelConfig('project scripts/China/2024_China_EFC/CHN_2024_EFC.toml')
 capacity_setup = ms.CapacitySetup(config)
 self = capacity_setup
 
 portfolio_assignments = self.config.get('portfolio_assignments')
-portfolio = "P2"
+portfolio = "P1"
 settings = portfolio_assignments[portfolio]
 
 """
@@ -46,6 +46,7 @@ class CapacitySetup:
         self.column_mask = ["PLEXOS technology", "Product", "Flow", "Classification", "Value"]
         self.model_capacities = {}
         self.plant_capacities = {}
+        self.efficiencies = {}
         print("class initialised")
         
     # main function to create the plant list with capacities for PLEXOS that calls on the relevant class methods depending on config settings
@@ -72,10 +73,18 @@ class CapacitySetup:
             # Pass the settings to the appropriate setup method
             if setup_method == "data warehouse":
                 self.model_capacities[portfolio] = self._setup_from_database(settings)
-                self.plant_capacities[portfolio] = self.make_regional_capacity_split(settings, portfolio)
+                self.plant_capacities[portfolio] = self._make_regional_capacity_split(settings, portfolio)
+                #print(settings)
+                try:
+                    self.efficiencies[portfolio] = self._make_efficiency_table(settings, portfolio)
+                except Exception as e:
+                    print(f"Error calling _make_efficiency_table: {e}")
+                    # Optionally, re-raise the exception to see the full traceback
+                    raise
+                #self.efficiencies[portfolio] = self._make_efficiency_table(settings, portfolio)
             elif setup_method == "weo_excel":
                 self.model_capacities[portfolio] = self._setup_from_weo_excel(settings)
-                self.plant_capacities[portfolio] = self.make_regional_capacity_split(settings, portfolio)
+                self.plant_capacities[portfolio] = self._make_regional_capacity_split(settings, portfolio)
             elif setup_method == "manual_sheet":
                 self.model_capacities[portfolio] = self._setup_from_manual_sheet(settings)
             else:
@@ -115,6 +124,27 @@ class CapacitySetup:
         
         common_table.drop(columns = ["WEO techs", "PLEXOS technology", 'Region']).to_csv(self.config.get("path","generation_folder")+ self.config.get("path", "capacity_list_name"), index = False)
         common_table.to_csv(self.config.get("path","generation_folder")+ "indexed_capacity_list.csv", index = False)
+        
+        efficiency_table = None
+        for portfolio, df in self.efficiencies.items():
+            # Make a copy to avoid modifying the original dataframe
+            temp_df = df[['PLEXOS technology', 'Classification', 'Value']].copy()
+            
+            # Rename the 'Value' column to the name of the portfolio for clarity
+            temp_df.rename(columns={'Value': portfolio}, inplace=True)            
+        
+            if efficiency_table is None:
+                # If common_table is not yet initialized, use temp_df as the starting point
+                efficiency_table = temp_df
+            else:
+                # Merge the current dataframe with the common table on 'PLEXOS technology'
+                efficiency_table = efficiency_table.merge(temp_df, on=['PLEXOS technology', 'Classification'], how='outer')
+                
+        # Drop rows where 'PLEXOSname' is NaN - in future ideally identify where this is happening earlier
+        efficiency_table = efficiency_table.dropna(subset=['PLEXOS technology'])
+        
+        efficiency_table.to_csv(self.config.get("path","generation_folder")+ "efficiencies_table.csv", index = False)
+
  
 
 
@@ -261,7 +291,7 @@ class CapacitySetup:
 
         
     
-    def make_regional_capacity_split(self, settings, portfolio):
+    def _make_regional_capacity_split(self, settings, portfolio):
         
         ## read in indices
         # get the appropriate index depending on the processing type
@@ -499,6 +529,42 @@ class CapacitySetup:
         split_addition_list["Value"] = split_addition_list["Value1"] + (split_addition_list["Value"] * (split_addition_list["Value1"] / split_addition_list["Total_Value1"]))
         
         return(split_addition_list[self.column_mask])
+    
+    
+    def _make_efficiency_table(self, settings, portfolio):
+        
+        #print(settings)
+        
+        conditions = {'Publication': settings['publication'],
+            'Scenario': settings['name'],
+            'Region': self.config.get('parameters', 'model_region'),
+            'Category': 'Efficiency',
+            'Year': settings['year'],
+            'Unit': '%'}
+        
+        
+        efficiency_data = export_data(self.table_rise_weo, 'IEA_DW', conditions=conditions)
+        plant_list = self.model_capacities[portfolio][["PLEXOS technology", "Classification"]]
+        plant_list_indexed = pd.merge(plant_list, self.weo_plexos_index)
+        efficiencies = pd.merge(plant_list_indexed, efficiency_data[["Product", "Flow", "Value"]], how = "left")
+        
+        return efficiencies[["PLEXOS technology", "Classification", "Value"]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

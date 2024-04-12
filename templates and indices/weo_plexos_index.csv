@@ -1,51 +1,51 @@
-WEO techs,Originally present,Preferred name,PLEXOS technology,Gets capacity from,process,notes,Product,Flow,Product2,Flow2,Product3,Flow3,Classification,merge
-Battery distributed,,Battery distributed,Battery_distributed,Battery storage minus battery utility,subtract,,Battery storage,Electrical capacity,Battery storage: utility scale,Electrical capacity,,,Battery,1
-Battery utility 1h,,Battery utility 1h,Battery_utility_1h,Battery storage: utility scale 1-hour,direct,,Battery storage: utility scale 1-hour,Electrical capacity,,,,,Battery,1
-Battery utility 2h,,Battery utility 2h,Battery_utility_2h,Battery storage: utility scale 2-hour,direct,,Battery storage: utility scale 2-hour,Electrical capacity,,,,,Battery,1
-Battery utility 4h,,Battery utility 4h,Battery_utility_4h,Battery storage: utility scale 4-hour,direct,,Battery storage: utility scale 4-hour,Electrical capacity,,,,,Battery,1
-Battery utility 8h,,Battery utility 8h,Battery_utility_8h,Battery storage: utility scale 8-hour,direct,,Battery storage: utility scale 8-hour,Electrical capacity,,,,,Battery,1
-Biogases,Y,Biogases,Biogases,Biogas,direct,,Biogas,Electrical capacity,,,,,Bioenergy,1
-Biomass CHP Medium,Y,Biomass CHP Medium,Biomass_CHP_Medium,Bioenergy medium-sized CHP,direct,,Bioenergy medium-sized,Electrical capacity: CHP plants,,,,,Bioenergy,1
-Biomass CHP Small,Y,Biomass CHP Small,Biomass_CHP_Small,Bioenergy small - DG Industry CHP,direct,,Bioenergy small - DG Industry,Electrical capacity: CHP plants,,,,,Bioenergy,1
-Biomass IGCC with CCS,Y,Biomass IGCC with CCS,Biomass_IGCC_with_CCS,Bioenergy IGCC fitted with CCUS,direct,,Bioenergy IGCC fitted with CCUS,Electrical capacity: electricity only plants,,,,,Bioenergy,1
-Biomass Medium,Y,Biomass Power Plant,Biomass_Power_Plant,Bioenergy medium-sized,direct,,Bioenergy medium-sized,Electrical capacity: electricity only plants,,,,,Bioenergy,1
-NEW CCS Coal,Y,Coal CCS,Coal_CCS,Coal conventional with CCUS,direct,,Coal conventional with CCUS,Electrical capacity: electricity only plants,,,,,Coal,1
-CHP Coal,Y,Coal CHP,Coal_CHP,Coal and ammonia CHP,direct,,Coal and ammonia,Electrical capacity: CHP plants,,,,,Coal,1
-CHP CCS Coal,Y,Coal CHP CCS,Coal_CHP_CCS,,,,,,,,,,,
-Coal IGCC 1,Y,Coal IGCC,Coal_IGCC,Coal and ammonia IGCC,split addition,,Coal and ammonia IGCC,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,1
-Coal IGCC CCUS,,Coal IGCC CCUS,Coal_IGCC_CCS,Coal IGCC with CCUS,split addition,,Coal IGCC with CCUS,Electrical capacity: electricity only plants,Bioenergy co-firing with CCUS,Electrical capacity: electricity only plants,,,Coal,1
-NEW CCS Coal Oxyfuel,Y,Coal Oxyfuel CCS,Coal_Oxyfuel_CCS,Coal oxyfuel with CCUS,split addition,,Coal oxyfuel with CCUS,Electrical capacity: electricity only plants,Bioenergy co-firing with CCUS,Electrical capacity: electricity only plants,,,Coal,1
-Coal Subcritical Hard,,Coal Subcritical Hard,Coal_Subcritical_Hard,Coal and ammonia subcritical - split off lignite,split and split addition,,Coal and ammonia subcritical,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,1
-Coal Subcritical Lignite,,Coal Subcritical Lignite,Coal_Subcritical_Lignite,need to split optionally,split and split addition,,Coal and ammonia subcritical,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,1
-Coal Supercritical 1,Y,Coal Supercritical,Coal_Supercritical,Coal and ammonia supercritical,split addition,,Coal and ammonia supercritical,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,1
-Coal Ultrasupercritical 1,Y,Coal Ultrasupercritical,Coal_Ultrasupercritical,Coal and ammonia ultrasupercritical,split addition,,Coal and ammonia ultrasupercritical,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,1
-Fuel Cell 1,Y,Fuel cell,Fuel_cell,Natural gas fuel cell,double addition,,Natural gas fuel cell,Electrical capacity: electricity only plants,Biomethane fuel cell,Electrical capacity: electricity only plants,Hydrogen fuel cell,Electrical capacity: electricity only plants,Natural gas,1
-Gas CCGT 1,Y,Gas CCGT,Gas_CCGT,Natural gas CCGT,double addition,,Natural gas CCGT,Electrical capacity: electricity only plants,Biomethane CCGT,Electrical capacity: electricity only plants,Hydrogen CCGT,Electrical capacity: electricity only plants,Natural gas,1
-NEW CCS Gas CCGT,Y,Gas CCGT CCS,Gas_CCGT_CCS,Natural gas CCGT CCUS,direct,,Natural gas: with CCUS,Electrical capacity: electricity only plants,,,,,Natural gas,1
-NEW CCS CHP Gas CCGT,Y,Gas CCGT CHP CCS,Gas_CCGT_CHP_CCS,Natural gas CHP CCUS,direct,,Natural gas: with CCUS,Electrical capacity: CHP plants,,,,,Natural gas,1
-CHP Gas,Y,Gas CHP,Gas_CHP,Natural gas CHP,double addition,,Natural gas,Electrical capacity: CHP plants,Biomethane,Electrical capacity: CHP plants,Hydrogen,Electrical capacity: CHP plants,Natural gas,1
-Gas GT 1,Y,Gas GT,Gas_GT,Natural gas GT,double addition,,Natural gas GT,Electrical capacity: electricity only plants,Biomethane GT,Electrical capacity: electricity only plants,Hydrogen GT,Electrical capacity: electricity only plants,Natural gas,1
-Gas Steam 1,Y,Gas Steam,Gas_Steam,Natural gas steam,double addition,,Natural gas steam,Electrical capacity: electricity only plants,Biomethane steam,Electrical capacity: electricity only plants,Hydrogen steam,Electrical capacity: electricity only plants,Natural gas,1
-Geothermal Elec,Y,Geothermal,Geothermal,Geothermal,direct,,Geothermal,Electrical capacity: electricity only plants,,,,,Other RE,1
-CHP Geothermal,Y,Geothermal CHP,Geothermal_CHP,Geothermal CHP,direct,,Geothermal,Electrical capacity: CHP plants,,,,,Other RE,1
-Hydro PSH,Y,Hydro PSH,Hydro_PSH,Hydro,split,need to  be split,Hydro,Electrical capacity,,,,,Hydro,1
-Hydro Pumpback PSH,Y,Hydro Pumpback PSH,Hydro_Pumpback_PSH,Hydro,split,,Hydro,Electrical capacity,,,,,Hydro,1
-Hydro Reservoir,Y,Hydro Reservoir,Hydro_Reservoir,Hydro,split,,Hydro,Electrical capacity,,,,,Hydro,1
-Hydro RoR,Y,Hydro RoR,Hydro_RoR,Hydro,split,,Hydro,Electrical capacity,,,,,Hydro,1
-Hydro RoRpondage,Y,Hydro RoRpondage,Hydro_RoRpondage,Hydro,split,,Hydro,Electrical capacity,,,,,Hydro,1
-Tide And Wave,Y,Marine,Marine,Marine,direct,,Marine,Electrical capacity,,,,,Other RE,1
-Nuclear,Y,Nuclear,Nuclear,Nuclear,direct,,Nuclear,Electrical capacity: electricity only plants,,,,,Nuclear,1
-CHP Nuclear,Y,Nuclear CHP,Nuclear_CHP,Nuclear CHP,direct,,Nuclear,Electrical capacity: CHP plants,,,,,Nuclear,1
-CHP Oil,Y,Oil CHP,Oil_CHP,Oil CHP,direct,,Oil,Electrical capacity: CHP plants,,,,,Oil,1
-Oil GT 1,Y,Oil GT,Oil_GT,Oil GT,direct,,Oil GT,Electrical capacity: electricity only plants,,,,,Oil,1
-Oil Steam 1,Y,Oil Steam,Oil_Steam,Oil steam,direct,,Oil steam,Electrical capacity: electricity only plants,,,,,Oil,1
-Solar CSP,Y,Solar CSP,Solar_CSP,Concentrating solar power,direct,,Concentrating solar power,Electrical capacity: electricity only plants,,,,,Other RE,1
-CHP Solar,Y,Solar CSP CHP,Solar_CSP_CHP,Concentrating solar power CHP,direct,,Concentrating solar power,Electrical capacity: CHP plants,,,,,Other RE,1
-Solar PV Buildings,Y,Solar PV Buildings,Solar_PV_Buildings,Solar PV buildings,direct,,Solar PV: buildings,Electrical capacity,,,,,Solar PV,1
-Solar PV Utility,Y,Solar PV Utility,Solar_PV_Utility,Solar PV utility,direct,,Solar PV: utility scale,Electrical capacity,,,,,Solar PV,1
-Waste to Energy,Y,Waste,Waste,Waste,direct,,Waste: non-renewable,Electrical capacity: electricity only plants,,,,,Waste,1
-Waste CHP,,Waste CHP,Waste_CHP,Waste CHP,direct,,Waste: non-renewable,Electrical capacity: CHP plants,,,,,Waste,1
-Waste Renewable,,Waste Renewable,Waste_Renewable,Waste renewable,subtract,,Waste: renewable,Electrical capacity,Waste: renewable,Electrical capacity: CHP plants,,,Other RE,1
-Waste Renewable CHP,,Waste Renewable CHP,Waste_Renewable_CHP,Waste renewable CHP,direct,,Waste: renewable,Electrical capacity: CHP plants,,,,,Other RE,1
-Wind Offshore,Y,Wind Offshore,Wind_Offshore,Wind Offshore,direct,,Wind: offshore,Electrical capacity,,,,,Wind,1
-Wind Onshore,Y,Wind Onshore,Wind_Onshore,Wind Onshore,direct,,Wind: onshore,Electrical capacity,,,,,Wind,1
+WEO techs,Originally present,Preferred name,PLEXOS technology,Gets capacity from,process,notes,Product,Flow,Product2,Flow2,Product3,Flow3,Classification,EfficiencyProductSource,EfficiencyFlowSource,merge
+Battery distributed,,Battery distributed,Battery_distributed,Battery storage minus battery utility,subtract,,Battery storage,Electrical capacity,Battery storage: utility scale,Electrical capacity,,,Battery,Battery storage,Electrical capacity,1
+Battery utility 1h,,Battery utility 1h,Battery_utility_1h,Battery storage: utility scale 1-hour,direct,,Battery storage: utility scale 1-hour,Electrical capacity,,,,,Battery,Battery storage: utility scale 1-hour,Electrical capacity,1
+Battery utility 2h,,Battery utility 2h,Battery_utility_2h,Battery storage: utility scale 2-hour,direct,,Battery storage: utility scale 2-hour,Electrical capacity,,,,,Battery,Battery storage: utility scale 2-hour,Electrical capacity,1
+Battery utility 4h,,Battery utility 4h,Battery_utility_4h,Battery storage: utility scale 4-hour,direct,,Battery storage: utility scale 4-hour,Electrical capacity,,,,,Battery,Battery storage: utility scale 4-hour,Electrical capacity,1
+Battery utility 8h,,Battery utility 8h,Battery_utility_8h,Battery storage: utility scale 8-hour,direct,,Battery storage: utility scale 8-hour,Electrical capacity,,,,,Battery,Battery storage: utility scale 8-hour,Electrical capacity,1
+Biogases,Y,Biogases,Biogases,Biogas,direct,,Biogas,Electrical capacity,,,,,Bioenergy,Biogas,Electrical capacity,1
+Biomass CHP Medium,Y,Biomass CHP Medium,Biomass_CHP_Medium,Bioenergy medium-sized CHP,direct,,Bioenergy medium-sized,Electrical capacity: CHP plants,,,,,Bioenergy,Bioenergy medium-sized,Electrical capacity: CHP plants,1
+Biomass CHP Small,Y,Biomass CHP Small,Biomass_CHP_Small,Bioenergy small - DG Industry CHP,direct,,Bioenergy small - DG Industry,Electrical capacity: CHP plants,,,,,Bioenergy,Bioenergy small - DG Industry,Electrical capacity: CHP plants,1
+Biomass IGCC with CCS,Y,Biomass IGCC with CCS,Biomass_IGCC_with_CCS,Bioenergy IGCC fitted with CCUS,direct,,Bioenergy IGCC fitted with CCUS,Electrical capacity: electricity only plants,,,,,Bioenergy,Bioenergy IGCC fitted with CCUS,Electrical capacity: electricity only plants,1
+Biomass Medium,Y,Biomass Power Plant,Biomass_Power_Plant,Bioenergy medium-sized,direct,,Bioenergy medium-sized,Electrical capacity: electricity only plants,,,,,Bioenergy,Bioenergy medium-sized,Electrical capacity: electricity only plants,1
+NEW CCS Coal,Y,Coal CCS,Coal_CCS,Coal conventional with CCUS,direct,,Coal conventional with CCUS,Electrical capacity: electricity only plants,,,,,Coal,Coal conventional with CCUS,Electrical capacity: electricity only plants,1
+CHP Coal,Y,Coal CHP,Coal_CHP,Coal and ammonia CHP,direct,,Coal and ammonia,Electrical capacity: CHP plants,,,,,Coal,Coal and ammonia,Electrical capacity: CHP plants,1
+CHP CCS Coal,Y,Coal CHP CCS,Coal_CHP_CCS,,### NOT INTEGRATED TO SCRIPT NEEDS TO BE DONE,,Coal: with CCUS,Electrical capacity: CHP plants,,,,,,Coal: with CCUS,Electrical capacity: CHP plants,1
+Coal IGCC 1,Y,Coal IGCC,Coal_IGCC,Coal and ammonia IGCC,split addition,,Coal and ammonia IGCC,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,Coal and ammonia IGCC,Electrical capacity: electricity only plants,1
+Coal IGCC CCUS,,Coal IGCC CCUS,Coal_IGCC_CCS,Coal IGCC with CCUS,split addition,,Coal IGCC with CCUS,Electrical capacity: electricity only plants,Bioenergy co-firing with CCUS,Electrical capacity: electricity only plants,,,Coal,Coal IGCC with CCUS,Electrical capacity: electricity only plants,1
+NEW CCS Coal Oxyfuel,Y,Coal Oxyfuel CCS,Coal_Oxyfuel_CCS,Coal oxyfuel with CCUS,split addition,,Coal oxyfuel with CCUS,Electrical capacity: electricity only plants,Bioenergy co-firing with CCUS,Electrical capacity: electricity only plants,,,Coal,Coal oxyfuel with CCUS,Electrical capacity: electricity only plants,1
+Coal Subcritical Hard,,Coal Subcritical Hard,Coal_Subcritical_Hard,Coal and ammonia subcritical - split off lignite,split and split addition,,Coal and ammonia subcritical,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,Coal and ammonia subcritical,Electrical capacity: electricity only plants,1
+Coal Subcritical Lignite,,Coal Subcritical Lignite,Coal_Subcritical_Lignite,need to split optionally,split and split addition,,Coal and ammonia subcritical,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,Coal and ammonia subcritical,Electrical capacity: electricity only plants,1
+Coal Supercritical 1,Y,Coal Supercritical,Coal_Supercritical,Coal and ammonia supercritical,split addition,,Coal and ammonia supercritical,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,Coal and ammonia supercritical,Electrical capacity: electricity only plants,1
+Coal Ultrasupercritical 1,Y,Coal Ultrasupercritical,Coal_Ultrasupercritical,Coal and ammonia ultrasupercritical,split addition,,Coal and ammonia ultrasupercritical,Electrical capacity: electricity only plants,Bioenergy co-firing unabated,Electrical capacity: electricity only plants,,,Coal,Coal and ammonia ultrasupercritical,Electrical capacity: electricity only plants,1
+Fuel Cell 1,Y,Fuel cell,Fuel_cell,Natural gas fuel cell,double addition,,Natural gas fuel cell,Electrical capacity: electricity only plants,Biomethane fuel cell,Electrical capacity: electricity only plants,Hydrogen fuel cell,Electrical capacity: electricity only plants,Natural gas,Natural gas fuel cell,Electrical capacity: electricity only plants,1
+Gas CCGT 1,Y,Gas CCGT,Gas_CCGT,Natural gas CCGT,double addition,,Natural gas CCGT,Electrical capacity: electricity only plants,Biomethane CCGT,Electrical capacity: electricity only plants,Hydrogen CCGT,Electrical capacity: electricity only plants,Natural gas,Natural gas CCGT,Electrical capacity: electricity only plants,1
+NEW CCS Gas CCGT,Y,Gas CCGT CCS,Gas_CCGT_CCS,Natural gas CCGT CCUS,direct,,Natural gas: with CCUS,Electrical capacity: electricity only plants,,,,,Natural gas,Natural gas: with CCUS,Electrical capacity: electricity only plants,1
+NEW CCS CHP Gas CCGT,Y,Gas CCGT CHP CCS,Gas_CCGT_CHP_CCS,Natural gas CHP CCUS,direct,,Natural gas: with CCUS,Electrical capacity: CHP plants,,,,,Natural gas,Natural gas: with CCUS,Electrical capacity: CHP plants,1
+CHP Gas,Y,Gas CHP,Gas_CHP,Natural gas CHP,double addition,,Natural gas,Electrical capacity: CHP plants,Biomethane,Electrical capacity: CHP plants,Hydrogen,Electrical capacity: CHP plants,Natural gas,Natural gas,Electrical capacity: CHP plants,1
+Gas GT 1,Y,Gas GT,Gas_GT,Natural gas GT,double addition,,Natural gas GT,Electrical capacity: electricity only plants,Biomethane GT,Electrical capacity: electricity only plants,Hydrogen GT,Electrical capacity: electricity only plants,Natural gas,Natural gas GT,Electrical capacity: electricity only plants,1
+Gas Steam 1,Y,Gas Steam,Gas_Steam,Natural gas steam,double addition,,Natural gas steam,Electrical capacity: electricity only plants,Biomethane steam,Electrical capacity: electricity only plants,Hydrogen steam,Electrical capacity: electricity only plants,Natural gas,Natural gas steam,Electrical capacity: electricity only plants,1
+Geothermal Elec,Y,Geothermal,Geothermal,Geothermal,direct,,Geothermal,Electrical capacity: electricity only plants,,,,,Other RE,Geothermal,Electrical capacity: electricity only plants,1
+CHP Geothermal,Y,Geothermal CHP,Geothermal_CHP,Geothermal CHP,direct,,Geothermal,Electrical capacity: CHP plants,,,,,Other RE,Geothermal,Electrical capacity: CHP plants,1
+Hydro PSH,Y,Hydro PSH,Hydro_PSH,Hydro,split,need to  be split,Hydro,Electrical capacity,,,,,Hydro,Hydro,Electrical capacity,1
+Hydro Pumpback PSH,Y,Hydro Pumpback PSH,Hydro_Pumpback_PSH,Hydro,split,,Hydro,Electrical capacity,,,,,Hydro,Hydro,Electrical capacity,1
+Hydro Reservoir,Y,Hydro Reservoir,Hydro_Reservoir,Hydro,split,,Hydro,Electrical capacity,,,,,Hydro,Hydro,Electrical capacity,1
+Hydro RoR,Y,Hydro RoR,Hydro_RoR,Hydro,split,,Hydro,Electrical capacity,,,,,Hydro,Hydro,Electrical capacity,1
+Hydro RoRpondage,Y,Hydro RoRpondage,Hydro_RoRpondage,Hydro,split,,Hydro,Electrical capacity,,,,,Hydro,Hydro,Electrical capacity,1
+Tide And Wave,Y,Marine,Marine,Marine,direct,,Marine,Electrical capacity,,,,,Other RE,Marine,Electrical capacity,1
+Nuclear,Y,Nuclear,Nuclear,Nuclear,direct,,Nuclear,Electrical capacity: electricity only plants,,,,,Nuclear,Nuclear,Electrical capacity: electricity only plants,1
+CHP Nuclear,Y,Nuclear CHP,Nuclear_CHP,Nuclear CHP,direct,,Nuclear,Electrical capacity: CHP plants,,,,,Nuclear,Nuclear,Electrical capacity: CHP plants,1
+CHP Oil,Y,Oil CHP,Oil_CHP,Oil CHP,direct,,Oil,Electrical capacity: CHP plants,,,,,Oil,Oil,Electrical capacity: CHP plants,1
+Oil GT 1,Y,Oil GT,Oil_GT,Oil GT,direct,,Oil GT,Electrical capacity: electricity only plants,,,,,Oil,Oil GT,Electrical capacity: electricity only plants,1
+Oil Steam 1,Y,Oil Steam,Oil_Steam,Oil steam,direct,,Oil steam,Electrical capacity: electricity only plants,,,,,Oil,Oil steam,Electrical capacity: electricity only plants,1
+Solar CSP,Y,Solar CSP,Solar_CSP,Concentrating solar power,direct,,Concentrating solar power,Electrical capacity: electricity only plants,,,,,Other RE,Concentrating solar power,Electrical capacity: electricity only plants,1
+CHP Solar,Y,Solar CSP CHP,Solar_CSP_CHP,Concentrating solar power CHP,direct,,Concentrating solar power,Electrical capacity: CHP plants,,,,,Other RE,Concentrating solar power,Electrical capacity: CHP plants,1
+Solar PV Buildings,Y,Solar PV Buildings,Solar_PV_Buildings,Solar PV buildings,direct,,Solar PV: buildings,Electrical capacity,,,,,Solar PV,Solar PV: buildings,Electrical capacity,1
+Solar PV Utility,Y,Solar PV Utility,Solar_PV_Utility,Solar PV utility,direct,,Solar PV: utility scale,Electrical capacity,,,,,Solar PV,Solar PV: utility scale,Electrical capacity,1
+Waste to Energy,Y,Waste,Waste,Waste,direct,,Waste: non-renewable,Electrical capacity: electricity only plants,,,,,Waste,Waste: non-renewable,Electrical capacity: electricity only plants,1
+Waste CHP,,Waste CHP,Waste_CHP,Waste CHP,direct,,Waste: non-renewable,Electrical capacity: CHP plants,,,,,Waste,Waste: non-renewable,Electrical capacity: CHP plants,1
+Waste Renewable,,Waste Renewable,Waste_Renewable,Waste renewable,subtract,,Waste: renewable,Electrical capacity,Waste: renewable,Electrical capacity: CHP plants,,,Other RE,Waste: renewable,Electrical capacity,1
+Waste Renewable CHP,,Waste Renewable CHP,Waste_Renewable_CHP,Waste renewable CHP,direct,,Waste: renewable,Electrical capacity: CHP plants,,,,,Other RE,Waste: renewable,Electrical capacity: CHP plants,1
+Wind Offshore,Y,Wind Offshore,Wind_Offshore,Wind Offshore,direct,,Wind: offshore,Electrical capacity,,,,,Wind,Wind: offshore,Electrical capacity,1
+Wind Onshore,Y,Wind Onshore,Wind_Onshore,Wind Onshore,direct,,Wind: onshore,Electrical capacity,,,,,Wind,Wind: onshore,Electrical capacity,1
