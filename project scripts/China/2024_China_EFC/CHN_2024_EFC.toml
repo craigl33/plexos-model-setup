@@ -12,7 +12,7 @@ load_path = "S:/China/2024_China_EFC/01_Data/06_Load/China_EFC_2024_04_09_combin
 # path to the root folder for PLEXOS demand inputs, scenario code will be used for the subfolder
 load_save_path = "S:/China/2024_China_EFC/03_Modelling/01_InputData/04_DSM/"
 # path to the model xml to populate some aspects of the solution Index, if not, None
-model_xml_path = "C:/Users/HUNGERFORD_Z/localrepositories/plexos-model-setup/templates and indices/plant export files/China model export trimmed generators 3.xml"
+model_xml_path = "S:/China/2024_China_EFC/01_Data/02_PowerPlants/China_gens_exported_20240426.xml"
 ## path to Annex A file if it is to be used to adjust capacities - legacy but not integrated due to difficulty in index matching
 Annex_A_adjust = "S:/India/WEO/WEO_India_2022_scaling/06_Data/03_PowerPlants/AnnexA_gencapacity.csv"
 

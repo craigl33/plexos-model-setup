@@ -1,5 +1,24 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
-# todo
+name = "plexos-model-setup"
+version = "0.0.1"
+requires-python = ">=3.11"
+authors = [{ name = "Craig Hart", email = "craig.hart@iea.org" }]
+#readme = "README.md"
+license = {text = "MIT License"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+#dependencies = {file = ["requirements.txt"]}
+
+[project.urls]
+Homepage = "https://gitlab.iea.org/iea/ems/rise/plexos-model-setup"
 
 # Ruff configuration
 # Ruff is a linter and formater to enforce code quality
