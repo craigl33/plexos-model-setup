@@ -30,7 +30,7 @@ class SolutionIndexCreator:
             config (object): The configuration object.
         """
         self.config = config
-        self.column_mask = ["PLEXOSname", "Object_type", "PLEXOS technology", "WEO_tech","Operating_class", "Region", "Subregion",
+        self.column_mask = ["PLEXOSname", "PLEXOScat", "Object_type", "PLEXOS technology", "WEO_tech","Operating_class", "Region", "Subregion",
                             "regFrom", "regTo", "InertiaLOW", "InertiaHI", "Cofiring", "CCUS", "IPP","CapacityCategory", 
                             "Category", "FlexCategory", "StressPeriodType", "ScaleCat", "StorageDuration"]
         self._init_regions_df()
@@ -132,12 +132,17 @@ class SolutionIndexCreator:
             # Extract the 'Name' attribute and object type
             for elem in elements:
                 name = elem.get('Name')  # Extract the 'Name' attribute
+                category = elem.get('Category')
+
+                if category is None:
+                    category = name
+
                 
                 # If name_filter is provided, check if the name contains the filter string
                 if name_filter and name_filter not in name:
                     continue  # Skip this element if it doesn't contain the filter string
                 
-                row_data = {'PLEXOSname': name, 'Object_type': obj_type}
+                row_data = {'PLEXOSname': name, 'Object_type': obj_type, 'PLEXOScat': category}
                 
                 # If extra attributes are specified, try to extract them
                 if extra_attributes:
@@ -208,7 +213,6 @@ class SolutionIndexCreator:
         dr_extended = self.harmonise_columns(dr_extended)
 
         return dr_extended
-
 
 
     def create_nodes_and_regions_index(self):
@@ -299,6 +303,7 @@ class SolutionIndexCreator:
         if self.config.get('solution_index_source', 'fuel') == "xml export":
             fuels = self.identify_plexos_objects(["Fuel"])
             fuels = pd.merge(fuels, self.indices_df, how="left")
+            fuels['Category'] = fuels['PLEXOScat']
         else:
             print("Fuels index creation in manual mode is incomplete.")
 

@@ -86,6 +86,7 @@ class CapacitySetup:
                 self.model_capacities[portfolio] = self._setup_from_weo_excel(settings)
                 self.plant_capacities[portfolio] = self._make_regional_capacity_split(settings, portfolio)
             elif setup_method == "manual_sheet":
+                ## TODO - this is not yet implemented
                 self.model_capacities[portfolio] = self._setup_from_manual_sheet(settings)
             else:
                 raise ValueError(f"Unknown setup method for portfolio {portfolio}: {setup_method}")
