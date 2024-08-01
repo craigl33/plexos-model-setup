@@ -4,15 +4,15 @@
 # capacity_path = "S:/China/China ETP NZE 2021/06_Data/02_PowerPlants/ETP2021_CHN_Generation_Capacity_2035_2050_edited.xlsx" 
 generation_folder = "S:/China/2024_China_EFC/01_Data/02_PowerPlants/"
 solution_index = "S:/China/2024_China_EFC/01_Data/02_PowerPlants/solution_index_auto.csv"
-generator_parameters_path = "S:/China/2024_China_EFC/01_Data/02_PowerPlants/2024_03_2_generator_parameters_China_0.1_updating_plant_list.xlsx"
+generator_parameters_path = "S:/China/2024_China_EFC/01_Data/02_PowerPlants/2024_05_06_generator_parameters_China_0.3_new_splitting_factors.xlsx"
 # TODO add processing to create transmission from excel rather than xml if desired
 #transmission_path = "S:/China/China proj 2023/06_Data/01_Transmission/to_complete.csv"
 # path to Excel containing the hourly load, demand index and regional splits by scenario, sheets identified by scenario code / year in portfolio assignments below
-load_path = "S:/China/2024_China_EFC/01_Data/06_Load/China_EFC_2024_04_09_combined_demand_inputs.xlsx"
+load_path = "S:/China/2024_China_EFC/01_Data/06_Load/China_EFC_2024_05_22_combined_demand_inputs_oldDurations.xlsx"
 # path to the root folder for PLEXOS demand inputs, scenario code will be used for the subfolder
 load_save_path = "S:/China/2024_China_EFC/03_Modelling/01_InputData/04_DSM/"
 # path to the model xml to populate some aspects of the solution Index, if not, None
-model_xml_path = "C:/Users/HUNGERFORD_Z/localrepositories/plexos-model-setup/templates and indices/plant export files/China model export trimmed generators 3.xml"
+model_xml_path = "S:/China/2024_China_EFC/01_Data/02_PowerPlants/China_PLEXOS_objs_exported_8regs.xml"
 ## path to Annex A file if it is to be used to adjust capacities - legacy but not integrated due to difficulty in index matching
 Annex_A_adjust = "S:/India/WEO/WEO_India_2022_scaling/06_Data/03_PowerPlants/AnnexA_gencapacity.csv"
 
@@ -30,7 +30,7 @@ generator_parameters_sheets = {"technology_split_sheet" = "SplitTechs", "regiona
 
 [parameters]
 model_region = "China"
-regions = ["CR", "ER", "NCR", "NER", "NWR", "SGR", "SWR"]
+regions = ["CR", "CYZR", "ER", "NCR", "NER", "NWR", "SR", "YR"]
 # whether a WEO based model or detailed plant level model - can be "WEO" or anything else will expect a plant list in the capacity path
 model_type = "WEO"
 Annex_A_adjust = "False"
@@ -47,6 +47,9 @@ has_aluminium = "False"
 P1 = { name = "Announced Pledges Scenario", year = "2022", setup_method = "data warehouse", publication = 'Global Energy and Climate 2023', scenario_code = "APS_2022", capacity_sheet = "", load_scaling = 8911.84}
 P2 = { name = "Announced Pledges Scenario", year = "2030", setup_method = "data warehouse", publication = 'Global Energy and Climate 2023', scenario_code = "APS_2030", capacity_sheet = "", load_scaling = 11453.9}
 P3 = { name = "Stated Policies Scenario", year = "2030", setup_method = "data warehouse", publication = 'Global Energy and Climate 2023', scenario_code = "STEPS_2030", capacity_sheet = "", load_scaling = 11742.8}
+P4 = { name = "Announced Pledges Scenario", year = "2030", setup_method = "load only", publication = 'Global Energy and Climate 2023', scenario_code = "APS_2030_VPP", capacity_sheet = "", load_scaling = 11453.9}
+P5 = { name = "Announced Pledges Scenario", year = "2030", setup_method = "load only", publication = 'Global Energy and Climate 2023', scenario_code = "APS_2030_VPPext", capacity_sheet = "", load_scaling = 11453.9}
+
 
 [outputs]
 # 'for parameters excel' is the old format for pasting into the generator parameters sheet
@@ -58,7 +61,7 @@ capacity_output = "for parameters excel"
 # 'xml export' or 'manual'
 [solution_index_source]
 transmission = "xml export" 
-generation = "manual" 
+generation = "xml export" 
 demand_response = "xml export"
 regions_setup = "xml export" 
 fuel = "xml export"

@@ -86,7 +86,12 @@ class CapacitySetup:
                 self.model_capacities[portfolio] = self._setup_from_weo_excel(settings)
                 self.plant_capacities[portfolio] = self._make_regional_capacity_split(settings, portfolio)
             elif setup_method == "manual_sheet":
+                ## TODO - this is not yet implemented
+                ## Currently returns a pass statment
                 self.model_capacities[portfolio] = self._setup_from_manual_sheet(settings)
+            elif setup_method == "load only":
+                # Load only - no capacity setup required
+                print(f"Load only setup method selected for portfolio {portfolio}. No capacity setup required.")
             else:
                 raise ValueError(f"Unknown setup method for portfolio {portfolio}: {setup_method}")
         
@@ -105,7 +110,7 @@ class CapacitySetup:
         common_table = None
         for portfolio, df in self.plant_capacities.items():
             # Make a copy to avoid modifying the original dataframe
-            temp_df = df[['PLEXOSname', 'PLEXOS technology', 'WEO techs', 'Region', 'Capacity']].copy()
+            temp_df = df[['PLEXOSname', 'PLEXOS technology', 'WEO_tech', 'Region', 'Capacity']].copy()
             temp_df['Capacity'] = temp_df['Capacity'].round(3)
             
             # Rename the 'Value' column to the name of the portfolio for clarity
@@ -117,12 +122,12 @@ class CapacitySetup:
                 common_table = temp_df
             else:
                 # Merge the current dataframe with the common table on 'PLEXOS technology'
-                common_table = common_table.merge(temp_df, on=['PLEXOSname', 'WEO techs', 'Region', 'PLEXOS technology'], how='outer')
+                common_table = common_table.merge(temp_df, on=['PLEXOSname', 'WEO_tech', 'Region', 'PLEXOS technology'], how='outer')
                 
         # Drop rows where 'PLEXOSname' is NaN - in future ideally identify where this is happening earlier
         common_table = common_table.dropna(subset=['PLEXOSname'])
         
-        common_table.drop(columns = ["WEO techs", "PLEXOS technology", 'Region']).to_csv(self.config.get("path","generation_folder")+ self.config.get("path", "capacity_list_name"), index = False)
+        common_table.drop(columns = ["WEO_tech", "PLEXOS technology", 'Region']).to_csv(self.config.get("path","generation_folder")+ self.config.get("path", "capacity_list_name"), index = False)
         common_table.to_csv(self.config.get("path","generation_folder")+ "indexed_capacity_list.csv", index = False)
         
         efficiency_table = None
@@ -144,11 +149,7 @@ class CapacitySetup:
         efficiency_table = efficiency_table.dropna(subset=['PLEXOS technology'])
         
         efficiency_table.to_csv(self.config.get("path","generation_folder")+ "efficiencies_table.csv", index = False)
-
  
-
-
-
     def _setup_from_database(self, settings):
         # Retrieve and store capacity data for the given scenario in self.capacities_df
         self.capacities_df = self._retrieve_capacity_data(settings["name"], settings['year'], settings['publication'])
@@ -203,30 +204,30 @@ class CapacitySetup:
         wf = pd.read_excel(self.config.get('path', 'capacity_path'), sheet_name=settings["capacity_sheet"]).reset_index()
         # Clean WEO tech name column - this is based on minimising manual changes to the format they used to come in from WEO
         # in reality they were slightly different almost every time so minor edits were made in the excel to harmonise to the script
-        wf['WEO techs'] = wf['Unnamed: 1'].str.replace(']', '').str.replace('[', '').str.replace(' ', '_')
+        wf['WEO_tech'] = wf['Unnamed: 1'].str.replace(']', '').str.replace('[', '').str.replace(' ', '_')
 
         # Read in WEO index
         wf_indexed = pd.merge(wf, pd.read_csv(self.config.get('path', 'capacity_categories_index')), left_on='Unnamed: 0', right_on='Label')
         # Select out plant capacity
         wfp = wf_indexed[wf_indexed['Category'].isin(['Capacity'])]
 
-        if len(wfp[wfp['WEO techs'].duplicated()]) > 0:
+        if len(wfp[wfp['WEO_tech'].duplicated()]) > 0:
             print(
                 f'WARNING!! some technologies are duplicated in the WEO input data after indexing and filtering to '
                 f'Capacity variables:\n'
-                f'{wfp.loc[wfp["WEO techs"].duplicated()]} WEO techs.\n'
+                f'{wfp.loc[wfp["WEO_tech"].duplicated()]} WEO_tech.\n'
                 f'Please check input data.'
             )
 
         select_year = int(settings['year'])
-        wfp = wfp[['WEO techs', select_year]]
+        wfp = wfp[['WEO_tech', select_year]]
 
         # separate battery and sum types
         wfb = wf_indexed[wf_indexed['Category'].isin(['Battery_Capacity'])]
-        wfb = wfb[['WEO techs', select_year]]
+        wfb = wfb[['WEO_tech', select_year]]
         tot = wfb[[select_year]].sum()
-        wfb = pd.DataFrame({'Index': len(wfp) + 1, 'WEO techs': 'Battery', select_year: tot}).set_index('Index')
-        # wfb = wfb[wfb["WEO techs"] == "Battery"]
+        wfb = pd.DataFrame({'Index': len(wfp) + 1, 'WEO_tech': 'Battery', select_year: tot}).set_index('Index')
+        # wfb = wfb[wfb["WEO_tech"] == "Battery"]
         # wfb.iloc[0,1] = float(tot)
         # Recombine plants and battery
         wf = pd.concat([wfp, wfb], axis=0)
@@ -234,7 +235,7 @@ class CapacitySetup:
         # wf.columns
         # gen_cap_frame[2040].sum()
         # np.unique(gen_cap_frame.level_0)
-        # wf = wf[["WEO techs", select_year]]
+        # wf = wf[["WEO_tech", select_year]]
         wf.columns = ['PLEXOS technology', 'Value']
         # add scen column to allow something for regional merge
         # wf['scen'] = weo_scen
@@ -273,7 +274,7 @@ class CapacitySetup:
             hysplit = pd.DataFrame(
                 {
                     'new_techs': ['Hydro_RoR', 'Hydro_RoRpondage', 'Hydro_Reservoir', 'Hydro_PSH'],
-                    'WEO techs': ['Hydro_Small', 'Hydro_Small', 'Hydro_Large', 'PSH'],
+                    'WEO_tech': ['Hydro_Small', 'Hydro_Small', 'Hydro_Large', 'PSH'],
                 }
             )
             hysplit = pd.merge(hysplit, hy)
@@ -353,32 +354,32 @@ class CapacitySetup:
             
         final_frame["Capacity"] = final_frame["Value"] * final_frame["SplitFactor"]
        
-        return(final_frame[["PLEXOSname", "PLEXOS technology", "Region", "WEO techs", "Capacity"]])
+        return(final_frame[["PLEXOSname", "PLEXOS technology", "Region", "WEO_tech", "Capacity"]])
 
         ## logic for handling if there is pre-existing hydro capacity to be preserved
         ## TO DO needs to be updated to the new system - used only in India model
-        if len(hydro_cap_sheet) > 0:
-            gf2 = gf2[~gf2['WEO techs'].isin(['Hydro Large', 'Hydro Small'])]
+        # if len(hydro_cap_sheet) > 0:
+        #     gf2 = gf2[~gf2['WEO_tech'].isin(['Hydro Large', 'Hydro Small'])]
 
-            hy = wf[wf['WEO techs'].isin(['Hydro Large', 'Hydro Small'])]
+        #     hy = wf[wf['WEO_tech'].isin(['Hydro Large', 'Hydro Small'])]
 
-            hyc = pd.read_excel(worksheet_path, sheet_name=hydro_cap_sheet)
-            hyc = pd.melt(hyc, id_vars='Tech', value_vars=regions_list, var_name='region', value_name='cap_split')
-            hyc['plexos_name'] = hyc.Tech + '_' + hyc.region
+        #     hyc = pd.read_excel(worksheet_path, sheet_name=hydro_cap_sheet)
+        #     hyc = pd.melt(hyc, id_vars='Tech', value_vars=regions_list, var_name='region', value_name='cap_split')
+        #     hyc['plexos_name'] = hyc.Tech + '_' + hyc.region
 
-            # Get split ratios for new hydro, to be all applied to pondage ROR based on feedback
-            hysplit = split_ratio[split_ratio.RegSplitCat == 'Hydro_RoRpondage'].rename(columns={'RegSplitCat': 'Tech'})
-            # Get total capacity for allocation based on WEO allocation minus existing
-            hysplit['capacity'] = hy.capacity.sum() * 1000 - hyc.cap_split.sum()
-            hysplit['cap_split'] = hysplit.capacity * hysplit.SplitFactor
-            hysplit['plexos_name'] = hysplit.Tech + '_' + hysplit.region
+        #     # Get split ratios for new hydro, to be all applied to pondage ROR based on feedback
+        #     hysplit = split_ratio[split_ratio.RegSplitCat == 'Hydro_RoRpondage'].rename(columns={'RegSplitCat': 'Tech'})
+        #     # Get total capacity for allocation based on WEO allocation minus existing
+        #     hysplit['capacity'] = hy.capacity.sum() * 1000 - hyc.cap_split.sum()
+        #     hysplit['cap_split'] = hysplit.capacity * hysplit.SplitFactor
+        #     hysplit['plexos_name'] = hysplit.Tech + '_' + hysplit.region
 
-            # Create final hydro frame with existing and new WEO capacity
-            hyfin = hyc[['plexos_name', 'cap_split']].append(hysplit[['plexos_name', 'cap_split']])
-            hyfin = hyfin.groupby('plexos_name').sum().reset_index()
+        #     # Create final hydro frame with existing and new WEO capacity
+        #     hyfin = hyc[['plexos_name', 'cap_split']].append(hysplit[['plexos_name', 'cap_split']])
+        #     hyfin = hyfin.groupby('plexos_name').sum().reset_index()
 
-            allcaps = gf2[['plexos_name', 'cap_split']].append(hyfin)
-            allcaps.cap_split.sum()
+        #     allcaps = gf2[['plexos_name', 'cap_split']].append(hyfin)
+        #     allcaps.cap_split.sum()
 
         allcaps = allcaps.sort_values(by=['plexos_name'])
         # Check final capacity against starting cap
@@ -394,7 +395,7 @@ class CapacitySetup:
     
     def annex_A_adjustment(self):
         
-        ## legacy function for scaling inputs based on Annex A values, incomplete
+        ## TODO: legacy function for scaling inputs based on Annex A values, incomplete
         
         AnnexAdata = pd.read_csv(self.config.get('path', 'Annex_A_adjust'))
         indices = pd.read_csv(self.config.get('path', 'legacy_indices'))
@@ -424,7 +425,8 @@ class CapacitySetup:
 
     def _setup_from_manual_sheet(self, scenario_name):
         # Process capacity from a manually created sheet for the given scenario
-        pass
+        # Not yet implemented
+        return pd.DataFrame(None)
 
     def _read_split_index(self):
         params_path = self.config.get('path', 'generator_parameters_path')

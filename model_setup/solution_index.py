@@ -7,6 +7,7 @@ Created on Fri Mar 22 13:19:26 2024
 import pandas as pd
 import os
 import re
+from lxml import etree
 
 class SolutionIndexCreator:
     
@@ -29,9 +30,9 @@ class SolutionIndexCreator:
             config (object): The configuration object.
         """
         self.config = config
-        self.column_mask = ["PLEXOSname", "Object type", "PLEXOS technology", "Operating class", "Region", "Subregion",
-                            "Island", "NodeFrom", "NodeTo", "InertiaLOW", "InertiaHI", "Cofiring", "CCUS", "IPP",
-                            "Category", "FlexCategory", "StressPeriodType", "ScaleCat"]
+        self.column_mask = ["PLEXOSname", "PLEXOScat", "Object_type", "PLEXOS technology", "WEO_tech","Operating_class", "Region", "Subregion",
+                            "regFrom", "regTo", "InertiaLOW", "InertiaHI", "Cofiring", "CCUS", "IPP","CapacityCategory", 
+                            "Category", "CategorySub", "FlexCategory", "StressPeriodType", "ScaleCat", "StorageDuration"]
         self._init_regions_df()
         self.indices_df = self._read_indices_data()  # Load indices data on initialization
 
@@ -92,6 +93,7 @@ class SolutionIndexCreator:
         ], ignore_index=True)
 
         solution_index.to_csv(solution_index_path, index=False)
+        print(f"Solution index generated successfully to {solution_index_path}.")
         return solution_index
     
     def identify_plexos_objects(self, object_types, extra_attributes=None, name_filter=None):
@@ -100,7 +102,7 @@ class SolutionIndexCreator:
         
         Parameters:
             object_types (list): A list of PLEXOS object types to identify.
-            extra_attributes (list, optional): Additional attributes to extract for each object, such as regions or the NodeFrom and NodeTo
+            extra_attributes (list, optional): Additional attributes to extract for each object, such as regions or the regFrom (formerly NodeFrom) and regTo
             name_filter (str, optional): A filter to apply to the object names in case specific objects such as DSM shed generators are required
         
         Returns:
@@ -108,7 +110,7 @@ class SolutionIndexCreator:
         """
 
         
-        from lxml import etree
+        
         # Load and parse the XML file
         tree = etree.parse(self.config.get('path', 'model_xml_path'))
         root = tree.getroot()
@@ -130,12 +132,17 @@ class SolutionIndexCreator:
             # Extract the 'Name' attribute and object type
             for elem in elements:
                 name = elem.get('Name')  # Extract the 'Name' attribute
+                category = elem.get('Category')
+
+                if category is None:
+                    category = name
+
                 
                 # If name_filter is provided, check if the name contains the filter string
                 if name_filter and name_filter not in name:
                     continue  # Skip this element if it doesn't contain the filter string
                 
-                row_data = {'PLEXOSname': name, 'Object type': obj_type}
+                row_data = {'PLEXOSname': name, 'Object_type': obj_type, 'PLEXOScat': category}
                 
                 # If extra attributes are specified, try to extract them
                 if extra_attributes:
@@ -185,7 +192,7 @@ class SolutionIndexCreator:
         return merged_df
 
     def create_demand_response_index(self):
-        demand_response_df = self.indices_df[self.indices_df["WEO techs"].isin(["DSM shed", "DSM shift"])]
+        demand_response_df = self.indices_df[self.indices_df["WEO_tech"].isin(["DSM shed", "DSM shift"])]
         
         if self.config.get('solution_index_source', 'demand_response') == "manual":
             # Merge with regions
@@ -208,7 +215,6 @@ class SolutionIndexCreator:
         return dr_extended
 
 
-
     def create_nodes_and_regions_index(self):
         # Define the object types of interest
         objects_list = ['Region', 'Zone', 'Area', 'Node']
@@ -216,6 +222,8 @@ class SolutionIndexCreator:
         if self.config.get('solution_index_source', 'regions_setup') == "xml export":
             nodes_etc = self.identify_plexos_objects(objects_list)
             nodes_etc = pd.merge(nodes_etc, self.indices_df)
+            ### Added so we get region names in the solution index
+            nodes_etc['Region'] = nodes_etc['PLEXOSname']
 
         elif self.config.get('solution_index_source', 'regions_setup') == "manual":
             # Initialize an empty DataFrame for the results
@@ -226,13 +234,14 @@ class SolutionIndexCreator:
                 object_type = self.config.get('model_configuration', option)
                 if object_type:  # Check if the option is present and not an empty string
                     # Filter self.indices_df for the current object type
-                    filtered_df = self.indices_df[self.indices_df['Object type'] == object_type]
+                    filtered_df = self.indices_df[self.indices_df['Object_type'] == object_type]
 
                     if 'aggregate' in option:  # Check if it's an aggregate object
                         filtered_df['PLEXOSname'] = self.config.get('model_configuration', 'aggregate_name')  # Assign the aggregate name
                     else:  # For node objects, assign names based on the regions_df
                         filtered_df = pd.merge(filtered_df, self.regions_df, how='cross')  # 'cross' join with regions_df
                         filtered_df['PLEXOSname'] = filtered_df['Region']  # Use the region names
+                
 
                     # Append the filtered DataFrame to the results
                     results_df = pd.concat([results_df, filtered_df], ignore_index=True)
@@ -244,15 +253,17 @@ class SolutionIndexCreator:
     
                 
     def create_lines_index(self):
+        # For legacy purposes, the columns regFrom and regTo are used in the solution index
+        # This could be changed rather to NodeFrom and NodeTo to be consistent with the XML export
         if self.config.get('solution_index_source', 'transmission') == "xml export":
             lines_df = self.identify_plexos_objects(["Line"], extra_attributes=["Line_NodeFrom", "Line_NodeTo"])
-            lines_df = lines_df.rename(columns={"Line_NodeFrom": "NodeFrom", "Line_NodeTo": "NodeTo"})
+            lines_df = lines_df.rename(columns={"Line_NodeFrom": "regFrom", "Line_NodeTo": "regTo"})
             lines_df = pd.merge(lines_df, self.indices_df, how="left")
 
         elif self.config.get('solution_index_source', 'transmission') == "manual":
             # Assuming you have a way to manually define lines_df or this part is to be implemented.
             # This example assumes that the manual lines data is a part of indices_df
-            lines_df = self.indices_df[self.indices_df["Object type"] == "Line"]
+            lines_df = self.indices_df[self.indices_df["Object_type"] == "Line"]
 
         lines_df = self.harmonise_columns(lines_df)
         return lines_df
@@ -292,6 +303,7 @@ class SolutionIndexCreator:
         if self.config.get('solution_index_source', 'fuel') == "xml export":
             fuels = self.identify_plexos_objects(["Fuel"])
             fuels = pd.merge(fuels, self.indices_df, how="left")
+            fuels['Category'] = fuels['PLEXOScat']
         else:
             print("Fuels index creation in manual mode is incomplete.")
 
