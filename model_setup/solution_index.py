@@ -32,7 +32,7 @@ class SolutionIndexCreator:
         self.config = config
         self.column_mask = ["PLEXOSname", "PLEXOScat", "Object_type", "PLEXOS technology", "WEO_tech","Operating_class", "Region", "Subregion",
                             "regFrom", "regTo", "InertiaLOW", "InertiaHI", "Cofiring", "CCUS", "IPP","CapacityCategory", 
-                            "Category", "FlexCategory", "StressPeriodType", "ScaleCat", "StorageDuration"]
+                            "Category", "CategorySub", "FlexCategory", "StressPeriodType", "ScaleCat", "StorageDuration"]
         self._init_regions_df()
         self.indices_df = self._read_indices_data()  # Load indices data on initialization
 

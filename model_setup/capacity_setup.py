@@ -87,7 +87,11 @@ class CapacitySetup:
                 self.plant_capacities[portfolio] = self._make_regional_capacity_split(settings, portfolio)
             elif setup_method == "manual_sheet":
                 ## TODO - this is not yet implemented
+                ## Currently returns a pass statment
                 self.model_capacities[portfolio] = self._setup_from_manual_sheet(settings)
+            elif setup_method == "load only":
+                # Load only - no capacity setup required
+                print(f"Load only setup method selected for portfolio {portfolio}. No capacity setup required.")
             else:
                 raise ValueError(f"Unknown setup method for portfolio {portfolio}: {setup_method}")
         
@@ -145,11 +149,7 @@ class CapacitySetup:
         efficiency_table = efficiency_table.dropna(subset=['PLEXOS technology'])
         
         efficiency_table.to_csv(self.config.get("path","generation_folder")+ "efficiencies_table.csv", index = False)
-
  
-
-
-
     def _setup_from_database(self, settings):
         # Retrieve and store capacity data for the given scenario in self.capacities_df
         self.capacities_df = self._retrieve_capacity_data(settings["name"], settings['year'], settings['publication'])
@@ -358,28 +358,28 @@ class CapacitySetup:
 
         ## logic for handling if there is pre-existing hydro capacity to be preserved
         ## TO DO needs to be updated to the new system - used only in India model
-        if len(hydro_cap_sheet) > 0:
-            gf2 = gf2[~gf2['WEO_tech'].isin(['Hydro Large', 'Hydro Small'])]
+        # if len(hydro_cap_sheet) > 0:
+        #     gf2 = gf2[~gf2['WEO_tech'].isin(['Hydro Large', 'Hydro Small'])]
 
-            hy = wf[wf['WEO_tech'].isin(['Hydro Large', 'Hydro Small'])]
+        #     hy = wf[wf['WEO_tech'].isin(['Hydro Large', 'Hydro Small'])]
 
-            hyc = pd.read_excel(worksheet_path, sheet_name=hydro_cap_sheet)
-            hyc = pd.melt(hyc, id_vars='Tech', value_vars=regions_list, var_name='region', value_name='cap_split')
-            hyc['plexos_name'] = hyc.Tech + '_' + hyc.region
+        #     hyc = pd.read_excel(worksheet_path, sheet_name=hydro_cap_sheet)
+        #     hyc = pd.melt(hyc, id_vars='Tech', value_vars=regions_list, var_name='region', value_name='cap_split')
+        #     hyc['plexos_name'] = hyc.Tech + '_' + hyc.region
 
-            # Get split ratios for new hydro, to be all applied to pondage ROR based on feedback
-            hysplit = split_ratio[split_ratio.RegSplitCat == 'Hydro_RoRpondage'].rename(columns={'RegSplitCat': 'Tech'})
-            # Get total capacity for allocation based on WEO allocation minus existing
-            hysplit['capacity'] = hy.capacity.sum() * 1000 - hyc.cap_split.sum()
-            hysplit['cap_split'] = hysplit.capacity * hysplit.SplitFactor
-            hysplit['plexos_name'] = hysplit.Tech + '_' + hysplit.region
+        #     # Get split ratios for new hydro, to be all applied to pondage ROR based on feedback
+        #     hysplit = split_ratio[split_ratio.RegSplitCat == 'Hydro_RoRpondage'].rename(columns={'RegSplitCat': 'Tech'})
+        #     # Get total capacity for allocation based on WEO allocation minus existing
+        #     hysplit['capacity'] = hy.capacity.sum() * 1000 - hyc.cap_split.sum()
+        #     hysplit['cap_split'] = hysplit.capacity * hysplit.SplitFactor
+        #     hysplit['plexos_name'] = hysplit.Tech + '_' + hysplit.region
 
-            # Create final hydro frame with existing and new WEO capacity
-            hyfin = hyc[['plexos_name', 'cap_split']].append(hysplit[['plexos_name', 'cap_split']])
-            hyfin = hyfin.groupby('plexos_name').sum().reset_index()
+        #     # Create final hydro frame with existing and new WEO capacity
+        #     hyfin = hyc[['plexos_name', 'cap_split']].append(hysplit[['plexos_name', 'cap_split']])
+        #     hyfin = hyfin.groupby('plexos_name').sum().reset_index()
 
-            allcaps = gf2[['plexos_name', 'cap_split']].append(hyfin)
-            allcaps.cap_split.sum()
+        #     allcaps = gf2[['plexos_name', 'cap_split']].append(hyfin)
+        #     allcaps.cap_split.sum()
 
         allcaps = allcaps.sort_values(by=['plexos_name'])
         # Check final capacity against starting cap
@@ -395,7 +395,7 @@ class CapacitySetup:
     
     def annex_A_adjustment(self):
         
-        ## legacy function for scaling inputs based on Annex A values, incomplete
+        ## TODO: legacy function for scaling inputs based on Annex A values, incomplete
         
         AnnexAdata = pd.read_csv(self.config.get('path', 'Annex_A_adjust'))
         indices = pd.read_csv(self.config.get('path', 'legacy_indices'))
@@ -425,7 +425,8 @@ class CapacitySetup:
 
     def _setup_from_manual_sheet(self, scenario_name):
         # Process capacity from a manually created sheet for the given scenario
-        pass
+        # Not yet implemented
+        return pd.DataFrame(None)
 
     def _read_split_index(self):
         params_path = self.config.get('path', 'generator_parameters_path')
