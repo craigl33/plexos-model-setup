@@ -54,6 +54,7 @@ dependencies:
   - libutf8proc=2.8.0=h82a8f57_0
   - libxml2=2.12.4=hc3477c8_1
   - libzlib=1.2.13=hcfcfb64_5
+  - lxml=5.1.0=py311h064e5ff_0
   - lz4-c=1.9.4=hcfcfb64_0
   - mkl=2024.0.0=h66d3029_49657
   - numpy=1.26.3=py311h0b4df5a_0
@@ -64,6 +65,7 @@ dependencies:
   - pip=23.3.2=pyhd8ed1ab_0
   - pthreads-win32=2.9.1=hfa6e2cd_3
   - pyarrow=14.0.2=py311h6a6099b_2_cpu
+  - pyodbc=5.1.0=py311h5da7b33_0
   - python=3.11.7=h2628c8c_1_cpython
   - python-dateutil=2.8.2=pyhd8ed1ab_0
   - python-tzdata=2023.4=pyhd8ed1ab_0
@@ -74,8 +76,10 @@ dependencies:
   - setuptools=69.0.3=pyhd8ed1ab_0
   - six=1.16.0=pyh6c4a22f_0
   - snappy=1.1.10=hfb803bf_0
+  - sqlalchemy=1.4.51=py311h2bbff1b_0
   - tbb=2021.11.0=h91493d7_1
   - tk=8.6.13=h5226925_1
+  - toml=0.10.2=pyhd3eb1b0_0
   - tzdata=2023d=h0c530f3_0
   - ucrt=10.0.22621.0=h57928b3_0
   - vc=14.3=hcf57466_18
