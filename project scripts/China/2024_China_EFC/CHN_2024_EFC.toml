@@ -8,7 +8,7 @@ generator_parameters_path = "S:/China/2024_China_EFC/01_Data/02_PowerPlants/2024
 # TODO add processing to create transmission from excel rather than xml if desired
 #transmission_path = "S:/China/China proj 2023/06_Data/01_Transmission/to_complete.csv"
 # path to Excel containing the hourly load, demand index and regional splits by scenario, sheets identified by scenario code / year in portfolio assignments below
-load_path = "S:/China/2024_China_EFC/01_Data/06_Load/China_EFC_2024_05_22_combined_demand_inputs_oldDurations.xlsx"
+load_path = "S:/China/2024_China_EFC/01_Data/06_Load/China_EFC_2024_09_12_combined_demand_inputs_oldDurations.xlsx"
 # path to the root folder for PLEXOS demand inputs, scenario code will be used for the subfolder
 load_save_path = "S:/China/2024_China_EFC/03_Modelling/01_InputData/04_DSM/"
 # path to the model xml to populate some aspects of the solution Index, if not, None

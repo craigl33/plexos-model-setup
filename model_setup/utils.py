@@ -253,5 +253,55 @@ def make_pattern_index(df):
     return df
 
 
+def extract_plexos_LT_results(model_path):
+    """	
+    Extracts the LT solution files from the zip files in the LT_solution_files folder in the ExpUnits folder of the model path.
+    The extracted files are then saved in the ExpUnits folder.
+    The function also increases the capacity of the generator units by 5% and integerises the capacity.
 
-#
+    Parameters:
+    -----------
+    model_path : str or Path
+        The path to the model folder.
+    
+    """
+    
+    if not isinstance(model_path, Path):
+        model_path = Path(model_path)
+
+    exp_out_path = model_path / '03_Modelling/01_InputData/08_ExpUnits/'
+    lt_solns_path = exp_out_path / 'LT_solution_files/'
+    lt_soln_zips = [ lt_solns_path / f for f in  os.listdir(lt_solns_path)]
+
+    for z in lt_soln_zips:
+        with ZipFile(z, 'r') as zipObj:
+            file_list = zipObj.namelist()
+            pattern = '* Units.csv'
+
+            filtered_list = []
+            for file in file_list:
+                if fnmatch.fnmatch(file, pattern):
+                    filtered_list.append(file)
+            
+            for f in filtered_list:
+                try:
+                    zipObj.extract(f, exp_out_path)
+                    print(f'Extracted {f} to {exp_out_path}')
+                except PermissionError:
+                    print(f'Could not extract {f} to {exp_out_path}. File already exists.')
+                    continue
+            
+            # Create a list of all the extracted files for Generator Units
+            # This can then be used to increase the capacity of the units by 5% and integerise the capacity
+            exp_units_files = [ exp_out_path / f for f in  os.listdir(exp_out_path) if 'Units.csv' in f]
+
+            for f in exp_units_files:
+                df = pd.read_csv(f)
+                df['Value'] = df['Value'] * 1.05
+                df.loc[df.Name.str.contains('Gas'),'Value'] = df['Value'].apply(np.round)
+                try:
+                    df.to_csv(f, index=False)
+                except PermissionError:
+                    print(f'Could not write to {f}. File already exists.')
+                    continue
+
