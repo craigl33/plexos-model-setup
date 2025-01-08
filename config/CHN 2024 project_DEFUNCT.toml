@@ -6,10 +6,10 @@ scenario_year_pairs = [["Announced Pledges Scenario", 2022,], ["Announced Pledge
 
 # path to files needed for setup such as generator parameters etc
 [path]
-generator_parameters_path = "S:/China/China proj 2023/test/06_Data/02_PowerPlants/2024_02_20_generator_parameters_China_2024_proj_simplified_v0.0.xlsx"
-transmission_path = "S:/China/China proj 2023/06_Data/01_Transmission/"
+generator_parameters_path = "S:/China/2024_China_EFC/01_Data/02_PowerPlants/2024_03_2_generator_parameters_China_0.1_updating_plant_list.xlsx"
+transmission_path = 
 load_path = 
-model_xml_path = None
+model_xml_path = "S:/China/2024_China_EFC/03_Modelling/China_2024_proj_1.7_New_zone_etc.xml"
 
 ## how the plexos model is configured internally, e.g. region object contains single nodes or all nodes
 ## there are some legacy differences between the models and there are some advantages, e.g. the Region object allows for more queries than Node

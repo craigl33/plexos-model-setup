@@ -1,4 +1,4 @@
-WEO techs,Originally present,Preferred name,PLEXOS technology,Gets capacity from,process,notes,Product,Flow,Product2,Flow2,Product3,Flow3,Classification,EfficiencyProductSource,EfficiencyFlowSource,merge
+WEO_tech,Originally present,Preferred name,PLEXOS technology,Gets capacity from,process,notes,Product,Flow,Product2,Flow2,Product3,Flow3,Classification,EfficiencyProductSource,EfficiencyFlowSource,merge
 Battery distributed,,Battery distributed,Battery_distributed,Battery storage minus battery utility,subtract,,Battery storage,Electrical capacity,Battery storage: utility scale,Electrical capacity,,,Battery,Battery storage,Electrical capacity,1
 Battery utility 1h,,Battery utility 1h,Battery_utility_1h,Battery storage: utility scale 1-hour,direct,,Battery storage: utility scale 1-hour,Electrical capacity,,,,,Battery,Battery storage: utility scale 1-hour,Electrical capacity,1
 Battery utility 2h,,Battery utility 2h,Battery_utility_2h,Battery storage: utility scale 2-hour,direct,,Battery storage: utility scale 2-hour,Electrical capacity,,,,,Battery,Battery storage: utility scale 2-hour,Electrical capacity,1

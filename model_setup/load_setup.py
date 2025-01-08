@@ -73,9 +73,9 @@ class LoadSetup:
             
             # identify the relevant sheet names - flexible in ordering and to use scenario code or year alone
             # could have multi-match issues (returns first match) with the load sheet if you have other sheets with the scenario code or year that are not the index or factors
-            load_sheet = self._find_sheet(self.excel_sheets, settings['scenario_code'], settings['year'], exclusions=["DSM_index", "RegionalFactors"])
-            index_sheet = self._find_sheet(self.excel_sheets, settings['scenario_code'], settings['year'], keyword = "DSM_index")
-            splitting_sheet = self._find_sheet(self.excel_sheets, settings['scenario_code'], settings['year'], keyword = "RegionalFactors")
+            load_sheet = self._find_sheet(self.excel_sheets, primary_id=settings['scenario_code'], fallback_id=settings['year'], exclusions=["DSM_index", "RegionalFactors"])
+            index_sheet = self._find_sheet(self.excel_sheets, primary_id=settings['scenario_code'], fallback_id=settings['year'], keyword = "DSM_index")
+            splitting_sheet = self._find_sheet(self.excel_sheets, primary_id=settings['scenario_code'], fallback_id=settings['year'], keyword = "RegionalFactors")
             
             # read in the hourly demand
             # LEGACY version used to have the capability to merge multiple regional sheets but this has not been integrated
@@ -136,23 +136,60 @@ class LoadSetup:
             
 
      
-    def _find_sheet(self, sheet_names, primary_id, fallback_id, keyword='', exclusions=None):
+    def _find_sheet(self, sheet_names, primary_id, fallback_id, keyword=None, exclusions=None):
+        """
+        Find the sheet name that contains the primary_id or fallback_id, and optionally a keyword.
+
+        This function is used to find the sheet name that contains the primary_id or fallback_id, and optionally a keyword.
+        If a keyword is provided, the function will first try to find a sheet with the keyword. If no sheet is found, or no keyword is provided, the function will look for a sheet with the primary_id or fallback_id.
+        
+        This function appears to give incorrect results when there are multiple sheets with the keyword. It will return the first match, which may not be the correct sheet. This is a limitation of the function.
+        
+        """
+    
         if exclusions is None:
             exclusions = []
+
+        # If using the standard format of 'keyword_primary_id', check if there is an explicit match
+        # Issues seem to occur with this function and it should be reviewed
+        if keyword:
+            explicit_match = f"{keyword}_{primary_id}"
+        else:
+            explicit_match = f"{primary_id}"
+
+        if explicit_match in sheet_names:
+            return explicit_match
         
+        # To check if primary_id is a component of other primary_ids
+        if len([(primary_id in i)&(keyword in i) for i in sheet_names] ) > 1:
+            # Add the primary_ids which include the primary_id as a component to the exclusions list
+            # This is to avoid returning a sheet with a primary_id that is a component of another primary_id
+            # For example, if primary_id is 'P1' and there is a sheet with primary_id 'P1A', we don't want to return that sheet
+            duplicate_ids = [i for i in sheet_names if (primary_id in i)&(keyword in i)]
+            exclusions.extend([i for i in duplicate_ids if len(i) > min([len(j) for j in duplicate_ids])])
+
         # First, try to find a sheet with the keyword if it's provided
+        # This is problematic if there are multiple sheets with the keyword, as it will return the first match
         if keyword:
             for sheet in sheet_names:
                 if any(exclusion in sheet for exclusion in exclusions):
                     continue
-                if keyword in sheet and (primary_id in sheet or fallback_id in sheet):
+                if (keyword in sheet) and (primary_id in sheet):
                     return sheet
-        
+                # If the keyword is not in the sheet name, but the fallback_id is, return the sheet
+                elif (keyword in sheet) and (fallback_id in sheet) and (primary_id not in sheet):
+                    print(f"Sheet with primary_id '{primary_id}' not found. Using sheet with fallback_id '{fallback_id}' for {keyword} keyword.")
+                    return sheet
+
         # If no sheet found with the keyword, or no keyword provided, look for primary_id or fallback_id
         for sheet in sheet_names:
             if any(exclusion in sheet for exclusion in exclusions):
                 continue
-            if primary_id in sheet or fallback_id in sheet:
+            if (primary_id in sheet):
+                print(f"Sheet with primary_id '{primary_id}' found.")
+                return sheet
+            elif(fallback_id in sheet) and (primary_id not in sheet):
+                print(f"Sheet with primary_id '{primary_id}' not found. Using sheet with fallback_id '{fallback_id}' for {keyword} keyword.")
                 return sheet
     
         return None
@@ -259,7 +296,7 @@ class LoadSetup:
         indexed_aggregate['1'] = indexed_aggregate.DSM_shift * indexed_aggregate.max_shift
         ## drop null values
         minmaxes = indexed_aggregate[pd.notnull(indexed_aggregate['1'])]
-        minmaxes['NAME'] = minmaxes.region + '_MaxShift' + minmaxes.max_shift.astype(int).astype(str) + 'h'
+        minmaxes.loc[:,'NAME'] = minmaxes.region + '_MaxShift' + minmaxes.max_shift.astype(int).astype(str) + 'h'
         ## find maxima of max shift values
         minmaxes = minmaxes.groupby(['NAME'])['1'].max().reset_index()
         # chkframe = minmaxes.groupby(["NAME"])["DSM"].max().reset_index()
