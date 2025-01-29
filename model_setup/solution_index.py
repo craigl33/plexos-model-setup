@@ -36,7 +36,6 @@ class SolutionIndexCreator:
         self._init_regions_df()
         self.indices_df = self._read_indices_data()  # Load indices data on initialization
 
-    
     def _init_regions_df(self):
         """
         Initializes the regions DataFrame using the configuration.
@@ -214,7 +213,6 @@ class SolutionIndexCreator:
 
         return dr_extended
 
-
     def create_nodes_and_regions_index(self):
         # Define the object types of interest
         objects_list = ['Region', 'Zone', 'Area', 'Node']
@@ -250,7 +248,6 @@ class SolutionIndexCreator:
 
         nodes_etc = self.harmonise_columns(nodes_etc)
         return nodes_etc
-    
                 
     def create_lines_index(self):
         # For legacy purposes, the columns regFrom and regTo are used in the solution index
@@ -267,8 +264,6 @@ class SolutionIndexCreator:
 
         lines_df = self.harmonise_columns(lines_df)
         return lines_df
-
-
 
     def create_emissions_index(self):
         if self.config.get('solution_index_source', 'emission') == "xml export":
@@ -325,19 +320,3 @@ class SolutionIndexCreator:
 
         # Return an empty DataFrame if there are no contracts
         return pd.DataFrame()
-    
-        
-
-
-
-
-
-
-
-
-
-
-
-#
-
-
