@@ -6,6 +6,11 @@ Created on Thu Mar 21 14:32:39 2024
 """
 
 import functools
+import pandas as pd
+from typing import Union, Dict, List
+import collections
+import pyodbc
+import sqlalchemy as sa
 
 def memory_cache(func):
     @functools.wraps(func)
@@ -17,14 +22,6 @@ def memory_cache(func):
         return getattr(self, attr_name)
 
     return _mem_cache_wrapper
-
-
-import collections
-
-import pyodbc
-import sqlalchemy as sa
-import pandas as pd
-
 
 def export_data(table,  database, columns=None, conditions=None, return_query_string=False):
     """
@@ -119,7 +116,6 @@ def export_data(table,  database, columns=None, conditions=None, return_query_st
 
     return df
 
-
 def make_pattern_index(df):
     if df.index.freqstr == 'D':
         df['Pattern'] = df.index.to_series().apply(lambda x: 'M{},D{}'.format(x.month,x.day))
@@ -128,7 +124,6 @@ def make_pattern_index(df):
     df = df.set_index('Pattern')
  
     return df
-
 
 def add_pattern_index(
     inputFrame: pd.DataFrame,
@@ -150,8 +145,6 @@ def add_pattern_index(
 
 
     return df
-
-
 
 def add_time_separators(
     inputFrame: pd.DataFrame,
@@ -242,7 +235,6 @@ def add_time_separators(
 
     return df
 
-
 def make_pattern_index(df):
     if df.index.freqstr == 'D':
         df['Pattern'] = df.index.to_series().apply(lambda x: 'M{},D{}'.format(x.month,x.day))
@@ -251,7 +243,6 @@ def make_pattern_index(df):
     df = df.set_index('Pattern')
  
     return df
-
 
 def extract_plexos_LT_results(model_path):
     """	
@@ -305,3 +296,82 @@ def extract_plexos_LT_results(model_path):
                     print(f'Could not write to {f}. File already exists.')
                     continue
 
+def make_plexos_csv(
+    data_var: pd.DataFrame,
+    plexos_prop: str,
+    index_var: pd.DataFrame,
+    set_pattern: Union[bool, str] = False
+) -> None:
+    """
+    Create CSV files for PLEXOS based on specified properties and patterns.
+    
+    Args:
+        data_var: DataFrame containing the source data
+        plexos_prop: PLEXOS property to process
+        index_var: DataFrame containing the property index information
+        set_pattern: If True, uses Pattern column from data, if False uses "M1-12",
+                    if string, uses that pattern
+    """
+    # Create subset of properties index for the given PLEXOS property
+    idx = index_var[index_var['PLEXOSlabel'] == plexos_prop]
+    
+    # Process each unique filename in the index
+    for filename in idx['Filename'].unique():
+        # Get subset of index for current filename
+        idx2 = idx[idx['Filename'] == filename]
+        
+        # Get relevant labels that exist in data_var
+        labels = idx2['Labels'].astype(str).tolist()
+        valid_labels = [label for label in labels if label in data_var.columns]
+        
+        if not valid_labels:
+            continue
+            
+        # Create subset of data removing NA rows
+        temp_data = data_var.copy()
+        
+        # Filter rows where all relevant columns are NA
+        if len(valid_labels) > 1:
+            mask = ~temp_data[valid_labels].isna().all(axis=1)
+        else:
+            mask = ~temp_data[valid_labels[0]].isna()
+        
+        temp_data = temp_data[mask]
+        
+        if temp_data.empty:
+            continue
+            
+        # Determine pattern to use
+        if isinstance(set_pattern, bool):
+            pattern = temp_data['Pattern'] if set_pattern else 'M1-12'
+        else:
+            pattern = set_pattern
+            
+        # Create output DataFrame
+        var = pd.DataFrame({
+            'NAME': temp_data['PLEXOSname'],
+            'PATTERN': pattern
+        })
+        
+        # Process each band in the index
+        for _, row in idx2.iterrows():
+            band = str(row['Band'])
+            label = str(row['Labels'])
+            
+            if label in data_var.columns:
+                # Create temporary series with default values for NA
+                temp_series = temp_data[label].copy()
+                temp_series = temp_series.fillna(row['NA_default'])
+                
+                # Map values to output DataFrame
+                var[band] = var['NAME'].map(
+                    dict(zip(temp_data['PLEXOSname'], temp_series))
+                )
+        
+        # Write to CSV
+        output_file = str(filename)
+        var.to_csv(output_file, index=False)
+        print(f"{output_file} successfully created")
+
+# Example usage:
+# make_plexos_csv(data_df, "some_property", index_df, set_pattern="DH1")
