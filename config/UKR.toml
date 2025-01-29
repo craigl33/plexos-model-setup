@@ -1,0 +1,130 @@
+[path]
+
+project_folder = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/'
+data_folder = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/'
+generation_folder = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/01_Generation/"
+load_folder = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/02_Demand/"
+
+# needed only for non-WEO models
+plants_list_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/01_Generation/20241113_generator_capacity_UKR_summary.xlsx" 
+plants_list_sheet= "AllGenerators" 
+plants_list_header = 0
+# capacity path only required for 'WEO excel' or 'manual sheet' setup methods. using example here for testing
+capacity_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/01_Generation/20241113_generator_capacity_UKR_summary.xlsx"
+
+#this could be implied from other inputs
+solution_index = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/01_Generation/"
+generator_parameters_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/01_Generation/20241113_generator_parameters_UKR.xlsx"
+# TODO add processing to create transmission from excel rather than xml if desired
+#transmission_path = "S:/China/China proj 2023/06_Data/01_Transmission/to_complete.csv"
+
+# path to Excel containing the hourly load, demand index and regional splits by scenario, sheets identified by scenario code / year in portfolio assignments below
+# For models built outside of WEO, this needs to be done manually
+load_path = "N/A"
+# path to the root folder for PLEXOS demand inputs, scenario code will be used for the subfolder
+load_save_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/01_InputData/04_DSM/"
+# path to the model xml to populate some aspects of the solution Index, if not, None
+model_xml_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/UKR_Base_Model_v7.4.7_battAS.xml"
+## path to Annex A file if it is to be used to adjust capacities - legacy but not integrated due to difficulty in index matching
+Annex_A_adjust = "N/A"
+
+## DEFAULT PATHS
+weo_plexos_index_path = 'templates and indices/weo_plexos_index.csv' # Index for deriving values from WEO DW. May need to be updated for future iterations if errors are discovered.
+indices_sheet = "templates and indices/all model indices.csv" # based on new WEO technologies
+legacy_indices = "templates and indices/legacy indices sheet.csv" # based on old-style WEO technologies. Can be used for manual setup for models developed before 2025
+
+# Generator paramters sheet now uses the Indices sheet to match technologies with generic data
+# while the capacity data sheet is used to match with the plant-level data
+# This should be copied and modified for each project to ensure that cost, HR, constraints etc. are correctly assigned
+# generator_params_index = "templates and indices/generator_parameters.xlsx" # This should be copied and modified for each project
+generator_params_index = "templates and indices/generator_parameters_legacy.xlsx"
+parameters_index = "templates and indices/parameters_index.csv" 
+capacity_categories_index = "templates and indices/capacity_data_categories_index.csv" # For DW
+capacity_list_name = 'capacity_list_for_pasting.csv'
+
+[sheet_names] # intended to be kept as default but can be adjusted here if needed
+# technology splitting sheet is where subtechs need to be split out of aggregated categories - coal and hydro for now
+# region split is for dividing generators between regions (tolerates different technology columns, just use the column name that corresponds with 'indices')
+generator_parameters_sheets = {"technology_split_sheet" = "SplitTechs", "regional_splitting_sheet" = "RegionSplit"}
+
+[parameters]
+model_region = "Ukraine"
+regions = ["CR", "CRM", "ER", "EOR", "NR", "SR", "SWR"]
+# whether a WEO based model or detailed plant level model - can be "WEO" or anything else will expect a plant list in the capacity path
+model_type = "Manual"
+Annex_A_adjust = "False"
+has_aluminium = "False"
+
+[manual_setup]
+# if the model is not WEO based, the capacity path should be specified here
+plants_list_header = 0
+plants_list_sheet = "AllGenerators"
+capacity_columns = "Q:Y" # columns to be used for capacity data
+# helper_columns = "A:H" # helper columns to be used for matching with indices sheet. may not be necessary in its entirety (WIP)
+name_column = "PLEXOS_Name" # column containing generator names
+tech_column = "WEO_Tech" # column used to match with indices sheet
+reg_column = "PLEXOS_GRP1" # column containing regional information
+classification_column = "Category1" # column containing classification information 
+indices_tech_col = 'PLEXOS technology' # column name for technology in indices sheet
+legacy_indices_flag = true  ## if the indices sheet is in the old format, set this to true
+regional_split_flag = false # If regional splitting is needed. Only needed if modelling WEO-style model with manual input data
+
+# This contains the associated standard name of the technical parameter and the 
+# column name in the generator capacity sheet (could be standardised!) for plant-level data
+# N/As or other values should be used to indicate when generic data should be used
+[manual_setup.plant_data]
+## generator_parameters name = plant data column
+HR= "HR"
+Units= "Units"
+#FOR = "FOR"
+# RR = "RR"
+
+
+## allocation of generic portfolio labels to input scenarios
+## the third list allows for specific variations in the generator parameters to be specified - to be completed
+[portfolio_assignments]
+# setup method can be data warehouse
+# only need to specify publication for data warehouse setup method
+# load_scaling is needed for losses scaling - should be obtained from WEO extended dataset or can be 1 (if the value is 0 to 2 it will scale, otherwise it is treated as the total in TWh)
+# load scaling values obtained from Extended dataset of WEO generation number
+# Capacity column can be provided as column number (e.g. Q, R, S) or the name of the column (e.g. "Capacity_2021")
+P1 = { name = "Validation", year = "2021", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators", cap_col = "Q", load_scaling = 0}
+P2 = { name = "War validation", year = "2024", setup_method = "manual", publication = 'None', scenario_code = "2024", capacity_sheet = "AllGenerators", cap_col = "R", load_scaling = 0}
+P3 = { name = "Base", year = "2025", setup_method = "manual", publication = 'None', scenario_code = "2025", capacity_sheet = "AllGenerators", cap_col = "S", load_scaling = 0}
+P4 = { name = "cO-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "T", load_scaling = 0}
+P5 = { name = "cON-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators", cap_col = "U",  load_scaling = 0}
+P6 = { name = "cP-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "V",load_scaling = 0}
+P7 = { name = "cPN-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "W",load_scaling = 0}
+P8 = { name = "cPN-BAU", year = "2021", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "X",load_scaling = 0}
+P9 = { name = "cPN-IR", year = "2021", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "Y",load_scaling = 0}
+
+
+[outputs]
+# 'for parameters excel' is the old format for pasting into the generator parameters sheet
+# to do: set up new output format and parameters processing to replace the old system
+capacity_output = "for parameters excel"
+
+### OPTIONAL SETTINGS - if you are using the xml processing to create the solution index for all but plants you can leave this as is
+## whether to populate the solution index sheet model objects using user made Excel sheets or a model xml export
+# 'xml export' or 'manual'
+[solution_index_source]
+transmission = "xml export" 
+generation = "xml export" 
+demand_response = "xml export"
+regions_setup = "xml export" 
+fuel = "xml export"
+emission= "xml export"
+reserve = "xml export"
+variable = "xml export"
+fuel_contracts = "xml export"
+
+
+## how the plexos model is configured internally, e.g. region object contains single nodes or all nodes
+## can avoid this if you use the xml processing version
+## there are some legacy differences between the models and there are some advantages, e.g. the Region object allows for more queries than Node
+[model_configuration]
+main_node_object = "Node" # for some models could be Region
+main_aggregate_object = "Region" # for some models could be Area or Zone
+secondary_node_object = "Zone" # for models with Region as the primary object, Node is typically the secondary
+secondary_aggregate_object = "" # This could be Area or Zone
+aggregate_name = "Ukraine"
