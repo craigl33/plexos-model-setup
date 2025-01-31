@@ -1,40 +1,44 @@
-Labels,PLEXOSlabel,Band,SpacelessTag,Filename,NA_default
-AuxDemand,Aux Incr,1,AuxIncr,AuxiliaryDemand.csv,0
-AuxLosses,Auxilliary Losses,1,AuxLosses,AuxLosses.csv,0
-Cap_PFOR,Outage Rating,2,OutageRating,OutageRating.csv,0
-CoolingBand_cold,Start Cost Time,1,StartCostTime,StartCostTimeThreeBand.csv,0
-CoolingBand_warm,Start Cost Time,1,StartCostTime,StartCostTimeThreeBand.csv,0
-CoolingBand_hot,Start Cost Time,1,StartCostTime,StartCostTimeThreeBand.csv,0
-DeratedMaintenance,Derated Maintenance Factor,1,DeratedMaintenance,DeratedMaintenanceFactor.csv,100
-FFOR,Forced Outage Rate,1,ForcedOutageRate,ForcedOutageRate.csv,0
-FirmCapacity,Firm Capacity,1,FirmCapacity,FirmCapacity.csv,0
-FOM,FO&M Charge,1,FOM,FOM_Charge.csv,0
-HR,Heat Rate,1,HeatRate,HeatRate.csv,0
-MaxCap,Max Capacity,1,MaxCapacity,MaxCapacity.csv,0
-RR_Flex,Max Ramp Up,1,MaxRampFlex,MaxRampFlex.csv,1000000
-RR_Inflex,Max Ramp Up,1,MaxRampInflexIPP,MaxRampInflex.csv,1000000
-RR,Max Ramp Up,1,MaxRamp,MaxRamp.csv,1000000
-MaxUnitsBuilt,Max Units Built,1,MaxUnitsBuilt,MaxUnitsBuilt.csv,0
-MinCapFacYear,Min Capacity Factor Year,1,MinCFyear,MinCFyear.csv,0
-MinCHP_Ind,Minimum CHP Ind,1,MinCHP,MinCHP_Ind.csv,0
-MDT,Min Down Time,1,MinDownTime,MinDownTime.csv,0
-MUT,Min Up Time,1,MinUpTime,MinUpTime.csv,0
-MSL,Min Stable Level,1,MinStableLevel,MinStableLevel.csv,0
-MSL_Flex,Min Stable Level,1,MinStableLevelFlex,MSLFlex.csv,0
-MSL_Inflex,Min Stable Level,1,MinStableLevelInflex,MSLInflexIPP.csv,0
-MTTR_FFOR,Mean Time to Repair,1,MeanTimetoRepair,MeanTimetoRepair.csv,24
-MTTR_PFOR,Mean Time to Repair,2,MeanTimetoRepair,MeanTimetoRepair.csv,24
-MTTR_POR,Mean Time to Repair,3,MeanTimetoRepair,MeanTimetoRepair.csv,24
-PFOR,Forced Outage Rate,2,ForcedOutageRate,ForcedOutageRate.csv,0
-POR,Maintenance Rate,3,MaintenanceRate,MaintenanceRate.csv,0
-RampCost,Ramp Down Charge,1,RampDownCharge,RampCharge.csv,0
-RUR,Run Up Rate,1,RunUpRate,RunUpRate.csv,1000000
-StartCost_cold,Start Cost,1,StartCost,StartCostThreeBand.csv,0
-StartCost_hot,Start Cost,1,StartCost,StartCostThreeBand.csv,0
-StartCost_single,Start Cost,1,StartCost,StartCostSingle.csv,0
-StartCost_warm,Start Cost,1,StartCost,StartCostThreeBand.csv,0
-StorageVol,Storage Volume,1,StoVol,StorageVol.csv,0
-Units,Units,1,Units,Units.csv,0
-VOM,VO&M Charge,1,VOMcharge,VOM_Charge.csv,0
-ChargeEff,Charge or Pump Efficiency,1,ChargeEfficiency,ChargeEfficiency.csv,100
-DischargeEff,Discharge Efficiency,1,DischargeEfficiency,DischargeEfficiency.csv,100
+Labels,PLEXOSlabel,Band,SpacelessTag,Filename,NA_default,Capacity_relative_parameter,FilenameCapSuffix
+AuxDemand,Aux Incr,1,AuxIncr,AuxiliaryDemand.csv,0,,
+AuxLosses,Auxilliary Losses,1,AuxLosses,AuxLosses.csv,0,,
+Cap_PFOR,Outage Rating,2,OutageRating,OutageRating.csv,0,TRUE,_P
+CoolingBand_cold,Start Cost Time,1,StartCostTime,StartCostTimeThreeBand.csv,0,,
+CoolingBand_warm,Start Cost Time,1,StartCostTime,StartCostTimeThreeBand.csv,0,,
+CoolingBand_hot,Start Cost Time,1,StartCostTime,StartCostTimeThreeBand.csv,0,,
+DeratedMaintenance,Derated Maintenance Factor,1,DeratedMaintenance,DeratedMaintenanceFactor.csv,100,,
+FFOR,Forced Outage Rate,1,ForcedOutageRate,ForcedOutageRate.csv,0,,
+FirmCapacity,Firm Capacity,1,FirmCapacity,FirmCapacity.csv,0,TRUE,_P
+FOM,FO&M Charge,1,FOM,FOM_Charge.csv,0,,
+HR,Heat Rate,1,HeatRate,HeatRate.csv,0,,
+MaxCap,Max Capacity,1,MaxCapacity,MaxCapacity.csv,0,TRUE,_P
+RR_Flex,Max Ramp Up,1,MaxRampFlex,MaxRampFlex.csv,1000000,TRUE,P
+RR_Inflex,Max Ramp Up,1,MaxRampInflexIPP,MaxRampInflex.csv,1000000,TRUE,_P
+RR,Max Ramp Up,1,MaxRamp,MaxRamp.csv,1000000,TRUE,P
+MaxUnitsBuilt,Max Units Built,1,MaxUnitsBuilt,MaxUnitsBuilt.csv,0,,
+MinCapFacYear,Min Capacity Factor Year,1,MinCFyear,MinCFyear.csv,0,,
+MinCHP_Ind,Minimum CHP Ind,1,MinCHP,MinCHP_Ind.csv,0,,
+MDT,Min Down Time,1,MinDownTime,MinDownTime.csv,0,,
+MUT,Min Up Time,1,MinUpTime,MinUpTime.csv,0,,
+MSL,Min Stable Level,1,MinStableLevel,MinStableLevel.csv,0,TRUE,P
+MSL_Flex,Min Stable Level,1,MinStableLevelFlex,MSLFlex.csv,0,TRUE,_P
+MSL_Inflex,Min Stable Level,1,MinStableLevelInflex,MSLInflexIPP.csv,0,TRUE,_P
+MTTR_FFOR,Mean Time to Repair,1,MeanTimetoRepair,MeanTimetoRepair.csv,24,,
+MTTR_PFOR,Mean Time to Repair,2,MeanTimetoRepair,MeanTimetoRepair.csv,24,,
+MTTR_POR,Mean Time to Repair,3,MeanTimetoRepair,MeanTimetoRepair.csv,24,,
+PFOR,Forced Outage Rate,2,ForcedOutageRate,ForcedOutageRate.csv,0,,
+POR,Maintenance Rate,3,MaintenanceRate,MaintenanceRate.csv,0,,
+RampCost,Ramp Down Charge,1,RampDownCharge,RampCharge.csv,0,,
+RUR,Run Up Rate,1,RunUpRate,RunUpRate.csv,1000000,TRUE,P
+RUR_Flex,Run Up Rate,1,RunUpRate,RunUpRateFlex.csv,1000000,TRUE,_P
+RUR_Inflex,Run Up Rate,1,RunUpRate,RunUpRateInflex.csv,1000000,TRUE,_P
+StartCost_cold,Start Cost,1,StartCost,StartCostThreeBand.csv,0,,
+StartCost_hot,Start Cost,1,StartCost,StartCostThreeBand.csv,0,,
+StartCost_single,Start Cost,1,StartCost,StartCostSingle.csv,0,TRUE,P
+StartCost_warm,Start Cost,1,StartCost,StartCostThreeBand.csv,0,,
+StorageVol,Storage Volume,1,StoVol,StorageVol.csv,0,TRUE,P
+Units,Units,1,Units,Units.csv,0,TRUE,_P
+VOM,VO&M Charge,1,VOMcharge,VOM_Charge.csv,0,,
+ChargeEff,Charge or Pump Efficiency,1,ChargeEfficiency,ChargeEfficiency.csv,100,,
+DischargeEff,Discharge Efficiency,1,DischargeEfficiency,DischargeEfficiency.csv,100,,
+RatingFactor,Rating Factor,1,RatingFactor,RatingFactorsPeriod.csv,100,,
+MaxCapFacDay,Max Capacity Factor Day,1,MaxCapacityFactorDay,CapacityFactorsDay.csv,100,,

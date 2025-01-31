@@ -35,6 +35,7 @@ from model_setup.utils import export_data, make_pattern_index
 import pandas as pd
 import warnings
 import string
+from pathlib import Path
 
 from riselib.utils.logger import Logger
 log = Logger('profiles')
@@ -62,11 +63,24 @@ class CapacitySetup:
         # Read in the generator parameters file
         self.df_generator_params = pd.read_excel(self.c.get('path', 'generator_params_index'), sheet_name='Indices')
         self.df_output_params = pd.read_csv(self.c.cfg['path']['parameters_index'])
+
+        # Not used anymore - could be removed
+        # self.path_gen_model_inputs = self.c.get('path', 'generator_parameters_path')
         
         try:
             self.dict_plant_data = self.c.cfg['manual_setup']['plant_data']
         except KeyError:
             self.dict_plant_data = {}
+
+
+        # Output directory for the capacity list
+        if self.c.cfg['outputs']['overwrite_flag']:
+            self.path_output_files = Path(self.c.cfg['outputs']['path_gen_outputs'])
+        else:
+            self.path_output_files = Path(self.c.cfg['outputs']['path_gen_outputs']) / 'NEW'
+        
+        # Create the output directory if it doesn't exist
+        self.path_output_files.mkdir(parents=True, exist_ok=True)
 
 
         self.split_index = self._read_split_index()
@@ -184,7 +198,6 @@ class CapacitySetup:
         common_table.drop(columns = [self.COMMON_TECH_COL, self.REGION_COL, self.INDICES_TECH_COL]).to_csv(self.c.get("path","generation_folder")+ self.c.get("path", "capacity_list_name"), index = False)
         common_table.to_csv(self.c.get("path","generation_folder")+ "indexed_capacity_list.csv", index = False)
         
-    
     def _calculate_plant_units(self):
         """
         Function to calculate the number of units for each plant based on the capacity and unit size.
@@ -193,9 +206,9 @@ class CapacitySetup:
         """
 
         for portfolio, df in self.plant_capacities.items():
-            unit_df =  df[[self.PLANT_NAME_COL, 'Capacity','MaxCap']].copy()
-            unit_df['Units'] = np.round(unit_df['Capacity'] / unit_df['MaxCap'])
-            unit_df['MaxCap'] = unit_df['Capacity'] / unit_df['Units']
+            unit_df =  df[[self.PLANT_NAME_COL, self.PLANT_CAPACITY_COL,'MaxCap']].copy()
+            unit_df['Units'] = np.round(unit_df[self.PLANT_CAPACITY_COL] / unit_df['MaxCap'])
+            unit_df['MaxCap'] = unit_df[self.PLANT_CAPACITY_COL] / unit_df['Units']
 
             new_df = pd.merge(df.drop(columns=['MaxCap']), 
                               unit_df[[self.PLANT_NAME_COL, 'Units']],
@@ -279,7 +292,31 @@ class CapacitySetup:
             # Add the updated plant-level data to the dictionary
             self.plant_capacities[portfolio] = df_plant_names
 
-    
+        # Finally, calculate the capacity relative parameters for each plant based on the unit capacity
+        self._calculate_capacity_relative_params()
+
+    def _calculate_capacity_relative_params(self):
+        """
+        Function to calculate the capacity relative parameters for each plant based on the capacity and unit size. These are for those paramters which are expressed as a percentage
+        but are input as MW values in PLEXOS. In future, this could be controlled by a flag in the config file if you actually want the percentage values.
+        """
+
+        # Read in the output parameter labels from the Parameter Index file (df_output_params)
+        
+
+        df_cap_relative_params = self.df_output_params[self.df_output_params.Capacity_relative_parameter.fillna(False)]
+        param_cols = [ c for c in df_cap_relative_params.Labels if c in (self.df_generator_params.columns) ]
+
+        for portfolio, df in self.plant_capacities.items():
+            df_plant_names = df.copy()
+
+            # Calculate the capacity relative parameters based on the capacity and maximum capacity
+            for col in param_cols:
+                df_plant_names.loc[:,col] = df_plant_names[col] * df_plant_names['MaxCap'] / 100
+
+            # Add the updated plant-level data to the dictionary
+            self.plant_capacities[portfolio] = df_plant_names
+
     def _add_heat_rate_from_efficiency_table(self):
         """
         Function to add heat rate to plant data when using efficiency tables from the DW setup.
@@ -307,8 +344,7 @@ class CapacitySetup:
                 )
         else:
             raise ValueError("No efficiency table found for the given scenario. Please check the setup method as this is available only for DW setups.")
-
-    
+  
     def _setup_from_manual_sheet(self, settings):
         """
         Function to setup capacity from a manual sheet for the given scenario.
@@ -855,6 +891,75 @@ class CapacitySetup:
         
         return efficiencies[[self.INDICES_TECH_COL, "Classification", "Value"]]
 
+    def export_plant_parameters(self):
+        """
+        Function to export plant parameters to a csv file in correct folder structure. This is the new equivalent to the R-based mkPLEXOScsv function.
+
+        """
+
+        for portfolio, df_plants in self.plant_capacities.items():
+
+            # We go through each output file in the loop. This way we can ensure that the multiband data is grouped correctly into the single output file
+            for file in self.df_output_params.Filename.unique():
+                
+                # Parametrs as a list as multi-band data will have more than one parameter returned
+                params = list(self.df_output_params.loc[self.df_output_params.Filename == file, 'Labels'])
+                param_bands =list(self.df_output_params.loc[self.df_output_params.Filename == file, 'Band'])
+                
+                # Check that parameters are in the plant data. If not, throw an error
+                if any(p not in df_plants.columns for p in params):
+                    # log.warning(f"Parameter {param} is specified in the ParameterIndex file, but is not in the plant data. Skipping this parameter.")
+                    print(f"Parameter {params} is specified in the ParameterIndex file, but is not in the plant data. Skipping this parameter.")
+                    continue
+                
+                df_output = df_plants.loc[:,[self.PLANT_NAME_COL]+ params ]
+                for p in params:
+                    # NaN values can either be filled or dropped. This is defined in the output parameters index
+                    fill_value = self.df_output_params.loc[self.df_output_params.Labels == p, 'NA_default'].iloc[0]
+                    if self.c.cfg['outputs']['fill_na_flag']:
+                        df_output.loc[:,p] = df_output[p].fillna(fill_value)
+                    else:
+                        # Drop all rows with NaN values in the parameter column
+                        # In the case where multi-band data is used, we drop rows where all bands are NaN, otherwise we pass default values
+                        df_output = df_output.dropna(subset=[p], how='all').fillna(fill_value)
+
+                    
+                # Add and rename columns to standard convention and in standard order
+                df_output.loc[:, 'PATTERN'] = "M1-12"
+                df_output = df_output.rename(columns={self.PLANT_NAME_COL: 'NAME' })
+                df_output = df_output.rename(columns=dict(zip(params, param_bands)))
+                df_output = df_output[['NAME', 'PATTERN']+param_bands]
+
+                # Check output file structure style. For China, this was done with different portfolios in different folders and is the preferred method going forward
+                # For Ukraine and other legacy projects, it was done with a suffix. This suffix was either _P1 or P1 (so inconsistent), therefore its defined in the parameters index
+
+                output_structure = self.c.cfg['outputs']['output_structure']
+                if (output_structure == 'suffix') & ('FilenameCapSuffix' not in self.df_output_params.columns):
+                    log.warning("No filename suffix defined, defaulting to folder-style output structure")
+                    output_structure = "folders"
+
+                if output_structure == 'suffix':
+                    # Get the filename suffix from the parameters index
+                    filename_suffix = self.df_output_params.loc[self.df_output_params.Filename == file, 'FilenameCapSuffix'].iloc[0]
+                    if self.df_output_params.loc[self.df_output_params.Filename == file, 'Capacity_relative_parameter'].iloc[0] is True:
+                        # Suffix is in style of _P or P. Therefore we replace "P" with the portfolio name to get the correct filename
+                        filename = f"{file.split('.csv')[0]}{filename_suffix.replace('P',portfolio)}.csv"
+                    else:
+                        filename = file
+                    df_output.to_csv(self.path_output_files / filename, index=False)
+                    
+                elif output_structure == 'folders':
+                    # Filename is the same as the file name in the parameters index. This line is maintained for clarity on steps for future development
+                    filename = file
+                    # Create a folder for each portfolio
+                    folder = self.path_output_files / self.c.portfolio_assignments.loc[portfolio]["scenario_code"]
+                    folder.mkdir(parents=True, exist_ok=True)
+                    df_output.to_csv(folder / filename, index=False)
+                else:
+                    raise ValueError(f"Unrecognised output structure of {output_structure}. Please double-check the configuration file.")
+
+
+            print(f"Plant parameters exported successfully for {portfolio} portfolio to {self.path_output_files}.")
 
 ### HELPER FUNCTIONS ###
 # This could be moved to RISELIB OR UTILS
