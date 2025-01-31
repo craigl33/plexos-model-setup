@@ -91,18 +91,31 @@ Units= "Units"
 P1 = { name = "Validation", year = "2021", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators", cap_col = "Q", load_scaling = 0}
 P2 = { name = "War validation", year = "2024", setup_method = "manual", publication = 'None', scenario_code = "2024", capacity_sheet = "AllGenerators", cap_col = "R", load_scaling = 0}
 P3 = { name = "Base", year = "2025", setup_method = "manual", publication = 'None', scenario_code = "2025", capacity_sheet = "AllGenerators", cap_col = "S", load_scaling = 0}
-P4 = { name = "cO-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "T", load_scaling = 0}
-P5 = { name = "cON-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators", cap_col = "U",  load_scaling = 0}
-P6 = { name = "cP-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "V",load_scaling = 0}
-P7 = { name = "cPN-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "W",load_scaling = 0}
-P8 = { name = "cPN-BAU", year = "2021", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "X",load_scaling = 0}
-P9 = { name = "cPN-IR", year = "2021", setup_method = "manual", publication = 'None', scenario_code = "2021", capacity_sheet = "AllGenerators",  cap_col = "Y",load_scaling = 0}
+P4 = { name = "cO-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2030_cO-BR", capacity_sheet = "AllGenerators",  cap_col = "T", load_scaling = 0}
+P5 = { name = "cON-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2030_cON-BR", capacity_sheet = "AllGenerators", cap_col = "U",  load_scaling = 0}
+P6 = { name = "cP-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2030_cP-BR", capacity_sheet = "AllGenerators",  cap_col = "V",load_scaling = 0}
+P7 = { name = "cPN-BR", year = "2030", setup_method = "manual", publication = 'None', scenario_code = "2030_cPN-BR", capacity_sheet = "AllGenerators",  cap_col = "W",load_scaling = 0}
+P8 = { name = "cPN-BAU", year = "2021", setup_method = "manual", publication = 'None', scenario_code = "2030_cPN-BAU", capacity_sheet = "AllGenerators",  cap_col = "X",load_scaling = 0}
+P9 = { name = "cPN-IR", year = "2021", setup_method = "manual", publication = 'None', scenario_code = "2030_cPN-IR", capacity_sheet = "AllGenerators",  cap_col = "Y",load_scaling = 0}
 
 
 [outputs]
 # 'for parameters excel' is the old format for pasting into the generator parameters sheet
 # to do: set up new output format and parameters processing to replace the old system
-capacity_output = "for parameters excel"
+# capacity_output = "for parameters excel"
+
+# Output structure can either be:
+### a) folders: China-style structure where folders are created for each portfolio according to the scenario_code
+### b) suffix: Legacy-style, as used for Ukraine and Thailand, where a suffix is used for the capacity-dependant parameters. This suffix must be defined in the ParametersIndex file
+output_structure = "suffix"
+path_gen_outputs = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/01_InputData/01_GeneratorParameters/"
+path_load_outputs = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/01_InputData/02_DemandSide/"
+# Whether to directly overwrite the existing files in the output folders or to create new files in a NEW subfolder
+overwrite_flag = false
+# Whether to replace NaN values in the output files with a default value or drop. Default is to drop but may lead to undesired results if it doesnt correspond to the model set-up
+# e.g. if a parameter has been defined in the model via data input, it should not be replaced with a default value
+fill_na_flag = false
+
 
 ### OPTIONAL SETTINGS - if you are using the xml processing to create the solution index for all but plants you can leave this as is
 ## whether to populate the solution index sheet model objects using user made Excel sheets or a model xml export

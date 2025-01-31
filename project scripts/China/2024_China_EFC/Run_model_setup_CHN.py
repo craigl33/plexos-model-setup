@@ -16,6 +16,7 @@ config = ms.ModelConfig('./config/UKR.toml')
 capacity_setup = ms.CapacitySetup(config)
 capacity_setup.setup_capacity()
 capacity_setup.setup_plant_parameters()
+capacity_setup.export_plant_parameters()
 
 
 # load_setup = ms.LoadSetup(config)
