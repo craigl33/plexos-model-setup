@@ -2,6 +2,9 @@
 
 A Python package for automating PLEXOS model setup and configuration, providing tools for capacity setup, demand configuration, and solution file index creation.
 
+
+[TOC]
+
 ## Project Structure
 
 ```
