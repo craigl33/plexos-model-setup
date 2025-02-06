@@ -2,8 +2,24 @@
 
 A Python package for automating PLEXOS model setup and configuration, providing tools for capacity setup, demand configuration, and solution file index creation.
 
+## Table of Contents
+- [PLEXOS Model Setup](#plexos-model-setup)
+  - [Description](#description)
+  - [Project Structure](#project-structure)
+  - [Core Reference Files](#core-reference-files)
+  - [TOML Configuration Guide](#toml-configuration-guide)
+  - [Installation](#installation)
+  - [Features](#features)
+  - [Usage](#usage)
+  - [Development Status](#development-status)
+  - [Contributing](#contributing)
 
-[TOC]
+## Description
+
+This package automates PLEXOS model setup with functionality for:
+- Capacity setup from DW (functional version complete) or old WEO Excel sheet style (partially integrated)
+- Demand setup from combined demand sheet
+- Automated solution file index creation
 
 ## Project Structure
 
@@ -23,45 +39,6 @@ plexos-model-setup/
 └── setup.py              # Package installation script
 ```
 
-### Template and Index Files
-
-The `templates and indices/` directory contains critical files for model operation:
-
-- **generator_parameters.xlsx** / **generator_parameters_legacy.xlsx**
-  - Contains technical parameters for different generator types
-  - Includes sheets for:
-    - Generator indices and classifications
-    - Regional splitting factors
-    - Technology splitting ratios
-    - Heat rates and efficiencies
-    - Operating constraints
-    - Cost parameters
-
-- **Index Files**:
-  - `all model indices.csv`: Master index mapping technologies to their properties (75 rows, 39 columns)
-    - Maps technologies to fuel types, operating classes, and categories
-    - Contains inertia parameters, storage durations, and flexibility categories
-    - Defines CHP types and CCS configurations
-  
-  - `weo_plexos_index.csv`: Maps WEO technologies to PLEXOS (50 rows, 17 columns)
-    - Links WEO data sources to PLEXOS technologies
-    - Specifies data processing methods and classifications
-    - Contains product and flow mappings
-
-  - `parameters_index.csv`: Defines PLEXOS parameters (43 rows, 8 columns)
-    - Maps parameter labels to PLEXOS names
-    - Specifies default values and filename conventions
-    - Identifies capacity-relative parameters
-
-  - `legacy indices sheet.csv`: Support for older models (164 rows, 32 columns)
-    - Maps legacy WEO technologies
-    - Contains historical categorizations and mappings
-
-- **Support Files**:
-  - `capacity_data_categories_index.csv`: Categories for capacity data
-  - `AnnexA_gencapacity.csv`: Capacity adjustment factors
-  - `Enduse_mapping_light.xlsx`: End-use sector mappings
-
 ### Key Components
 
 - **model_setup/**: Core implementation modules
@@ -71,51 +48,6 @@ The `templates and indices/` directory contains critical files for model operati
   - `model_config.py`: Configuration management
   - `solution_index.py`: Solution file index creation
   - `utils.py`: General utility functions
-
-- **functions/**: Support utilities
-  - `convert_plexos.py`: PLEXOS conversion utilities
-  - `read_weo.py`: World Energy Outlook data processing
-  - `xml_exploring.py`: XML manipulation tools
-
-## Features
-
-### 1. Capacity Setup
-- Support for multiple data sources:
-  - Direct Data Warehouse (DW) integration
-  - WEO Excel sheet import
-  - Manual capacity configuration
-- Regional capacity splitting
-- Generator parameter configuration
-
-### 2. Demand Setup
-- Load profile configuration from combined demand sheets
-- Demand response modeling
-- Regional demand splitting
-- Time pattern generation
-
-### 3. Solution Index Creation
-- Automated index generation for:
-  - Generators
-  - Demand response
-  - Nodes and regions
-  - Transmission lines
-  - Emissions
-  - Reserves
-  - Variables
-  - Fuels and contracts
-
-## Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/your-org/plexos-model-setup.git
-```
-
-2. Create and activate the conda environment:
-```bash
-conda env create -f environment.yml
-conda activate plexos-model-setup
-```
 
 ## Core Reference Files
 
@@ -144,131 +76,72 @@ The generator parameters file (either `generator_parameters.xlsx` or `generator_
 
 ### All Model Indices
 
-The `all_model_indices.csv` file serves as the master technology mapping system, containing crucial classifications that determine how technologies are treated in the model:
+The `all_model_indices.csv` file serves as the master technology mapping system, containing crucial classifications that determine how technologies are treated in the model.
 
-1. **Technology Identification**
-   - PLEXOS technology names
-   - WEO technology mappings
-   - Operating classes
-   - Fuel type assignments
+### Template and Index Files
 
-2. **Technical Classifications**
-   - VRE (Variable Renewable Energy) categorization
-   - Storage duration parameters
-   - Inertia contributions (HIGH/LOW)
-   - CHP and CCS type specifications
+The `templates and indices/` directory contains critical files for model operation:
 
-3. **Operational Categories**
-   - Flexibility categories
-   - Capacity categories
-   - Stack categories for reporting
-   - Quick start capabilities
+- **Index Files**:
+  - `all model indices.csv`: Master index mapping technologies to their properties
+  - `weo_plexos_index.csv`: Maps WEO technologies to PLEXOS
+  - `parameters_index.csv`: Defines PLEXOS parameters
+  - `legacy indices sheet.csv`: Support for older models
 
-This classification system ensures consistent treatment of technologies across different model components and supports proper parameter assignment and regional splitting.
+- **Support Files**:
+  - `capacity_data_categories_index.csv`: Categories for capacity data
+  - `AnnexA_gencapacity.csv`: Capacity adjustment factors
+  - `Enduse_mapping_light.xlsx`: End-use sector mappings
 
 ## TOML Configuration Guide
 
-The package uses TOML configuration files (located in `config/`) for model setup. Below is a detailed breakdown of the key configuration sections:
+[Previous TOML configuration section remains unchanged]
 
-### Path Configuration
-```toml
-[path]
-project_folder = "path/to/project/"
-data_folder = "path/to/data/"
-generation_folder = "path/to/generation/"
-load_folder = "path/to/load/"
-plants_list_path = "path/to/generator_capacity.xlsx"
-generator_parameters_path = "path/to/generator_parameters.xlsx"
-model_xml_path = "path/to/model.xml"
+## Installation
+
+1. Clone the repository:
+```bash
+git clone git clone plexos-model-setup
 ```
 
-### Parameters
-```toml
-[parameters]
-model_region = "Region_Name"
-regions = ["R1", "R2", "R3"]  # List of model regions
-model_type = "Manual"  # Can be "WEO" or "Manual"
-Annex_A_adjust = "False"
-has_aluminium = "False"
+2. Create and activate the conda environment using the provided `environment.yml` file:
+```bash
+conda env create -f environment.yml
 ```
 
-### Manual Setup Configuration
-```toml
-[manual_setup]
-plants_list_header = 0
-plants_list_sheet = "AllGenerators"
-capacity_columns = "Q:Y"  # Excel column range for capacity data
-name_column = "PLEXOS_Name"
-tech_column = "WEO_Tech"
-reg_column = "PLEXOS_GRP1"
-classification_column = "Category1"
-legacy_indices_flag = true
-```
+This creates a conda environment named `plexos-model-setup` and installs all relevant packages.
 
-### Portfolio Assignments
-```toml
-[portfolio_assignments]
-P1 = { name = "Validation", year = "2021", setup_method = "manual",
-       publication = 'None', scenario_code = "2021", 
-       capacity_sheet = "AllGenerators", cap_col = "Q", 
-       load_scaling = 0}
-# Additional portfolios P2-Pn can be defined similarly
-```
+If problems occur during installation, try:
+1. Updating conda
+2. Creating a fresh environment
+3. Installing packages individually
 
-### Output Configuration
-```toml
-[outputs]
-output_structure = "suffix"  # or "folders"
-path_gen_outputs = "path/to/outputs/parameters/"
-path_load_outputs = "path/to/outputs/demand/"
-overwrite_flag = false
-fill_na_flag = false
-```
+## Features
 
-### Solution Index Sources
-```toml
-[solution_index_source]
-transmission = "xml export"
-generation = "xml export"
-demand_response = "xml export"
-regions_setup = "xml export"
-fuel = "xml export"
-emission = "xml export"
-reserve = "xml export"
-variable = "xml export"
-fuel_contracts = "xml export"
-```
+### 1. Capacity Setup
+- Support for multiple data sources:
+  - Direct Data Warehouse (DW) integration
+  - WEO Excel sheet import
+  - Manual capacity configuration
+- Regional capacity splitting
+- Generator parameter configuration
 
-### Key Configuration Notes:
+### 2. Demand Setup
+- Load profile configuration from combined demand sheets
+- Demand response modeling
+- Regional demand splitting
+- Time pattern generation
 
-1. **Setup Methods**:
-   - `manual`: For detailed plant-level models
-   - `data warehouse`: For WEO data-based models
-   - `weo_excel`: For legacy WEO Excel-based models
-   - `load only`: For demand-side only configurations
-
-2. **Output Structures**:
-   - `suffix`: Uses file suffixes for different portfolios
-   - `folders`: Creates separate folders for each portfolio
-
-3. **Index Flags**:
-   - `legacy_indices_flag`: For compatibility with older model structures
-   - `regional_split_flag`: For WEO-style models with manual input data
-
-4. **Portfolio Configuration**:
-   - Each portfolio (P1, P2, etc.) can have different years, methods, and scenarios
-   - Capacity columns can be specified either by Excel column letters or names
-
-## Configuration
-
-The package uses these TOML configuration files (located in `config/`) to specify:
-- File paths and locations
-- Portfolio assignments
-- Model parameters
-- Output settings
-- Regional configurations
-
-Example configuration files are provided for reference (e.g., `CHN_2024_EFC.toml`, `UKR.toml`).
+### 3. Solution Index Creation
+- Automated index generation for:
+  - Generators
+  - Demand response
+  - Nodes and regions
+  - Transmission lines
+  - Emissions
+  - Reserves
+  - Variables
+  - Fuels and contracts
 
 ## Usage
 
@@ -309,10 +182,6 @@ Current development priorities:
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
-
-## License
-
-[Your license information here]
 
 ## Acknowledgments
 
