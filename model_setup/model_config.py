@@ -8,9 +8,16 @@ Created on Fri Mar 22 13:19:26 2024
 import toml
 import os
 import pandas as pd
+import geopandas as gpd
 from pathlib import Path
+
+from matplotlib.gridspec import GridSpec
+
 from riselib.utils.logger import Logger
-log = Logger('profiles')
+
+from riselib.gis import get_country_gdf
+
+log = Logger('model_config')
 
 class ModelConfig:
     def __init__(self, config_name):
@@ -86,6 +93,19 @@ class ModelConfig:
         self.legacy_indices_sheet = self.cfg['path']['legacy_indices']
         self.list_capacity_names = self.cfg['path']['capacity_list_name']
 
+        # GIS inputs which act as helper functions for demand and transmission
+        # self.modelling_reg_col = self.cfg['gis']['modelling_reg_column']
+        self.country_name = self.cfg['gis']['country_name']
+        self.country_id = self.cfg['gis']['country_id']
+
+        
+        try:
+            self.list_neighbouring_countries = self.cfg['gis']['neighbouring_countries']
+        except KeyError:
+            self.list_neighbouring_countries = []
+        
+        self.gdf_adm0, self.gdf_adm = self._initialise_admin_data()
+        
 
     def get(self, section, key=None, default=None):
         # Fetch the entire section if key is None
@@ -96,12 +116,20 @@ class ModelConfig:
         section_data = self.cfg.get(section, {})
         return section_data.get(key, default)
     
-    
-        
+    def _initialise_admin_data(self):
+        """
+        Initialise admin data from the configuration file.
 
+        """
 
-"""
+        gdf_adm = gpd.read_file(self.get('gis', 'path_adm1_shp'))
+        df_adm_info  = pd.read_csv(self.get('gis', 'path_adm1_info'))
+        gdf_adm = gdf_adm.merge(df_adm_info, on=self.get('gis', 'adm1_name'))
 
-self = config
+       # Add neighbouring countries to the admin data
+        db_name = self.get('gis', 'ne_db_name')
+        gdf_adm0 =get_country_gdf(self.country_id, db_name=db_name)
+        for country in self.list_neighbouring_countries:
+            gdf_adm0 = gpd.GeoDataFrame(pd.concat([gdf_adm0, get_country_gdf(country, db_name=db_name)]))
 
-"""
+        return gdf_adm0, gdf_adm
