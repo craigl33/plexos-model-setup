@@ -1,4 +1,5 @@
 import model_setup as ms
+from model_setup import TransmissionSetup
 
 
 
@@ -7,6 +8,9 @@ import model_setup as ms
 # config = ms.ModelConfig('project scripts/China/2024_China_EFC/CHN_2024_EFC.toml')
 config = ms.ModelConfig('./config/UKR.toml')
 
+
+ts = TransmissionSetup(config)
+ts.calculate_tx_capacities()
 # Step 2: Initialize the SolutionIndexCreator object with the config
 # solution_index_creator = ms.SolutionIndexCreator(config)
 

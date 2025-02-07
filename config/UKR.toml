@@ -28,6 +28,8 @@ model_xml_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/UKR_Bas
 ## path to Annex A file if it is to be used to adjust capacities - legacy but not integrated due to difficulty in index matching
 Annex_A_adjust = "N/A"
 
+
+
 ## DEFAULT PATHS
 weo_plexos_index_path = 'templates and indices/weo_plexos_index.csv' # Index for deriving values from WEO DW. May need to be updated for future iterations if errors are discovered.
 indices_sheet = "templates and indices/all model indices.csv" # based on new WEO technologies
@@ -141,3 +143,33 @@ main_aggregate_object = "Region" # for some models could be Area or Zone
 secondary_node_object = "Zone" # for models with Region as the primary object, Node is typically the secondary
 secondary_aggregate_object = "" # This could be Area or Zone
 aggregate_name = "Ukraine"
+
+[gis]
+# Adding functionality for building transmission analysis into the package
+country_id = 'UKR' ## This could be ISO2 or ISO3 code or fully country name
+country_name = 'Ukraine'
+ne_db_name ='admin_0_countries_ukr'  # Natural Earth database for admin0
+path_adm1_shp ='Y:/GIS/Ukraine/adm/UKR_adm1.shp'  # Shapefile for the country at ADM1 level
+path_adm1_info = 'Y:/GIS/Ukraine/ukr_adm_info.csv' # Additional administrative information for the country at ADM1 level
+neighbouring_countries = ['ROU', 'MDA', 'POL', 'HUN', 'SVK'] # ISO3 codes for neighbouring countries
+adm1_name = 'NAME_1' # Column name for the common name of the ADM1 regions
+modelling_reg_col = 'PLEXOS_GRP1' # Column name for the modelling regions
+plot_save_path = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/04_Plots/' # Path to save the output files
+default_crs = 'EPSG:4326'
+utm_crs = 'EPSG:3857'
+
+[transmission]
+# This file needs to be created from transmission shapefiles that have been cleaned (e.g. from https://openinframap.org or other GIS data directly from stakeholders).
+# OpenStreetMap data must be cleaned (e.g. to ensure all line voltages are standardised etc.) 
+# This should also be clipped to the country(ies) of interest
+path_tx_shp = "Y:/GIS/Ukraine/tx/ukr_plus_tx_oim.gpkg"
+plot_col = 'voltage' # Column name for the voltage level of the transmission lines
+#path_tx_shp = "Y:/GIS/Ukraine/tx/ukr_tx_digitized.shp" 
+path_tx_cap_index = 'templates and indices/transmission_capacity_by_voltage.csv'
+tx_save_path = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/03_Transmission/' # Path to save the output files
+
+# This can be done when cleaning the data. A standard list of data should be created and used for all projects
+rename_cols = {constructi='under_construction', start_date='start_date', voltage='voltage', circuits='circuits'}
+
+# Not yet used. Optional setting
+path_tx_known_values = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/03_Transmission/ukr_tx_known_values.csv' # Known values for transmission lines (e.g. from PLEXOS or other data sources)'
