@@ -123,7 +123,7 @@ Note that plexos-model-setup uses functionality developed in other packages (ris
 ```bash
 
 pip install -e ../riselib/ --config-settings editable_mode=strict  
-pip install -e ../gis-script/ --config-settings editable_mode=strict
+pip install -r ../riselib/requirements.txt
 
 ```
 
