@@ -116,6 +116,29 @@ If problems occur during installation, try:
 2. Creating a fresh environment
 3. Installing packages individually
 
+### Other repositories required
+
+Note that plexos-model-setup uses functionality developed in other packages (riselib, gis-script) that require the installation of these packages in the plexos-model-setup environment. To do so you, can install in editable mode that allows you to develop the package while using its functionality. 
+
+```bash
+
+pip install -e ../riselib/ --config-settings editable_mode=strict  
+pip install -e ../gis-script/ --config-settings editable_mode=strict
+
+```
+
+Note that config settings here allow for Pylance functionality to work with the code in editable mode, enabling autocomplete features in VS Code.
+
+If just installing for use of the package functions, one can install normally from GitLab as follows:
+
+```bash
+
+pip install git+ssh://git@gitlab.iea.org/iea/ems/rise/riselib --no-dependencies
+pip install git+ssh://git@gitlab.iea.org/iea/ems/rise/gis-script --no-dependencies
+
+
+```
+
 ## Features
 
 ### 1. Capacity Setup
