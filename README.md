@@ -101,7 +101,7 @@ The `templates and indices/` directory contains critical files for model operati
 
 1. Clone the repository:
 ```bash
-git clone git clone plexos-model-setup
+git clone git@gitlab.iea.org/plexos-model-setup.git
 ```
 
 2. Create and activate the conda environment using the provided `environment.yml` file:
