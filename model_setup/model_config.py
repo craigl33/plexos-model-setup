@@ -58,7 +58,7 @@ class ModelConfig:
         self.capacity_list_name = self.cfg['path']['capacity_list_name']
         self.capacity_categories_index = self.cfg['path']['capacity_categories_index']
         self.path_soln_idx = self.cfg['path']['solution_index']
-        self.path_demand = self.cfg['path']['load_path']
+        self.path_demand = self.cfg['load']['load_path']
 
 
         # Manual setup inputs
@@ -122,14 +122,17 @@ class ModelConfig:
 
         """
 
-        gdf_adm = gpd.read_file(self.get('gis', 'path_adm1_shp'))
-        df_adm_info  = pd.read_csv(self.get('gis', 'path_adm1_info'))
+        gdf_adm = gpd.read_file(self.cfg['gis']['path_adm1_shp'])
+        df_adm_info  = pd.read_csv(self.cfg['gis']['path_adm1_info'])
         gdf_adm = gdf_adm.merge(df_adm_info, on=self.get('gis', 'adm1_name'))
 
        # Add neighbouring countries to the admin data
         db_name = self.get('gis', 'ne_db_name')
-        gdf_adm0 =get_country_gdf(self.country_id, db_name=db_name)
-        for country in self.list_neighbouring_countries:
-            gdf_adm0 = gpd.GeoDataFrame(pd.concat([gdf_adm0, get_country_gdf(country, db_name=db_name)]))
+        all_adm0_ids = [self.country_id] + self.list_neighbouring_countries
+        gdf_adm0 = pd.DataFrame(None)
+        for country_id in all_adm0_ids:
+            temp_adm0 = get_country_gdf(country_id, db_name=db_name)
+            temp_adm0.loc[:,'NAME_0'] = country_id
+            gdf_adm0 = gpd.GeoDataFrame(pd.concat([gdf_adm0, temp_adm0]))
 
         return gdf_adm0, gdf_adm

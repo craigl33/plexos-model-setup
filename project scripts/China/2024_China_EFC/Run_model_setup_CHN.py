@@ -8,6 +8,8 @@ from model_setup import TransmissionSetup
 # config = ms.ModelConfig('project scripts/China/2024_China_EFC/CHN_2024_EFC.toml')
 config = ms.ModelConfig('./config/UKR.toml')
 
+ls = ms.LoadSetup(config)
+ls._read_manual_demand_data()
 
 ts = TransmissionSetup(config)
 ts.calculate_tx_capacities()
