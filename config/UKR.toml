@@ -18,16 +18,6 @@ generator_parameters_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/0
 # TODO add processing to create transmission from excel rather than xml if desired
 #transmission_path = "S:/China/China proj 2023/06_Data/01_Transmission/to_complete.csv"
 
-# path to Excel containing the hourly load, demand index and regional splits by scenario, sheets identified by scenario code / year in portfolio assignments below
-# For models built outside of WEO, this needs to be done manually
-load_path = "N/A"
-# path to the root folder for PLEXOS demand inputs, scenario code will be used for the subfolder
-load_save_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/01_InputData/04_DSM/"
-# path to the model xml to populate some aspects of the solution Index, if not, None
-model_xml_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/UKR_Base_Model_v7.4.7_battAS.xml"
-## path to Annex A file if it is to be used to adjust capacities - legacy but not integrated due to difficulty in index matching
-Annex_A_adjust = "N/A"
-
 
 
 ## DEFAULT PATHS
@@ -43,6 +33,11 @@ generator_params_index = "templates and indices/generator_parameters_legacy.xlsx
 parameters_index = "templates and indices/parameters_index.csv" 
 capacity_categories_index = "templates and indices/capacity_data_categories_index.csv" # For DW
 capacity_list_name = 'capacity_list_for_pasting.csv'
+
+# path to the model xml to populate some aspects of the solution Index, if not, None
+model_xml_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/UKR_Base_Model_v7.4.7_battAS.xml"
+## path to Annex A file if it is to be used to adjust capacities - legacy but not integrated due to difficulty in index matching
+Annex_A_adjust = "N/A"
 
 [sheet_names] # intended to be kept as default but can be adjusted here if needed
 # technology splitting sheet is where subtechs need to be split out of aggregated categories - coal and hydro for now
@@ -149,7 +144,7 @@ aggregate_name = "Ukraine"
 country_id = 'UKR' ## This could be ISO2 or ISO3 code or fully country name
 country_name = 'Ukraine'
 ne_db_name ='admin_0_countries_ukr'  # Natural Earth database for admin0
-path_adm1_shp ='Y:/GIS/Ukraine/adm/UKR_adm1.shp'  # Shapefile for the country at ADM1 level
+path_adm1_shp = 'Y:/GIS/Ukraine/adm/UKR_adm1.shp'  # Shapefile for the country at ADM1 level
 path_adm1_info = 'Y:/GIS/Ukraine/ukr_adm_info.csv' # Additional administrative information for the country at ADM1 level
 neighbouring_countries = ['ROU', 'MDA', 'POL', 'HUN', 'SVK'] # ISO3 codes for neighbouring countries
 adm1_name = 'NAME_1' # Column name for the common name of the ADM1 regions
@@ -173,3 +168,34 @@ rename_cols = {constructi='under_construction', start_date='start_date', voltage
 
 # Not yet used. Optional setting
 path_tx_known_values = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/03_Transmission/ukr_tx_known_values.csv' # Known values for transmission lines (e.g. from PLEXOS or other data sources)'
+
+[load]
+timezone = 2
+# path to Excel containing the hourly load, demand index and regional splits by scenario, sheets identified by scenario code / year in portfolio assignments below
+# For models built outside of WEO, this needs to be done manually
+load_path = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/02_Demand/Ukrenergo_National_Demand_hourly.csv' # Path to the load data. Assumed to have already include all forecasted years.
+neighbour_load_path = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/02_Demand/EU_national_demand_hourly.csv' #Prepared with the same format as the main load file, with ISO3 code as columns
+
+
+# Load type can be defined as WEO or manual. If WEO, this uses the standard format of the combined data inputs
+# Otherwise, if manual, it will read the CSV.
+load_type = "manual_national"
+# path to the root folder for PLEXOS demand inputs, scenario code will be used for the subfolder
+load_save_path = "Y:/Modelling/Ukraine/2023_UKR_ST_Security/03_Modelling/01_InputData/04_DSM/"
+load_data_path = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/02_Demand'
+load_data_col = 'Demand MW'
+index_cols = ['Year', 'Month', 'Day', 'Hour'] # This is the format obtained from DW RT data
+date_start = '2019-01-01'
+date_end = '27-10-2022 23:00'
+load_res = '1H' # Resolution of the load data
+# Options to clean timeseries data. See riselib.math for more details that can be configured such
+# as rolling window and threshold for sudden changes, etc.
+clean_ts_methods = [ 'sudden_changes', 'positive', 'std'] 
+
+# the following are not implemented. just ideas
+regional_split_path = 'Y:/Modelling/Ukraine/2023_UKR_ST_Security/01_Data/02_Demand/ukr_demand_regional_split.csv' # Path to the regional split data. This should be produced adhoc in Project notebooks or otherwise
+regional_split_col = 'PLEXOS_GRP1' # Column name for the regional split data
+multi_year = false #
+
+
+
